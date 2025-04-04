@@ -1,0 +1,17 @@
+{
+  "Content": {
+    "backToContentElementsList": "Back to content elements list",
+    "home": "Home",
+    "goToHome": "Go to home",
+    "contentElements": "Content elements",
+    "goToContentElements": "Go to content elements overview",
+    "contentElementsPageMetaDescription": "Overview of all content elements",
+    "elementPageMetaDescription": "Demo page for the content element",
+    "goToPreview": "Go to preview",
+    "legalNotice": "Legal notice",
+    "privacyPolicy": "Privacy policy",
+    "youAreHere": "You are here:",
+    "notFound": "404 - Page not found",
+    "pageNotFound": "This page does not exist."
+  }
+}

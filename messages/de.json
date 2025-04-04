@@ -1,0 +1,17 @@
+{
+  "Content": {
+    "backToContentElementsList": "Zurück zur Content-Elemente-Liste",
+    "home": "Startseite",
+    "goToHome": "Gehe zur Startseite",
+    "contentElements": "Content-Elemente",
+    "goToContentElements": "Gehe zur Übersicht der Content-Elemente",
+    "contentElementsPageMetaDescription": "Übersicht aller Content-Elemente",
+    "elementPageMetaDescription": "Demoseite für das Content-Element",
+    "goToPreview": "Gehe zur Vorschau",
+    "legalNotice": "Impressum",
+    "privacyPolicy": "Datenschutz",
+    "youAreHere": "Du bist hier:",
+    "notFound": "404 - Seite nicht gefunden",
+    "pageNotFound": "Diese Seite wurde nicht gefunden."
+  }
+}
