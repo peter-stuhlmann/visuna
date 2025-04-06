@@ -3,6 +3,7 @@
 import styled from 'styled-components';
 
 export const FooterContainer = styled.footer`
+  font-size: 16px;
   background-color: #fff;
   box-sizing: border-box;
   display: flex;
@@ -12,7 +13,6 @@ export const FooterContainer = styled.footer`
   align-items: flex-start;
   min-height: 70px;
   width: 100%;
-  margin-top: 50px;
 
   @media (max-width: 1280px) {
     flex-direction: column;

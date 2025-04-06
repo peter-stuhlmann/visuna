@@ -5,10 +5,32 @@ export type FooterProps = {
   data: LocalizedFooterData;
 };
 
+export type SubFooterProps = {
+  content: Record<Locale, string | ReactNode>;
+  fontSize?: 'small' | 'medium' | 'large';
+  align?: 'left' | 'center' | 'right';
+};
+
+// export interface FooterData {
+//   title: Record<Locale, string>;
+//   nav: NavSection[];
+//   subFooter: Record<
+//     Locale,
+//     {
+//       content: string | ReactNode;
+//       fontSize: 'small' | 'medium' | 'large';
+//       align: 'left' | 'center' | 'right';
+//     }
+//   >;
+// }
 export interface FooterData {
   title: Record<Locale, string>;
   nav: NavSection[];
-  subFooter: Record<Locale, string>;
+  subFooter: {
+    content: Record<Locale, string | ReactNode>;
+    fontSize: 'small' | 'medium' | 'large';
+    align: 'left' | 'center' | 'right';
+  };
 }
 
 export interface NavSection {
@@ -21,11 +43,28 @@ export interface LinkItem {
   href: string;
 }
 
+// export interface LocalizedFooterData {
+//   title: string;
+//   nav: {
+//     title: string;
+//     links: { name: string; href: string }[];
+//   }[];
+//   subFooter: {
+//     content: string | ReactNode;
+//     fontSize: 'small' | 'medium' | 'large';
+//     align: 'left' | 'center' | 'right';
+//   };
+// }
+
 export interface LocalizedFooterData {
   title: string;
   nav: {
     title: string;
     links: { name: string; href: string }[];
   }[];
-  subFooter: string | ReactNode;
+  subFooter: {
+    content: string | ReactNode;
+    fontSize: 'small' | 'medium' | 'large';
+    align: 'left' | 'center' | 'right';
+  };
 }

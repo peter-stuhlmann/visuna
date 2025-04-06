@@ -7,14 +7,17 @@ export const GlobalStyles = createGlobalStyle`
     --primary-color: rgb(0, 0, 0, 1);
     --secondary-color: rgb(255, 255, 255, 1);
     --primary-text-color: var(--primary-color);
-    --font-size: 16px;
+    --font-size: 18px;
     --line-height: 1.6;
+  }
+
+  html {
+    font-size: var(--font-size);
   }
 
   body {
     margin: 0;
     font-family: var(--primary-font), sans-serif;
-    font-size: var(--font-size);
     line-height: var(--line-height);
     color: var(--text-color);
     background-color: #f4fdff;
@@ -22,6 +25,7 @@ export const GlobalStyles = createGlobalStyle`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-x: hidden;
 
 
     & > div {
@@ -34,14 +38,8 @@ export const GlobalStyles = createGlobalStyle`
       }
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 500;
-      margin: 0 0 1rem 0;
-    }
-
-    :focus-visible {
-      outline: 2px solid red;
-      outline-offset: 2px;
-    }
+    /* :focus-visible {
+      outline: 3px solid red;
+    } */
   }
 `;

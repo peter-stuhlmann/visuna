@@ -10,7 +10,6 @@ export type BreadcrumbItem = {
 export type BreadcrumbsProps = {
   links: BreadcrumbItem[];
   margin?: 'none' | 'small' | 'medium' | 'large';
-  padding?: 'none' | 'small' | 'medium' | 'large';
   className?: string;
   style?: CSSProperties;
 };

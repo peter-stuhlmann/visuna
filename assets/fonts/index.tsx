@@ -1,6 +1,6 @@
-import { Nunito_Sans, Poppins, Ubuntu } from 'next/font/google';
+import { Raleway, Poppins, Ubuntu } from 'next/font/google';
 
-export const primaryFont = Nunito_Sans({
+export const primaryFont = Raleway({
   weight: ['400', '700'],
   style: ['normal', 'italic'],
   subsets: ['latin'],

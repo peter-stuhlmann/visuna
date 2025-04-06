@@ -7,3 +7,4 @@ const config = {
 export default config;
 
 export const PRIMARY_COLOR = colors.SLATE;
+export const RIPPLE_SPEED = 700;

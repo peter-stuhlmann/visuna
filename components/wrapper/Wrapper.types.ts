@@ -8,6 +8,11 @@ export type WrapperProps = {
   innerWidth?: 'small' | 'medium' | 'large';
   margin?: 'none' | 'small' | 'medium' | 'large';
   textAlign?: 'left' | 'center' | 'right';
+  backgroundColor?: string;
+  textColor?: string;
+  padding?: 'none' | 'small' | 'medium' | 'large';
+  className?: string;
+  style?: React.CSSProperties;
 };
 
 export type ContainerProps = {
@@ -17,4 +22,7 @@ export type ContainerProps = {
   $margin?: 'none' | 'small' | 'medium' | 'large';
   $innerWidth?: 'small' | 'medium' | 'large';
   $textAlign?: 'left' | 'center' | 'right';
+  $padding?: 'none' | 'small' | 'medium' | 'large';
+  $backgroundColor?: string;
+  $textColor?: string;
 };

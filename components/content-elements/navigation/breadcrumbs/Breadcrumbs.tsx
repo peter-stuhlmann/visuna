@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { BreadcrumbItem, BreadcrumbsProps } from './Breadcrumbs.types';
 import { Container } from './Breadcrumbs.styles';
 import getElementClassName from '../../utils/getElementClassName';
+import Wrapper from '@/components/wrapper';
 
 const BreadcrumbsComponent: FC<BreadcrumbsProps> = ({
   links,
   className = '',
   margin = 'small',
-  padding = 'none',
   style,
 }) => {
   if (!links || links.length === 0) {
@@ -21,33 +21,34 @@ const BreadcrumbsComponent: FC<BreadcrumbsProps> = ({
   const elementClassName = getElementClassName('breadcrumbs');
 
   return (
-    <Container
-      className={`${elementClassName} ${className}`}
-      style={style}
-      $margin={margin}
-      $padding={padding}
-    >
-      {links.map((link: BreadcrumbItem, idx: number) =>
-        link.href ? (
-          <Link
-            key={link.label + idx}
-            href={link.href}
-            className={link.isActive ? 'is-active' : ''}
-            title={link.title}
-          >
-            <span>{link.label}</span>
-          </Link>
-        ) : (
-          <span
-            key={link.label + idx}
-            className={link.isActive ? 'is-active' : ''}
-            title={link.title}
-          >
-            <span>{link.label}</span>
-          </span>
-        )
-      )}
-    </Container>
+    <Wrapper margin="none" padding="small">
+      <Container
+        className={`${elementClassName} ${className}`}
+        style={style}
+        $margin={margin}
+      >
+        {links.map((link: BreadcrumbItem, idx: number) =>
+          link.href ? (
+            <Link
+              key={link.label + idx}
+              href={link.href}
+              className={link.isActive ? 'is-active' : ''}
+              title={link.title}
+            >
+              <span>{link.label}</span>
+            </Link>
+          ) : (
+            <span
+              key={link.label + idx}
+              className={link.isActive ? 'is-active' : ''}
+              title={link.title}
+            >
+              <span>{link.label}</span>
+            </span>
+          )
+        )}
+      </Container>
+    </Wrapper>
   );
 };
 

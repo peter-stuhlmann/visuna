@@ -7,11 +7,76 @@ import {
   Translation,
 } from '@/components/content-elements/types';
 import Wrapper from '@/components/wrapper';
+import Button from '@/components/content-elements/text/button';
+import { Flex } from '@/components/Flex';
+import IntroText from '@/components/content-elements/text/intro-text';
+import { PRIMARY_COLOR } from '@/components/content-elements/content-elements.config';
+import Colors from '@/components/content-elements/layout/colors';
 
 export type ContentElementsSection = {
   name: Translation;
   description?: Translation;
   elements?: ContentElement[];
+};
+
+const textElements: ContentElementsSection = {
+  name: { de: 'Text-Elemente', en: 'Text elements' },
+  // description: { de: 'Description', en: 'Description' },
+  elements: [
+    {
+      name: { de: 'Button', en: 'Button' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'button',
+      components: [
+        <Wrapper>
+          <Flex $gap="1rem" $justifyContent="center">
+            <Button variant="text">text</Button>
+            <Button variant="contained">contained</Button>
+            <Button variant="outlined">outlined</Button>
+          </Flex>
+        </Wrapper>,
+      ],
+    },
+    {
+      name: { de: 'Intro-Text', en: 'Intro text' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'intro-text',
+      components: [
+        <IntroText
+          heading="Lorem ipsum"
+          ctaButton={{ children: 'Call-To-Action' }}
+          align="center"
+          backgroundColor={PRIMARY_COLOR['700']}
+          textColor={PRIMARY_COLOR['100']}
+          padding="large"
+          margin="none"
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. <b>Stet clita kasd gubergren</b>, no sea takimata
+            sanctus est Lorem ipsum dolor sit amet.
+          </p>
+          <p>
+            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
+            kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+            amet. <b>Lorem ipsum dolor sit amet</b>, consetetur sadipscing
+            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+            magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet,
+            consetetur sadipscing elitr, <b>sed diam nonumy eirmod</b> tempor
+            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+          </p>
+        </IntroText>,
+      ],
+    },
+  ],
 };
 
 const navigationElements: ContentElementsSection = {
@@ -108,10 +173,51 @@ const footerElements: ContentElementsSection = {
   ],
 };
 
+const core: ContentElementsSection = {
+  name: { de: 'Core', en: 'Core' },
+  // description: { de: 'Description', en: 'Description' },
+  elements: [
+    {
+      name: { de: 'Farben', en: 'Colors' },
+      description: {
+        de: (
+          <>
+            <p>
+              Ein Theme ist mit diesen Standard-Farbnamen einfach anpassbar, es
+              können auch eigene Farben mit selbst definierten Farbwerten
+              konfiguriert werden.
+            </p>
+            <p>
+              Die Elemente des Core-Themes enthalten bereits Farbabstufungen. Es
+              muss also nur global der Farbname geändert werden.
+            </p>
+          </>
+        ),
+        en: (
+          <>
+            <p>
+              A theme can be easily customized using these standard color names,
+              and you can also configure your own colors with custom values.
+            </p>
+            <p>
+              The elements of the core theme already include color shades, so
+              you only need to change the color name globally.
+            </p>
+          </>
+        ),
+      },
+      slug: 'colors',
+      components: [<Colors />],
+    },
+  ],
+};
+
 // Arrays kombinieren
 export const contentElementsSections: ContentElementsSection[] = [
+  textElements,
   navigationElements,
   footerElements,
+  core,
 ];
 
 export default contentElementsSections;

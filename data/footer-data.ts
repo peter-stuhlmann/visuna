@@ -1,4 +1,6 @@
-const footerData = {
+import { FooterData } from '@/components/footer/Footer.types';
+
+const footerData: FooterData = {
   title: {
     de: '&#091;<span>PS</span><span>UI</span>&#093;<span>Content Elemente</span>',
     en: '&#091;<span>PS</span><span>UI</span>&#093;<span>Content Elements</span>',
@@ -86,8 +88,12 @@ const footerData = {
     },
   ],
   subFooter: {
-    de: 'Designt und entwickelt von <a href="https://peter-stuhlmann-webentwicklung.de">Peter R. Stuhlmann Webentwicklung</a>.',
-    en: 'Designed and developed by <a href="https://peter-stuhlmann-webentwicklung.de">Peter R. Stuhlmann Web Development</a>.',
+    fontSize: 'small',
+    align: 'center',
+    content: {
+      de: 'Designt und entwickelt von <a href="https://peter-stuhlmann-webentwicklung.de">Peter R. Stuhlmann Webentwicklung</a>.',
+      en: 'Designed and developed by <a href="https://peter-stuhlmann-webentwicklung.de">Peter R. Stuhlmann Web Development</a>.',
+    },
   },
 };
 

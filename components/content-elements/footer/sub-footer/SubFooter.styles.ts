@@ -9,6 +9,12 @@ type SubFooterContainerProps = {
   $align?: 'left' | 'center' | 'right';
 };
 
+const fontSizeMap: Record<string, string> = {
+  small: '0.875rem',
+  medium: '1rem',
+  large: '1.25rem',
+};
+
 export const SubFooterContainer = styled.footer<SubFooterContainerProps>`
   background-color: ${({ $backgroundColor, theme }) =>
     $backgroundColor ?? theme.subFooter?.backgroundColor ?? '#fff'};
@@ -24,21 +30,7 @@ export const SubFooterContainer = styled.footer<SubFooterContainerProps>`
     margin: 0 auto;
     text-align: ${({ $align, theme }) =>
       $align ?? theme.subFooter?.align ?? 'left'};
-    font-size: ${({ $fontSize, theme }) => {
-      if ($fontSize) {
-        return $fontSize === 'small'
-          ? '0.875rem'
-          : $fontSize === 'large'
-          ? '1.2rem'
-          : '1rem';
-      }
-      // Fallback: Nutze den Wert aus dem Theme, falls vorhanden, ansonsten '1rem'
-      return theme.subFooter?.fontSize === 'small'
-        ? '0.875rem'
-        : theme.subFooter?.fontSize === 'large'
-        ? '1.2rem'
-        : '1rem';
-    }};
+    font-size: ${({ $fontSize = 'medium' }) => fontSizeMap[$fontSize]};
   }
 
   a {

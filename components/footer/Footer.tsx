@@ -28,13 +28,21 @@ const Footer: FC<FooterProps> = async ({ data }) => {
         </nav>
       </div>
       {!!data.subFooter &&
-        (typeof data.subFooter === 'string' ? (
+        (typeof data.subFooter.content === 'string' ? (
           <SubFooter
-            align="center"
-            dangerouslySetInnerHTML={{ __html: data.subFooter }}
+            align={data.subFooter.align}
+            fontSize={data.subFooter.fontSize}
+            dangerouslySetInnerHTML={{ __html: data.subFooter.content }}
+            element="div"
           />
         ) : (
-          <SubFooter align="center">{data.subFooter}</SubFooter>
+          <SubFooter
+            align={data.subFooter.align}
+            fontSize={data.subFooter.fontSize}
+            element="div"
+          >
+            {data.subFooter.content}
+          </SubFooter>
         ))}
     </FooterContainer>
   );

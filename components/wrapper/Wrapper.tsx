@@ -1,25 +1,37 @@
 import { FC } from 'react';
+
 import { Container } from './Wrapper.styles';
 import { WrapperProps } from './Wrapper.types';
+import getElementClassName from '../content-elements/utils/getElementClassName';
+import { PRIMARY_COLOR } from '../content-elements/content-elements.config';
 
 const Wrapper: FC<WrapperProps> = ({
   children,
-  theme = 'default',
   withShadow = false,
   width = 'medium',
   innerWidth = 'medium',
   margin = 'none',
   textAlign = 'left',
+  backgroundColor = 'transparent',
+  textColor = PRIMARY_COLOR['1000'],
+  padding = 'medium',
+  className = '',
+  style = {},
 }) => {
+  const elementClassName = getElementClassName(`wrapper`);
+
   return (
     <Container
-      $theme={theme}
       $withShadow={withShadow}
       $width={width}
       $innerWidth={innerWidth}
       $margin={margin}
       $textAlign={textAlign}
-      className={theme === 'dark' ? 'theme-dark' : ''}
+      $backgroundColor={backgroundColor}
+      $textColor={textColor}
+      $padding={padding}
+      className={`${elementClassName} ${className}`}
+      style={style}
     >
       <div>{children}</div>
     </Container>

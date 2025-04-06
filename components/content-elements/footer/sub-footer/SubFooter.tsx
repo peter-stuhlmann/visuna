@@ -12,6 +12,7 @@ export type SubFooterProps = {
   textColor?: string;
   fontSize?: 'small' | 'medium' | 'large';
   align?: 'left' | 'center' | 'right';
+  element?: 'div' | 'footer';
 } & SubFooterContent;
 
 const SubFooter: FC<SubFooterProps> = ({
@@ -21,6 +22,7 @@ const SubFooter: FC<SubFooterProps> = ({
   textColor,
   fontSize,
   align,
+  element = 'footer',
   dangerouslySetInnerHTML,
   children,
 }) => {
@@ -32,6 +34,7 @@ const SubFooter: FC<SubFooterProps> = ({
       $textColor={textColor}
       $fontSize={fontSize}
       $align={align}
+      as={element}
     >
       {dangerouslySetInnerHTML ? (
         <div

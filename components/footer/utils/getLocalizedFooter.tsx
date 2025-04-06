@@ -21,6 +21,10 @@ export function getLocalizedFooter(
         };
       }),
     })),
-    subFooter: data.subFooter[locale],
+    subFooter: {
+      content: data.subFooter.content[locale],
+      fontSize: data.subFooter.fontSize,
+      align: data.subFooter.align,
+    },
   };
 }

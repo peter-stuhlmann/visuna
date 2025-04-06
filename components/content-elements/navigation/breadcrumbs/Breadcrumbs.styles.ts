@@ -15,13 +15,6 @@ const marginMap: Record<string, string> = {
   large: '2rem',
 };
 
-const paddingMap: Record<string, string> = {
-  none: '0',
-  small: '0.5rem',
-  medium: '1rem',
-  large: '2rem',
-};
-
 export const Container = styled.nav<ContainerProps>`
   display: flex;
   width: 100%;
@@ -29,7 +22,6 @@ export const Container = styled.nav<ContainerProps>`
   font-size: 1rem;
   overflow: visible;
   margin: ${({ $margin = 'none' }) => marginMap[$margin]};
-  padding: ${({ $padding = 'none' }) => paddingMap[$padding]};
 
   @media (max-width: 480px) {
     font-size: 0.875rem;

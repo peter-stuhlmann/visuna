@@ -12,6 +12,7 @@
     "privacyPolicy": "Privacy policy",
     "youAreHere": "You are here:",
     "notFound": "404 - Page not found",
-    "pageNotFound": "This page does not exist."
+    "pageNotFound": "This page does not exist.",
+    "copied": "Copied!"
   }
 }

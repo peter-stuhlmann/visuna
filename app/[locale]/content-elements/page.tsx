@@ -31,19 +31,17 @@ const ContentElementsPage: FC<ContentElementsPageProps> = async ({
 
   return (
     <main>
-      <Wrapper>
-        <Breadcrumbs
-          links={[
-            { href: '/', label: t('home'), title: t('goToHome') },
-            {
-              href: null,
-              label: t('contentElements'),
-              title: t('goToContentElements'),
-              isActive: true,
-            },
-          ]}
-        />
-      </Wrapper>
+      <Breadcrumbs
+        links={[
+          { href: '/', label: t('home'), title: t('goToHome') },
+          {
+            href: null,
+            label: t('contentElements'),
+            title: t('goToContentElements'),
+            isActive: true,
+          },
+        ]}
+      />
       <Wrapper innerWidth="small" textAlign="center">
         <h1>{t('contentElements')}</h1>
         {contentElementsSections.map(
