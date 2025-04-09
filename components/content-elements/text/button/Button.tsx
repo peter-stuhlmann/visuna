@@ -19,6 +19,7 @@ const Button: FC<ButtonProps> = ({
   target = '_self',
   onClick,
   style,
+  disabledRipple = false,
 }) => {
   if (!children) {
     console.error(
@@ -47,7 +48,9 @@ const Button: FC<ButtonProps> = ({
       {...(href ? { href, target, rel: 'noreferrer noopener' } : {})}
     >
       <div>{children}</div>
-      <Ripple duration={RIPPLE_SPEED} color={PRIMARY_COLOR['500']} />
+      {!disabledRipple && (
+        <Ripple duration={RIPPLE_SPEED} color={PRIMARY_COLOR['500']} />
+      )}
     </ButtonContainer>
   );
 };

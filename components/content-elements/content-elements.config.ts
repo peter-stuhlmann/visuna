@@ -8,3 +8,4 @@ export default config;
 
 export const PRIMARY_COLOR = colors.SLATE;
 export const RIPPLE_SPEED = 700;
+export const FONT_SIZE = '18px';

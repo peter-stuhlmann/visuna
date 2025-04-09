@@ -8,18 +8,13 @@ import Wrapper from '@/components/wrapper';
 import { PRIMARY_COLOR } from '../../content-elements.config';
 
 const IntroText: FC<IntroTextProps> = ({
-  children,
+  children = '',
   className = '',
   heading = '',
-  headingType = 'h2',
+  headingType = 'h1',
   backgroundColor = 'transparent',
   textColor = PRIMARY_COLOR['900'],
-  ctaButton: {
-    href = undefined,
-    target = '_self',
-    children: buttonText = '',
-    onClick: onCtaClick,
-  },
+  ctaButton = {},
   margin = 'small',
   width = 'large',
   innerWidth = 'small',
@@ -27,6 +22,13 @@ const IntroText: FC<IntroTextProps> = ({
   padding = 'medium',
   style,
 }) => {
+  const {
+    href = undefined,
+    target = '_self',
+    children: buttonText = '',
+    onClick: onCtaClick,
+  } = ctaButton;
+
   if (!children && !heading && !buttonText) {
     console.error(
       'IntroText: One of the following props is required: "children", "heading", or "buttonText".'

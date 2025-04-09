@@ -39,6 +39,95 @@ const textElements: ContentElementsSection = {
           </Flex>
         </Wrapper>,
       ],
+      elementProps: [
+        {
+          name: 'children',
+          required: true,
+          type: ['string', 'React.ReactNode'],
+          description: {
+            de: 'Button-Text',
+            en: 'Button text',
+          },
+        },
+        {
+          name: 'className',
+          type: ['string'],
+          default: '.[prefix]-button',
+          description: {
+            de: 'CSS-Klasse für benutzerdefinierte Stile wird ergänzt.',
+            en: 'Additional CSS class for custom styles.',
+          },
+        },
+        {
+          name: 'variant',
+          type: ['"text"', '"contained"', '"outlined"'],
+          default: '"outlined"',
+          description: {
+            de: 'Button-Stil',
+            en: 'Button style',
+          },
+        },
+        {
+          name: 'fontWeight',
+          type: ['400', '700'],
+          default: '700',
+          description: {
+            de: 'Normal- oder Fettdruck',
+            en: 'Button text',
+          },
+        },
+        {
+          name: 'size',
+          type: ['"small"', '"medium"', '"large"'],
+          default: '"medium"',
+          description: {
+            de: 'Buttongröße',
+            en: 'Button size',
+          },
+        },
+        {
+          name: 'margin',
+          type: ['"none"', '"small"', '"medium"', '"large"'],
+          default: '"none"',
+          description: {
+            de: 'Vertikaler Abstand',
+            en: 'Vertical spacing',
+          },
+        },
+        {
+          name: 'href',
+          type: ['string'],
+          description: {
+            de: 'Link des Call-To-Action-Buttons',
+            en: 'Link of the call-to-action button',
+          },
+        },
+        {
+          name: 'target',
+          type: ['"_self"', '"_blank"', '"_parent"', '"_top"'],
+          default: '"_self"',
+          description: {
+            de: 'Linkziel des Call-To-Action-Buttons',
+            en: 'Link target of the call-to-action button',
+          },
+        },
+        {
+          name: 'onClick',
+          type: ['React.MouseEventHandler<HTMLElement>'],
+          description: {
+            de: 'Funktion, die beim Klicken auf den Button aufgerufen wird',
+            en: 'Function called when the button is clicked',
+          },
+        },
+        {
+          name: 'style',
+          type: ['React.CSSProperties'],
+          description: {
+            de: 'Inline-CSS-Stile',
+            en: 'Inline CSS styles',
+          },
+        },
+      ],
     },
     {
       name: { de: 'Intro-Text', en: 'Intro text' },
@@ -74,6 +163,124 @@ const textElements: ContentElementsSection = {
             invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
           </p>
         </IntroText>,
+      ],
+      elementProps: [
+        {
+          name: 'children',
+          type: ['string', 'React.ReactNode'],
+          default: '""',
+          description: {
+            de: 'Text',
+            en: 'Text',
+          },
+        },
+        {
+          name: 'className',
+          type: ['string'],
+          default: '.[prefix]-intro-text',
+          description: {
+            de: 'CSS-Klasse für benutzerdefinierte Stile wird ergänzt.',
+            en: 'Additional CSS class for custom styles.',
+          },
+        },
+        {
+          name: 'heading',
+          type: ['string', 'React.ReactNode'],
+          default: '""',
+          description: {
+            de: 'Überschrift',
+            en: 'Heading',
+          },
+        },
+        {
+          name: 'headingType',
+          type: ['"h1"', '"h2"', '"h3"'],
+          default: '"h1"',
+          description: {
+            de: 'Level der Überschrift',
+            en: 'Heading level',
+          },
+        },
+        {
+          name: 'backgroundColor',
+          type: ['string'],
+          default: 'transparent',
+          description: {
+            de: 'Hintergrundfarbe',
+            en: 'Background color',
+          },
+        },
+        {
+          name: 'textColor',
+          type: ['string'],
+          default: 'PRIMARY_COLOR["900"]',
+          description: {
+            de: 'Textfarbe',
+            en: 'Text color',
+          },
+        },
+        {
+          name: 'ctaButton',
+          type: [{ name: 'Button', href: '/content-elements/button/props' }],
+          description: {
+            de: 'Link des Call-To-Action-Buttons',
+            en: 'Link of the call-to-action button',
+          },
+        },
+        {
+          name: 'margin',
+          type: ['"none"', '"small"', '"medium"', '"large"'],
+          default: '"small"',
+          description: {
+            de: 'Abstand zum nächsten Element',
+            en: 'Spacing to the next element',
+          },
+        },
+        {
+          name: 'width',
+          type: ['"small"', '"medium"', '"large"'],
+          default: '"large"',
+          description: {
+            de: 'Gesamtbreite des Elements',
+            en: 'Overall width of the element',
+          },
+        },
+        {
+          name: 'innerWidth',
+          type: ['"small"', '"medium"', '"large"'],
+          default: '"small"',
+          description: {
+            de: 'Wrapper-Breite des Elements',
+            en: 'Wrapper width of the element',
+          },
+        },
+        {
+          name: 'align',
+          type: ['"left"', '"center"', '"right"'],
+          default: '"left"',
+          description: {
+            de: 'Inline-CSS-Stile',
+            en: 'Inline CSS styles',
+          },
+        },
+        {
+          name: 'padding',
+          type: ['"none"', '"small"', '"medium"', '"large"'],
+          default: '"medium"',
+          description: {
+            de: 'Innenabstand des Elements',
+            en: 'Inner padding of the element',
+          },
+        },
+        {
+          name: 'style',
+          type: ['React.CSSProperties'],
+          default: '{}',
+          description: {
+            de: 'Inline-CSS-Stile',
+            en: 'Inline CSS styles',
+          },
+        },
       ],
     },
   ],

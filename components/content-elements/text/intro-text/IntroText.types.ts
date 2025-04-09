@@ -3,13 +3,11 @@ import { ButtonProps } from '../button/Button.types';
 
 export type IntroTextProps = {
   children?: string | ReactNode;
-  variant?: 'text' | 'contained' | 'outlined';
-  heading: string | ReactNode;
+  heading?: string | ReactNode;
   headingType?: 'h1' | 'h2' | 'h3';
   backgroundColor?: string;
   textColor?: string;
-  ctaButton: ButtonProps;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  ctaButton?: Partial<ButtonProps>;
   className?: string;
   style?: CSSProperties;
   margin?: 'none' | 'small' | 'medium' | 'large';

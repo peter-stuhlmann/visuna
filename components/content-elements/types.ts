@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { ElementProp } from '../props-table/PropsTable.types';
 
 export type Theme = {
   subFooter?: {
@@ -14,6 +15,7 @@ export type ContentElement = {
   description: Translation;
   slug: string;
   components?: ReactNode[];
+  elementProps?: ElementProp[];
 };
 
 export type Translation = {

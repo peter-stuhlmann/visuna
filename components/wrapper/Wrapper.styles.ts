@@ -2,7 +2,10 @@
 
 import styled, { css } from 'styled-components';
 import { ContainerProps } from './Wrapper.types';
-import { PRIMARY_COLOR } from '../content-elements/content-elements.config';
+import {
+  PRIMARY_COLOR,
+  FONT_SIZE,
+} from '../content-elements/content-elements.config';
 
 const widthMap: Record<string, string> = {
   small: '900px',
@@ -37,6 +40,8 @@ const textAlignMap: Record<string, string> = {
 };
 
 export const Container = styled.div<ContainerProps>`
+  font-size: ${FONT_SIZE};
+
   background-color: ${({ $backgroundColor = 'transparent' }) =>
     $backgroundColor};
   color: ${({ $textColor = PRIMARY_COLOR['1000'] }) => $textColor};
@@ -52,6 +57,10 @@ export const Container = styled.div<ContainerProps>`
 
   @media (max-width: 1440px) {
     border-radius: 0;
+  }
+
+  @media (max-width: 1280px) {
+    font-size: 0.875rem;
   }
 
   & > div {

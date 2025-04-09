@@ -2,6 +2,7 @@
 
 import React, { FC, useState, useLayoutEffect, MouseEvent } from 'react';
 import { RippleContainer } from './Ripple.styles';
+import getElementClassName from '../utils/getElementClassName';
 
 export interface RippleProps {
   duration?: number;
@@ -48,8 +49,11 @@ const Ripple: FC<RippleProps> = ({ duration = 700, color = '#fff' }) => {
     setRippleArray((prev) => [...prev, newRipple]);
   };
 
+  const elementClassName = getElementClassName('ripple');
+
   return (
     <RippleContainer
+      className={elementClassName}
       $duration={duration}
       $color={color}
       onMouseDown={addRipple}

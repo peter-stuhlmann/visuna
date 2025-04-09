@@ -11,4 +11,5 @@ export type ButtonProps = {
   onClick?: React.MouseEventHandler<HTMLElement>;
   className?: string;
   style?: CSSProperties;
+  disabledRipple?: boolean;
 };

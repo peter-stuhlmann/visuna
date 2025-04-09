@@ -58,7 +58,7 @@ export const ButtonContainer = styled.button<ContainerProps>`
   font-weight: ${({ $fontWeight = '700' }) => $fontWeight};
   border-radius: 0.25rem;
   border-radius: 1000rem;
-  cursor: default;
+  cursor: pointer;
   text-decoration: none;
   color: ${PRIMARY_COLOR['900']};
   margin: ${({ $margin = 'none' }) => marginMap[$margin]};

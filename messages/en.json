@@ -13,6 +13,13 @@
     "youAreHere": "You are here:",
     "notFound": "404 - Page not found",
     "pageNotFound": "This page does not exist.",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "propsSectionHeading": "Props",
+    "propsSectionDescription": "With these props you can customize this content element.",
+    "props": "Props",
+    "type": "Type",
+    "default": "Default",
+    "description": "Description",
+    "name": "Name"
   }
 }
