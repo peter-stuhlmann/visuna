@@ -1,23 +1,28 @@
 import Link from 'next/link';
 
-import SubFooter from '@/components/content-elements/footer/sub-footer';
-import Breadcrumbs from '@/components/content-elements/navigation/breadcrumbs';
+import SubFooter from '@/components/content-elements/default/footer/sub-footer/component';
+import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
+
+import { Flex } from '@/components/Flex';
+import Colors from '@/components/layout/colors';
+import {
+  Button,
+  IntroText,
+  Wrapper,
+} from '@/components/content-elements/default';
 import {
   ContentElement,
   Translation,
-} from '@/components/content-elements/types';
-import Wrapper from '@/components/wrapper';
-import Button from '@/components/content-elements/text/button';
-import { Flex } from '@/components/Flex';
-import IntroText from '@/components/content-elements/text/intro-text';
-import { PRIMARY_COLOR } from '@/components/content-elements/content-elements.config';
-import Colors from '@/components/content-elements/layout/colors';
+} from '@/app/[locale]/content-elements/[slug]/utils/getContentElement';
+import { getPrimaryColor } from '@/components/content-elements/default/constants';
 
 export type ContentElementsSection = {
   name: Translation;
   description?: Translation;
   elements?: ContentElement[];
 };
+
+const primaryColor = getPrimaryColor();
 
 const textElements: ContentElementsSection = {
   name: { de: 'Text-Elemente', en: 'Text elements' },
@@ -141,8 +146,8 @@ const textElements: ContentElementsSection = {
           heading="Lorem ipsum"
           ctaButton={{ children: 'Call-To-Action' }}
           align="center"
-          backgroundColor={PRIMARY_COLOR['700']}
-          textColor={PRIMARY_COLOR['100']}
+          backgroundColor={primaryColor['700']}
+          textColor={primaryColor['100']}
           padding="large"
           margin="none"
         >
@@ -213,7 +218,7 @@ const textElements: ContentElementsSection = {
         {
           name: 'textColor',
           type: ['string'],
-          default: 'PRIMARY_COLOR["900"]',
+          default: 'primaryColor["900"]',
           description: {
             de: 'Textfarbe',
             en: 'Text color',
@@ -221,7 +226,7 @@ const textElements: ContentElementsSection = {
         },
         {
           name: 'ctaButton',
-          type: [{ name: 'Button', href: '/content-elements/button/props' }],
+          type: [{ name: 'Button', href: '/content-elements/button' }],
           description: {
             de: 'Link des Call-To-Action-Buttons',
             en: 'Link of the call-to-action button',

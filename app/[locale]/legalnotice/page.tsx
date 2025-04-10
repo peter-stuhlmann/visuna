@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { getTranslations } from 'next-intl/server';
 
-import Wrapper from '@/components/wrapper';
-import Breadcrumbs from '@/components/content-elements/navigation/breadcrumbs';
+import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
+import { Wrapper } from '@/components/content-elements/default';
 
 const LegalNoticePage: FC = async () => {
   const t = await getTranslations('Content');

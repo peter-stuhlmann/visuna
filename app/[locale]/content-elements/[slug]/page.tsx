@@ -3,13 +3,12 @@ import { notFound } from 'next/navigation';
 import WestIcon from '@mui/icons-material/West';
 import { getTranslations } from 'next-intl/server';
 
-import Breadcrumbs from '@/components/content-elements/navigation/breadcrumbs';
+import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
 import { getElement } from './utils/getContentElement';
 import { generateElementMetadata } from './utils/generateElementspageMetadata';
-import IntroText from '@/components/content-elements/text/intro-text';
-import { PRIMARY_COLOR } from '@/components/content-elements/content-elements.config';
-import Spacer from '@/components/content-elements/layout/Spacer';
 import PropsTable from '@/components/props-table';
+import { IntroText } from '@/components/content-elements/default';
+import Spacer from '@/components/content-elements/default/layout/spacer/component';
 
 export const generateMetadata = generateElementMetadata;
 
@@ -64,7 +63,6 @@ const ContentElementPage: FC<ContentElementPageProps> = async ({ params }) => {
           href: `/${locale}/content-elements`,
         }}
         align="center"
-        textColor={PRIMARY_COLOR['950']}
         margin="none"
         padding="small"
       >

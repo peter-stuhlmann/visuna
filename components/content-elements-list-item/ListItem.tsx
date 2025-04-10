@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import EastIcon from '@mui/icons-material/East';
 
 import { Container } from './ListItem.styles';
-import Button from '../content-elements/text/button';
+import { Button } from '../content-elements/default';
 
 type ListItemProps = {
   description: string | ReactNode;

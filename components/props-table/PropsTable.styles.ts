@@ -1,8 +1,9 @@
 'use client';
 
 import styled from 'styled-components';
+import { getPrimaryColor } from '../content-elements/default/constants';
 
-import { PRIMARY_COLOR } from '../content-elements/content-elements.config';
+const primaryColor = getPrimaryColor();
 
 export const TableHead = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ export const TableHead = styled.div`
     right: 0;
     bottom: -1rem;
     height: 1px;
-    background-color: ${PRIMARY_COLOR['600']};
+    background-color: ${primaryColor['600']};
   }
 
   @media (max-width: 1280px) {
@@ -67,7 +68,7 @@ export const TableBody = styled.div`
       right: 0;
       bottom: -1rem;
       height: 1px;
-      background-color: ${PRIMARY_COLOR['600']};
+      background-color: ${primaryColor['600']};
     }
 
     & > div {

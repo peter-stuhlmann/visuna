@@ -25,8 +25,4 @@ export const Container = styled.li`
       margin: 0;
     }
   }
-
-  & > a {
-    color: #133c59;
-  }
 `;

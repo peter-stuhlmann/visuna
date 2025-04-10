@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import { FC } from 'react';
 import { getTranslations } from 'next-intl/server';
 
-import Breadcrumbs from '@/components/content-elements/navigation/breadcrumbs';
+import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
 import contentElementsSections, {
   ContentElementsSection,
 } from '@/data/content-elements';
-import Wrapper from '@/components/wrapper';
 import ListItem from '@/components/content-elements-list-item/ListItem';
 import List from '@/components/content-element-list/List';
-import { ContentElement } from '@/components/content-elements/types';
+import { Wrapper } from '@/components/content-elements/default';
+import { ContentElement } from './[slug]/utils/getContentElement';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Content');

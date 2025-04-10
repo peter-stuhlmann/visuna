@@ -23,7 +23,6 @@ export const HeaderContainer = styled.header`
       font-weight: bold;
       font-size: 0.9rem;
       letter-spacing: 0.05rem;
-      color: #133c59;
 
       & > span {
         &:nth-of-type(1) {

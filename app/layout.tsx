@@ -1,5 +1,4 @@
 import { primaryFont, secondaryFont, tertiaryFont } from '@/assets/fonts';
-import CustomThemeProvider from '@/components/contexts/theme-context/ThemeContext';
 import Footer from '@/components/footer';
 import { getLocalizedFooter } from '@/components/footer/utils/getLocalizedFooter';
 import { GlobalStyles } from '@/components/Global.styles';
@@ -30,19 +29,17 @@ export default async function RootLayout({
     <StyledComponentsRegistry>
       <GlobalStyles />
       <NextIntlClientProvider messages={messages}>
-        <CustomThemeProvider>
-          <html lang={locale}>
-            <body
-              className={`${primaryFont.variable} ${secondaryFont.variable} ${tertiaryFont.variable}`}
-            >
-              <div>
-                <Header />
-                {children}
-              </div>
-              <Footer data={localizedFooter} />
-            </body>
-          </html>
-        </CustomThemeProvider>
+        <html lang={locale}>
+          <body
+            className={`${primaryFont.variable} ${secondaryFont.variable} ${tertiaryFont.variable}`}
+          >
+            <div>
+              <Header />
+              {children}
+            </div>
+            <Footer data={localizedFooter} />
+          </body>
+        </html>
       </NextIntlClientProvider>
     </StyledComponentsRegistry>
   );

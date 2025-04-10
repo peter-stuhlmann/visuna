@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { getTranslations, getLocale } from 'next-intl/server';
-
-import Wrapper from '@/components/wrapper';
+import { Wrapper } from '@/components/content-elements/default';
 
 const NotFoundPage: FC = async () => {
   const t = await getTranslations('Content');

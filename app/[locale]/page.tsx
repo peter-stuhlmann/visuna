@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import Wrapper from '@/components/wrapper';
+import { Wrapper } from '@/components/content-elements/default';
 
 const HomePage: FC = async () => {
   return (

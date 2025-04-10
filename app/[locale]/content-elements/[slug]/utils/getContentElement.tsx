@@ -1,5 +1,18 @@
-import { ContentElement } from '@/components/content-elements/types';
+import { ElementProp } from '@/components/props-table/PropsTable.types';
 import contentElements from '@/data/content-elements';
+import { ReactNode } from 'react';
+
+export type Translation = {
+  [key: string]: string | ReactNode;
+};
+
+export type ContentElement = {
+  name: Translation;
+  description: Translation;
+  slug: string;
+  components?: ReactNode[];
+  elementProps?: ElementProp[];
+};
 
 export const getElement = async (
   slug: string | null

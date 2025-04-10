@@ -1,6 +1,7 @@
 'use client';
 
 import { createGlobalStyle } from 'styled-components';
+import { getPrimaryColor } from './content-elements/default/constants';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
@@ -20,7 +21,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: var(--primary-font), sans-serif;
     line-height: var(--line-height);
     color: var(--text-color);
-    background-color: #f4fdff;
+    background-color: ${getPrimaryColor()['0']};
     min-height: 100vh;
     display: flex;
     flex-direction: column;

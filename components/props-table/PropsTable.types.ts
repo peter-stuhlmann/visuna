@@ -1,4 +1,4 @@
-import { Translation } from '../content-elements/types';
+import { Translation } from '@/app/[locale]/content-elements/[slug]/utils/getContentElement';
 
 export type ElementType =
   | string

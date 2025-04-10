@@ -1,18 +1,19 @@
+import Link from 'next/link';
 import { FC, Fragment } from 'react';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { Locale } from '@/i18n/routing';
 
 import { TableBody, TableHead } from './PropsTable.styles';
-import getElementClassName from '../content-elements/utils/getElementClassName';
-import { PRIMARY_COLOR } from '../content-elements/content-elements.config';
-import Wrapper from '../wrapper';
-import IntroText from '../content-elements/text/intro-text';
+import getElementClassName from '../content-elements/default/utils/getElementClassName';
 import { ElementProp, ElementType } from './PropsTable.types';
-import Link from 'next/link';
+import { IntroText, Wrapper } from '../content-elements/default';
+import { getPrimaryColor } from '../content-elements/default/constants';
 
 type PropsTableProps = {
   contentElementProps: ElementProp[];
 };
+
+const primaryColor = getPrimaryColor();
 
 const PropsTable: FC<PropsTableProps> = async ({ contentElementProps }) => {
   const locale = await getLocale();
@@ -24,15 +25,15 @@ const PropsTable: FC<PropsTableProps> = async ({ contentElementProps }) => {
     <Wrapper
       width="large"
       innerWidth="small"
-      backgroundColor={PRIMARY_COLOR['700']}
-      textColor={PRIMARY_COLOR['50']}
+      backgroundColor={primaryColor['700']}
+      textColor={primaryColor['50']}
       className={elementClassName}
     >
       <IntroText
         heading={t('propsSectionHeading')}
         headingType="h2"
         padding="none"
-        textColor={PRIMARY_COLOR['50']}
+        textColor={primaryColor['50']}
         align="center"
         margin="none"
         style={{ marginBottom: '4rem' }}
