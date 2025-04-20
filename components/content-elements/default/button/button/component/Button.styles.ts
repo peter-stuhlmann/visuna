@@ -10,6 +10,7 @@ type ContainerProps = {
   $fontWeight?: number;
   $speed?: number;
   $primaryColor: Record<string, string>;
+  $textColor?: string;
 };
 
 const marginMap: Record<string, string> = {
@@ -27,13 +28,13 @@ const sizeMap: Record<string, string> = {
 
 export const ButtonContainer = styled.button<ContainerProps>`
   font-size: 1rem;
-  font-weight: ${({ $fontWeight = '700' }) => $fontWeight};
+  font-weight: ${({ $fontWeight }) => $fontWeight};
   border-radius: 0.25rem;
   border-radius: 1000rem;
   cursor: pointer;
   text-decoration: none;
-  color: ${getPrimaryColor()['900']};
-  margin: ${({ $margin = 'none' }) => marginMap[$margin]};
+  color: ${({ $textColor }) => $textColor || getPrimaryColor()['900']};
+  margin: ${({ $margin }) => marginMap[$margin!]};
   position: relative;
   overflow: hidden;
   width: fit-content;
@@ -50,15 +51,9 @@ export const ButtonContainer = styled.button<ContainerProps>`
 
   ${({ $variant, $primaryColor }) => {
     switch ($variant) {
-      case 'contained':
-        return css`
-          color: ${$primaryColor['50']};
-          background-color: ${$primaryColor['600']};
-          border: 1px solid ${$primaryColor['800']};
-        `;
       case 'outlined':
         return css`
-          background-color: ${$primaryColor['50']};
+          background-color: transparent;
           border: 1px solid ${$primaryColor['300']};
         `;
       case 'text':
@@ -66,12 +61,23 @@ export const ButtonContainer = styled.button<ContainerProps>`
           background-color: transparent;
           border: none;
         `;
+      case 'contained':
+        return css`
+          color: ${$primaryColor['50']};
+          background-color: ${$primaryColor['600']};
+          border: 1px solid ${$primaryColor['800']};
+        `;
     }
   }}
 
   &:hover {
     ${({ $variant, $primaryColor }) => {
       switch ($variant) {
+        case 'outlined':
+          return css`
+            background-color: rgba(0, 0, 0, 0.05);
+            border: 1px solid ${getPrimaryColor()['400']};
+          `;
         case 'text':
           return css`
             background-color: ${$primaryColor['100']};
@@ -82,11 +88,6 @@ export const ButtonContainer = styled.button<ContainerProps>`
             box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
               0px 2px 2px 0px rgba(0, 0, 0, 0.14),
               0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-          `;
-        case 'outlined':
-          return css`
-            background-color: ${$primaryColor['100']};
-            border: 1px solid ${getPrimaryColor()['400']};
           `;
       }
     }}
@@ -100,7 +101,7 @@ export const ButtonContainer = styled.button<ContainerProps>`
       position: relative;
       z-index: 1;
       pointer-events: none;
-      padding: ${({ $size = 'medium' }) => sizeMap[$size]};
+      padding: ${({ $size }) => sizeMap[$size!]};
       cursor: pointer;
     }
   }

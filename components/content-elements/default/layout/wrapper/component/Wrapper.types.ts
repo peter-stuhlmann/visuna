@@ -12,11 +12,10 @@ export type WrapperProps = {
   textColor?: string;
   padding?: 'none' | 'small' | 'medium' | 'large';
   className?: string;
-  style?: React.CSSProperties;
 };
 
 export type ContainerProps = {
-  $withShadow: boolean;
+  $withShadow?: boolean;
   $width?: 'small' | 'medium' | 'large';
   $theme?: 'light' | 'dark' | 'default';
   $margin?: 'none' | 'small' | 'medium' | 'large';

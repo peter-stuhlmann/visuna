@@ -1,4 +1,4 @@
-import { Raleway, Poppins, Ubuntu } from 'next/font/google';
+import { Raleway, Poppins, Noto_Serif } from 'next/font/google';
 
 export const primaryFont = Raleway({
   weight: ['400', '700'],
@@ -8,7 +8,7 @@ export const primaryFont = Raleway({
   display: 'swap',
 });
 
-export const secondaryFont = Ubuntu({
+export const secondaryFont = Noto_Serif({
   weight: ['400', '700'],
   style: ['normal', 'italic'],
   subsets: ['latin'],

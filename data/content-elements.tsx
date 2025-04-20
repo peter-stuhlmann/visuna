@@ -15,6 +15,7 @@ import {
   Translation,
 } from '@/app/[locale]/content-elements/[slug]/utils/getContentElement';
 import { getPrimaryColor } from '@/components/content-elements/default/constants';
+import { ImageText } from '@/components/content-elements/default';
 
 export type ContentElementsSection = {
   name: Translation;
@@ -286,6 +287,71 @@ const textElements: ContentElementsSection = {
             en: 'Inline CSS styles',
           },
         },
+      ],
+    },
+    {
+      name: { de: 'Text mit Bild', en: 'Text with image' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'image-text',
+      components: [
+        <ImageText
+          $imagePosition="left"
+          image={{
+            src: '/img/image-1.png',
+            alt: 'Intro image',
+            width: 693,
+            height: 462,
+          }}
+          heading="Lorem ipsum"
+          headingType="h2"
+          subHeading="Lorem ipsum dolor sit amet"
+          // ctaButton={{ children: 'Call-To-Action' }}
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+          </p>
+        </ImageText>,
+        <ImageText
+          $imagePosition="right"
+          $backgroundColor={primaryColor['700']}
+          $textColor={primaryColor['50']}
+          image={{
+            src: '/img/image-2.png',
+            alt: 'Intro image',
+            width: 693,
+            height: 462,
+          }}
+          heading="Lorem ipsum"
+          headingType="h2"
+          subHeading="Lorem ipsum dolor sit amet"
+          ctaButton={{
+            children: 'Lorem ipsum',
+            $textColor: primaryColor['50'],
+          }}
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+          </p>
+        </ImageText>,
       ],
     },
   ],

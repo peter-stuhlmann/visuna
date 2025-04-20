@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ButtonProps } from '../../../../default';
 
 export type IntroTextProps = {
@@ -9,7 +9,6 @@ export type IntroTextProps = {
   textColor?: string;
   ctaButton?: Partial<ButtonProps>;
   className?: string;
-  style?: CSSProperties;
   margin?: 'none' | 'small' | 'medium' | 'large';
   padding?: 'none' | 'small' | 'medium' | 'large';
   width?: 'small' | 'medium' | 'large';

@@ -18,7 +18,6 @@ const Wrapper: FC<WrapperProps> = ({
   textColor = primaryColor['1000'],
   padding = 'medium',
   className = '',
-  style = {},
 }) => {
   const elementClassName = getElementClassName(`wrapper`);
 
@@ -33,7 +32,6 @@ const Wrapper: FC<WrapperProps> = ({
       $textColor={textColor}
       $padding={padding}
       className={`${elementClassName} ${className}`}
-      style={style}
     >
       <div>{children}</div>
     </Container>

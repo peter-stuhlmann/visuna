@@ -1,3 +1,6 @@
 import Wrapper from './Wrapper';
 export default Wrapper;
-export type { WrapperProps } from './Wrapper.types';
+export type {
+  WrapperProps,
+  ContainerProps as WrapperStyleProps,
+} from './Wrapper.types';

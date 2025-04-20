@@ -39,8 +39,8 @@ export const FooterContainer = styled.footer`
 
     .title {
       text-transform: uppercase;
-      font-family: var(--secondary-font);
-      font-family: var(--secondary-font), sans-serif;
+      font-family: var(--tertiary-font);
+      font-family: var(--tertiary-font), sans-serif;
       font-weight: bold;
       font-size: 0.9rem;
       letter-spacing: 0.05rem;

@@ -23,6 +23,7 @@ const Button: FC<ButtonProps> = ({
   onClick,
   style,
   disabledRipple = false,
+  $textColor,
 }) => {
   if (!children) {
     console.error(
@@ -50,6 +51,7 @@ const Button: FC<ButtonProps> = ({
       $size={size}
       $margin={margin}
       $primaryColor={resolvedPrimaryColor}
+      $textColor={$textColor}
       onClick={onClick}
       {...(href ? { href, target, rel: 'noreferrer noopener' } : {})}
     >

@@ -39,7 +39,8 @@ const textAlignMap: Record<string, string> = {
   right: 'right',
 };
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.section<ContainerProps>`
+  position: relative;
   font-size: ${FONT_SIZE};
   background-color: ${({ $backgroundColor }) => $backgroundColor};
   color: ${({ $textColor }) => $textColor};

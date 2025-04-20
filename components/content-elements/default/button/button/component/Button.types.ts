@@ -13,4 +13,5 @@ export type ButtonProps = {
   className?: string;
   style?: CSSProperties;
   disabledRipple?: boolean;
+  $textColor?: string;
 };

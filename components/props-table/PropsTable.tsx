@@ -36,7 +36,6 @@ const PropsTable: FC<PropsTableProps> = async ({ contentElementProps }) => {
         textColor={primaryColor['50']}
         align="center"
         margin="none"
-        style={{ marginBottom: '4rem' }}
       >
         {t('propsSectionDescription')}
       </IntroText>

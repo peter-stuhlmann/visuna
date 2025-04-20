@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import { Heading, IntroTextContainer } from './IntroText.styles';
+import { IntroTextContainer } from './IntroText.styles';
 import getElementClassName from '../../../utils/getElementClassName';
-import { Button, Wrapper } from '../../..';
+import { Button, Heading, Wrapper } from '../../..';
 import { IntroTextProps } from './IntroText.types';
 import { getPrimaryColor } from '../../../constants';
 
@@ -21,7 +21,6 @@ const IntroText: FC<IntroTextProps> = ({
   innerWidth = 'small',
   align = 'left',
   padding = 'medium',
-  style,
 }) => {
   const {
     href = undefined,
@@ -54,14 +53,18 @@ const IntroText: FC<IntroTextProps> = ({
       margin={margin}
       padding={padding}
       textAlign={align}
-      style={style}
     >
       <IntroTextContainer $textColor={textColor} $align={align}>
-        {heading && <Heading as={headingType}>{heading}</Heading>}
+        {heading && <Heading level={headingType}>{heading}</Heading>}
         {children && <div>{children}</div>}
         {buttonText && (
           <div>
-            <Button href={href} target={target} onClick={onCtaClick}>
+            <Button
+              href={href}
+              target={target}
+              onClick={onCtaClick}
+              $textColor={textColor}
+            >
               {buttonText}
             </Button>
           </div>
