@@ -24,6 +24,7 @@ const Button: FC<ButtonProps> = ({
   style,
   disabledRipple = false,
   $textColor,
+  ariaLabel,
 }) => {
   if (!children) {
     console.error(
@@ -54,6 +55,7 @@ const Button: FC<ButtonProps> = ({
       $textColor={$textColor}
       onClick={onClick}
       {...(href ? { href, target, rel: 'noreferrer noopener' } : {})}
+      aria-label={ariaLabel}
     >
       <div>{children}</div>
       {!disabledRipple && (

@@ -29,7 +29,6 @@ const sizeMap: Record<string, string> = {
 export const ButtonContainer = styled.button<ContainerProps>`
   font-size: 1rem;
   font-weight: ${({ $fontWeight }) => $fontWeight};
-  border-radius: 0.25rem;
   border-radius: 1000rem;
   cursor: pointer;
   text-decoration: none;
@@ -39,6 +38,7 @@ export const ButtonContainer = styled.button<ContainerProps>`
   overflow: hidden;
   width: fit-content;
   min-width: 4rem;
+  min-height: 45px;
   box-sizing: border-box;
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
     border 0.2s ease-in-out;

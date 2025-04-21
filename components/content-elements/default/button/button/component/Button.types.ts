@@ -14,4 +14,5 @@ export type ButtonProps = {
   style?: CSSProperties;
   disabledRipple?: boolean;
   $textColor?: string;
+  ariaLabel?: string;
 };

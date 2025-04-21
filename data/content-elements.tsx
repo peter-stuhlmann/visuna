@@ -16,6 +16,9 @@ import {
 } from '@/app/[locale]/content-elements/[slug]/utils/getContentElement';
 import { getPrimaryColor } from '@/components/content-elements/default/constants';
 import { ImageText } from '@/components/content-elements/default';
+import Slider from '@/components/content-elements/default/slider/slider';
+import { Slide1, Slide2, Slide3, Slide4, Slide5, Slide6 } from './slides';
+import Metrics from '@/components/content-elements/default/metrics/metrics';
 
 export type ContentElementsSection = {
   name: Translation;
@@ -409,6 +412,57 @@ const navigationElements: ContentElementsSection = {
   ],
 };
 
+const metrcisElements: ContentElementsSection = {
+  name: { de: 'Metricselemente', en: 'Metrics elements' },
+  // description: { de: 'Description', en: 'Description' },
+  elements: [
+    {
+      name: { de: 'Metrics', en: 'Metrics' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'metrics',
+      components: [
+        <Metrics
+          data={[
+            {
+              value: 30,
+              label: 'Lorem ipsum dolor sit amet',
+            },
+            {
+              value: 100,
+              label: 'Lorem ipsum dolor sit amet',
+            },
+            {
+              value: 45,
+              label: 'Lorem ipsum dolor sit amet',
+            },
+          ]}
+        />,
+        <Metrics
+          $backgroundColor={primaryColor['700']}
+          $textColor={primaryColor['50']}
+          data={[
+            {
+              value: 30,
+              label: 'Lorem ipsum dolor sit amet',
+            },
+            {
+              value: 100,
+              label: 'Lorem ipsum dolor sit amet',
+            },
+            {
+              value: 45,
+              label: 'Lorem ipsum dolor sit amet',
+            },
+          ]}
+        />,
+      ],
+    },
+  ],
+};
+
 const footerElements: ContentElementsSection = {
   name: { de: 'Footerelemente', en: 'Footer elements' },
   // description: { de: 'Description', en: 'Description' },
@@ -494,6 +548,7 @@ const core: ContentElementsSection = {
 export const contentElementsSections: ContentElementsSection[] = [
   textElements,
   navigationElements,
+  metrcisElements,
   footerElements,
   core,
 ];

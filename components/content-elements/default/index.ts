@@ -16,6 +16,9 @@ export type { ButtonProps } from './button/button';
 export { default as Heading } from './text/heading';
 export type { HeadingProps } from './text/heading';
 
+export { default as Metrics } from './metrics/metrics';
+export type { MetricsProps } from './metrics/metrics';
+
 export { default as Ripple } from './ripple/ripple';
 export type { RippleProps } from './ripple/ripple';
 
