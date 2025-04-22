@@ -1,3 +1,12 @@
+export { default as Breadcrumbs } from './breadcrumbs/breadcrumbs';
+export type { BreadcrumbsProps } from './breadcrumbs/breadcrumbs';
+
+export { default as Button } from './button/button';
+export type { ButtonProps } from './button/button';
+
+export { default as Heading } from './text/heading';
+export type { HeadingProps } from './text/heading';
+
 export { default as Image } from './images/image';
 export type { ImageProps } from './images/image';
 
@@ -7,14 +16,8 @@ export type { ImageTextProps } from './text/image-text';
 export { default as IntroText } from './text/intro-text';
 export type { IntroTextProps } from './text/intro-text';
 
-export { default as Breadcrumbs } from './breadcrumbs/breadcrumbs';
-export type { BreadcrumbsProps } from './breadcrumbs/breadcrumbs';
-
-export { default as Button } from './button/button';
-export type { ButtonProps } from './button/button';
-
-export { default as Heading } from './text/heading';
-export type { HeadingProps } from './text/heading';
+export { default as List } from './list/list';
+export type { ListProps } from './list/list';
 
 export { default as Metrics } from './metrics/metrics';
 export type { MetricsProps } from './metrics/metrics';

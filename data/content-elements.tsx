@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
 import SubFooter from '@/components/content-elements/default/footer/sub-footer/component';
 import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
@@ -8,6 +9,7 @@ import Colors from '@/components/layout/colors';
 import {
   Button,
   IntroText,
+  List,
   Wrapper,
 } from '@/components/content-elements/default';
 import {
@@ -16,9 +18,8 @@ import {
 } from '@/app/[locale]/content-elements/[slug]/utils/getContentElement';
 import { getPrimaryColor } from '@/components/content-elements/default/constants';
 import { ImageText } from '@/components/content-elements/default';
-import Slider from '@/components/content-elements/default/slider/slider';
-import { Slide1, Slide2, Slide3, Slide4, Slide5, Slide6 } from './slides';
 import Metrics from '@/components/content-elements/default/metrics/metrics';
+import colors from '@/components/content-elements/default/constants/colors';
 
 export type ContentElementsSection = {
   name: Translation;
@@ -412,6 +413,78 @@ const navigationElements: ContentElementsSection = {
   ],
 };
 
+const listElements: ContentElementsSection = {
+  name: { de: 'Listen', en: 'Lists' },
+  // description: { de: 'Description', en: 'Description' },
+  elements: [
+    {
+      name: { de: 'Liste', en: 'List' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'list',
+      components: [
+        <List
+          items={[
+            {
+              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            { text: 'Lorem ipsum dolor sit amet.' },
+            { text: 'Lorem ipsum dolor sit amet.' },
+          ]}
+          $textColor={primaryColor['950']}
+        />,
+        <List
+          items={[
+            {
+              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            { text: 'Lorem ipsum dolor sit amet.' },
+            { text: 'Lorem ipsum dolor sit amet.' },
+          ]}
+          $backgroundColor={primaryColor['700']}
+          $textColor={primaryColor['50']}
+          $defaultIconColor={primaryColor['50']}
+        />,
+        <List
+          items={[
+            {
+              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            { text: 'Lorem ipsum dolor sit amet.' },
+            {
+              text: 'Lorem ipsum dolor sit amet.',
+              icon: FaTimes,
+              iconColor: colors.RED[500],
+            },
+          ]}
+          $textColor={primaryColor['950']}
+          defaultIcon={FaCheck}
+          $defaultIconColor={colors.GREEN['500']}
+        />,
+        <List
+          items={[
+            {
+              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            { text: 'Lorem ipsum dolor sit amet.' },
+            {
+              text: 'Lorem ipsum dolor sit amet.',
+              icon: FaTimes,
+              iconColor: colors.RED[500],
+            },
+          ]}
+          $backgroundColor={primaryColor['700']}
+          $textColor={primaryColor['50']}
+          defaultIcon={FaCheck}
+          $defaultIconColor={colors.GREEN['500']}
+        />,
+      ],
+    },
+  ],
+};
+
 const metrcisElements: ContentElementsSection = {
   name: { de: 'Metricselemente', en: 'Metrics elements' },
   // description: { de: 'Description', en: 'Description' },
@@ -548,6 +621,7 @@ const core: ContentElementsSection = {
 export const contentElementsSections: ContentElementsSection[] = [
   textElements,
   navigationElements,
+  listElements,
   metrcisElements,
   footerElements,
   core,
