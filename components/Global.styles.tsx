@@ -10,8 +10,12 @@ export const GlobalStyles = createGlobalStyle`
     --primary-text-color: var(--primary-color);
     --font-size: 18px;
     --line-height: 1.6;
-  }
 
+    @media (max-width: 1440px) {
+      --font-size: 16px;
+    }
+  }
+  
   html {
     font-size: var(--font-size);
   }

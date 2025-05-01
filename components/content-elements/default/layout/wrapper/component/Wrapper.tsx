@@ -8,6 +8,8 @@ import { getPrimaryColor } from '../../../constants';
 const primaryColor = getPrimaryColor();
 
 const Wrapper: FC<WrapperProps> = ({
+  ref,
+  id = 'element-1',
   children,
   withShadow = false,
   width = 'medium',
@@ -23,6 +25,7 @@ const Wrapper: FC<WrapperProps> = ({
 
   return (
     <Container
+      ref={ref}
       $withShadow={withShadow}
       $width={width}
       $innerWidth={innerWidth}
@@ -31,6 +34,7 @@ const Wrapper: FC<WrapperProps> = ({
       $backgroundColor={backgroundColor}
       $textColor={textColor}
       $padding={padding}
+      id={id}
       className={`${elementClassName} ${className}`}
     >
       <div>{children}</div>

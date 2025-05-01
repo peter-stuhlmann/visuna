@@ -1,8 +1,11 @@
-import React, { useEffect, useState, FC, ReactElement } from 'react';
+'use client';
+
+import { useEffect, useState, FC, useRef, useLayoutEffect } from 'react';
 import { RotateIcon, PauseIcon, PlayIcon } from '../../../icons';
 import { SliderControlMenuProps } from './Slider.types';
 import { SliderControl } from './Slider.styles';
 import Button from '../../../button/button';
+import getElementClassName from '../../../utils/getElementClassName';
 
 const SliderControlMenu: FC<SliderControlMenuProps> = ({
   isInViewport,
@@ -12,19 +15,23 @@ const SliderControlMenu: FC<SliderControlMenuProps> = ({
   totalSlides,
   activeSlideIndex,
   setActiveSlideIndex,
+  isSlideChangePlaying,
+  setIsSlideChangePlaying,
 }) => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0);
   const [isReset, setIsReset] = useState<boolean>(false);
 
-  const intervalTime = 50; // Intervallzeit in Millisekunden
-
+  const intervalTime = 50;
   const [nextSlideIndex, setNextSlideIndex] = useState<number | null>(null);
+
+  const dotRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const elementClassName = getElementClassName('slider-control-menu');
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
 
-    if (isPlaying && !isReset) {
+    if (isSlideChangePlaying && !isReset) {
       intervalId = setInterval(() => {
         setProgress((prevProgress) => {
           const nextProgress =
@@ -32,11 +39,11 @@ const SliderControlMenu: FC<SliderControlMenuProps> = ({
 
           if (nextProgress >= 100) {
             if (activeSlideIndex + 1 >= totalSlides && !isLooping) {
-              setIsPlaying(false);
+              setIsSlideChangePlaying(false);
               setIsReset(true);
               return 100;
             } else {
-              setNextSlideIndex((activeSlideIndex + 1) % totalSlides); // ✅ NEU
+              setNextSlideIndex((activeSlideIndex + 1) % totalSlides);
               return 0;
             }
           }
@@ -50,7 +57,7 @@ const SliderControlMenu: FC<SliderControlMenuProps> = ({
       if (intervalId) clearInterval(intervalId);
     };
   }, [
-    isPlaying,
+    isSlideChangePlaying,
     isReset,
     activeSlideIndex,
     isLooping,
@@ -58,41 +65,101 @@ const SliderControlMenu: FC<SliderControlMenuProps> = ({
     totalSlides,
   ]);
 
-  // ✅ Neuer Effekt
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (nextSlideIndex !== null) {
       setActiveSlideIndex(nextSlideIndex);
       setNextSlideIndex(null);
     }
   }, [nextSlideIndex, setActiveSlideIndex]);
 
+  const lastInputWasKeyboard = useRef(false);
+
+  useEffect(() => {
+    const handleKeyDown = () => {
+      lastInputWasKeyboard.current = true;
+    };
+    const handleMouseDown = () => {
+      lastInputWasKeyboard.current = false;
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('touchstart', handleMouseDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('touchstart', handleMouseDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleFocusIn = (e: FocusEvent) => {
+      const focusedElement = e.target as HTMLElement;
+      if (!focusedElement) return;
+
+      if (
+        lastInputWasKeyboard.current &&
+        focusedElement.closest('.psui-slide')
+      ) {
+        setIsSlideChangePlaying(false);
+      }
+    };
+
+    document.addEventListener('focusin', handleFocusIn);
+
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, []);
+
   const togglePlayPause = () => {
     if (isReset) {
-      // Wenn die Animation zurückgesetzt wurde, von vorne starten
       resetSlider();
     } else {
-      setIsPlaying((prevIsPlaying) => !prevIsPlaying);
+      setIsSlideChangePlaying(!isSlideChangePlaying);
     }
   };
 
   const resetSlider = () => {
     setActiveSlideIndex(0);
     setProgress(0);
-    setIsPlaying(true);
+    setIsSlideChangePlaying(true);
     setIsReset(false);
   };
 
   const jumpToSlide = (index: number) => {
     setActiveSlideIndex(index);
     setProgress(0);
-    // setIsPlaying(true); // Dies entfernen, um den Play/Pause-Status beizubehalten
     setIsReset(false);
+  };
+
+  const handleDotKeyDown = (
+    e: React.KeyboardEvent<HTMLButtonElement>,
+    idx: number
+  ) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIndex = (idx + 1) % totalSlides;
+      jumpToSlide(nextIndex);
+      dotRefs.current[nextIndex]?.focus();
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIndex = (idx - 1 + totalSlides) % totalSlides;
+      jumpToSlide(prevIndex);
+      dotRefs.current[prevIndex]?.focus();
+    }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      jumpToSlide(idx);
+    }
   };
 
   return (
     <SliderControl
       $progress={progress}
-      className={`slider-control-menu ${isInViewport ? 'is-visible' : ''}`}
+      className={`${elementClassName} ${isInViewport ? 'is-visible' : ''}`}
     >
       <div>
         <div>
@@ -103,48 +170,48 @@ const SliderControlMenu: FC<SliderControlMenuProps> = ({
             ariaLabel={
               isReset
                 ? 'Slider-Animation von Slide 1 neu starten'
-                : isPlaying
-                ? 'Slider-Animation pausieren'
-                : 'Slider-Animation fortsetzen'
+                : isSlideChangePlaying
+                ? 'Automatischen Slide-Wechsel pausieren'
+                : 'Automatischen Slide-Wechsel fortsetzen'
             }
           >
             {isReset ? (
               <RotateIcon width="1rem" aria-hidden="true" />
-            ) : isPlaying ? (
-              <PauseIcon width="0.8rem" aria-hidden="true" />
+            ) : isSlideChangePlaying ? (
+              <PauseIcon width="0.9rem" aria-hidden="true" />
             ) : (
-              <PlayIcon width="0.8rem" aria-hidden="true" />
+              <PlayIcon width="1rem" aria-hidden="true" />
             )}
           </Button>
         </div>
         <div>
-          <ul className="dots">
-            {slides.map((slide, idx: number) => {
-              const slideElement = slide as ReactElement<{
-                'data-label'?: string;
-              }>;
-              const dataLabel = slideElement.props['data-label'];
-              const ariaLabel = dataLabel
-                ? `Gehe zu Slide ${idx + 1} - ${dataLabel}`
-                : `Gehe zu Slide ${idx + 1}`;
-
-              return (
-                <li key={idx}>
-                  <button
-                    className={`dot ${
-                      idx === activeSlideIndex ? 'is-active' : ''
-                    }`}
-                    onClick={() => jumpToSlide(idx)}
-                    aria-label={ariaLabel}
-                  >
-                    <div>
-                      {idx === activeSlideIndex && <div className="progress" />}
-                    </div>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="dots">
+            {slides.map((_, idx: number) => (
+              <button
+                key={idx}
+                ref={(el) => {
+                  dotRefs.current[idx] = el;
+                }}
+                className={`dot-button ${
+                  idx === activeSlideIndex ? 'is-active' : ''
+                }`}
+                onClick={() => jumpToSlide(idx)}
+                tabIndex={idx === activeSlideIndex ? 0 : -1}
+                onKeyDown={(e) => handleDotKeyDown(e, idx)}
+                aria-label={`Gehe zu Folie ${idx + 1}`}
+                aria-current={idx === activeSlideIndex ? 'true' : undefined}
+              >
+                <div className="dot">
+                  {idx === activeSlideIndex && (
+                    <div
+                      className="progress"
+                      style={{ width: progress + '%' }}
+                    />
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </SliderControl>

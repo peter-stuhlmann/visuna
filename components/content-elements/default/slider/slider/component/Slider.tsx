@@ -1,46 +1,72 @@
 'use client';
 
-import React, {
-  Children,
-  FC,
-  isValidElement,
-  ReactElement,
-  useRef,
-  useState,
-  useEffect,
-  cloneElement,
-  useCallback,
-} from 'react';
+import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
 
-import { SliderProps } from './Slider.types';
+import { Slide as SlideProps, SliderProps, VideoStatus } from './Slider.types';
 import SliderControlMenu from './SliderControlMenu';
 import useIsInViewport from '../../../utils/useIsInViewport';
 import { SliderContainer } from './Slider.styles';
 import Wrapper from '../../../layout/wrapper';
-import Spacer from '../../../layout/spacer';
+import getElementClassName from '../../../utils/getElementClassName';
+import Slide from './Slide';
+import { useDrag } from '@use-gesture/react';
+import NoJsMessage from '../../../loading/no-js-message';
 
 const Slider: FC<SliderProps> = ({
+  id = 'slider-1',
   isLooping = false,
   slideDuration = 7000,
-  children,
+  slides = [],
+  className = '',
   $backgroundColor,
+  $outline = 'dark',
+  slideAnimationDefaultPlay = true,
 }) => {
-  Children.forEach(children, (child) => {
-    if (isValidElement(child) && child.type !== 'li') {
-      throw new Error('Slider darf nur li-Elemente enthalten.');
-    }
-  });
+  const elementClassName = getElementClassName('slider');
 
   const [activeSlideIndex, setActiveSlideIndexState] = useState<number>(0);
   const [isManualChange, setIsManualChange] = useState<boolean>(false);
 
-  const childrenArray = Children.toArray(children).filter(
-    isValidElement
-  ) as ReactElement[];
-  const totalSlides = childrenArray.length;
+  const bind = useDrag(
+    ({ movement: [mx], last }) => {
+      if (last) {
+        const threshold = 50;
+
+        if (mx > threshold) {
+          const newIndex = (activeSlideIndex - 1 + totalSlides) % totalSlides;
+          setActiveSlideIndex(newIndex, true);
+        } else if (mx < -threshold) {
+          const newIndex = (activeSlideIndex + 1) % totalSlides;
+          setActiveSlideIndex(newIndex, true);
+        }
+      }
+    },
+    { axis: 'x', filterTaps: true }
+  );
+
+  const [videoStatus, setVideoStatus] = useState<VideoStatus>(
+    slideAnimationDefaultPlay
+      ? {
+          status: 1,
+          isPlaying: true,
+          isEnded: false,
+          buttonLabel: 'Pause',
+        }
+      : {
+          status: 0,
+          isPlaying: false,
+          isEnded: false,
+          buttonLabel: 'Play',
+        }
+  );
+  const [isSlideChangePlaying, setIsSlideChangePlaying] = useState<boolean>(
+    slideAnimationDefaultPlay
+  );
+
+  const totalSlides = slides.length;
 
   const elementRef = useRef<HTMLDivElement>(null);
-  const isInViewport = useIsInViewport(elementRef);
+  const isInViewport = useIsInViewport(elementRef, 0.45);
 
   const setActiveSlideIndex = useCallback(
     (index: number, manual: boolean = false) => {
@@ -52,58 +78,76 @@ const Slider: FC<SliderProps> = ({
 
   useEffect(() => {
     if (isManualChange) {
-      const slideElement = document.getElementById(`slide-${activeSlideIndex}`);
+      const slideElement = document.getElementById(
+        `${id}-slide-${activeSlideIndex}`
+      );
       if (slideElement) {
-        slideElement.focus();
+        (slideElement as HTMLElement).focus({ preventScroll: false });
       }
       setIsManualChange(false);
     }
   }, [activeSlideIndex, isManualChange]);
 
   return (
-    <Wrapper
-      width="large"
-      innerWidth="large"
-      padding="none"
-      backgroundColor={$backgroundColor}
-    >
-      <Spacer $size="medium" />
-      <SliderContainer
-        id="slider"
-        className="slider-container"
-        $totalSlides={totalSlides}
-        $activeSlideIndex={activeSlideIndex}
-        $slideOffset={`-${activeSlideIndex * (100 / totalSlides)}%`}
+    <>
+      <Wrapper
+        width="large"
+        innerWidth="large"
+        padding="none"
+        backgroundColor={$backgroundColor}
+        className={`${elementClassName} ${className}`}
+        ref={elementRef}
+        id={id}
       >
-        <div ref={elementRef}>
-          <div className="slide-list-wrapper">
+        <SliderContainer
+          className={`${elementClassName}-container`}
+          $totalSlides={totalSlides}
+          $activeSlideIndex={activeSlideIndex}
+          $slideOffset={`-${activeSlideIndex * (100 / totalSlides)}%`}
+        >
+          <div className={`${elementClassName}-slides`} {...bind()}>
             <div>
-              <ul className="slides-list" aria-live="off">
-                {childrenArray.map((child, idx: number) =>
-                  cloneElement(
-                    child as ReactElement<{ id?: string; tabIndex?: number }>,
-                    {
-                      key: idx,
-                      id: `slide-${idx}`,
-                      tabIndex: -1,
-                    }
-                  )
-                )}
-              </ul>
+              <div>
+                {slides.map((slide: SlideProps, idx: number) => {
+                  return (
+                    <Slide
+                      key={idx}
+                      id={`${id}-slide-${idx}`}
+                      slideIndex={idx}
+                      setActiveSlideIndex={setActiveSlideIndex}
+                      activeSlideIndex={activeSlideIndex}
+                      totalSlides={totalSlides}
+                      backgroundColor={slide.backgroundColor ?? null}
+                      backgroundVideo={slide.backgroundVideo ?? null}
+                      backgroundImage={slide.backgroundImage ?? null}
+                      videoStatus={videoStatus}
+                      setIsSlideChangePlaying={setIsSlideChangePlaying}
+                      setVideoStatus={setVideoStatus}
+                      ctaButton={slide.ctaButton ?? []}
+                      $outline={$outline}
+                    >
+                      {slide.content}
+                    </Slide>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <SliderControlMenu
-            slides={childrenArray}
+            slides={slides}
             isInViewport={isInViewport}
             isLooping={isLooping}
             slideDuration={slideDuration}
             totalSlides={totalSlides}
             activeSlideIndex={activeSlideIndex}
             setActiveSlideIndex={setActiveSlideIndex}
+            isSlideChangePlaying={isSlideChangePlaying}
+            setIsSlideChangePlaying={setIsSlideChangePlaying}
           />
-        </div>
-      </SliderContainer>
-    </Wrapper>
+        </SliderContainer>
+      </Wrapper>
+      <NoJsMessage className={elementClassName} />
+    </>
   );
 };
 

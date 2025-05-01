@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export type WrapperProps = {
+  ref?: React.Ref<HTMLDivElement>;
+  id?: string;
   children: ReactNode;
   theme?: 'light' | 'dark' | 'default';
   withShadow?: boolean;

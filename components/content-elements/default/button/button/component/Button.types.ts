@@ -15,4 +15,6 @@ export type ButtonProps = {
   disabledRipple?: boolean;
   $textColor?: string;
   ariaLabel?: string;
+  tabIndex?: number;
+  type?: 'button' | 'submit' | 'reset';
 };

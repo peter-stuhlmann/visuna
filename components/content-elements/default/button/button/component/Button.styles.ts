@@ -37,8 +37,8 @@ export const ButtonContainer = styled.button<ContainerProps>`
   position: relative;
   overflow: hidden;
   width: fit-content;
-  min-width: 4rem;
-  min-height: 45px;
+  min-width: 48px;
+  min-height: 48px;
   box-sizing: border-box;
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
     border 0.2s ease-in-out;
@@ -91,6 +91,11 @@ export const ButtonContainer = styled.button<ContainerProps>`
           `;
       }
     }}
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -2px;
   }
 
   & > div {

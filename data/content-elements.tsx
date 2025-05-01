@@ -18,8 +18,10 @@ import {
 } from '@/app/[locale]/content-elements/[slug]/utils/getContentElement';
 import { getPrimaryColor } from '@/components/content-elements/default/constants';
 import { ImageText } from '@/components/content-elements/default';
+import Slider from '@/components/content-elements/default/slider/slider';
 import Metrics from '@/components/content-elements/default/metrics/metrics';
 import colors from '@/components/content-elements/default/constants/colors';
+import Accordion from '@/components/content-elements/default/list/accordion';
 
 export type ContentElementsSection = {
   name: Translation;
@@ -413,6 +415,396 @@ const navigationElements: ContentElementsSection = {
   ],
 };
 
+const sliderElements: ContentElementsSection = {
+  name: { de: 'Sliderelemente', en: 'Slider elements' },
+  // description: { de: 'Description', en: 'Description' },
+  elements: [
+    {
+      name: { de: 'Slider', en: 'Slider' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'slider',
+      components: [
+        <Slider
+          id="slider-1"
+          slideDuration={7000}
+          $backgroundColor={primaryColor['0']}
+          slides={[
+            {
+              backgroundVideo: {
+                src: '/test-3.mp4',
+                type: 'video/mp4',
+              },
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundVideo: {
+                src: '/test-4.mp4',
+                type: 'video/mp4',
+              },
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundImage: {
+                src: '/img/image-1.png',
+                alt: 'Image 1',
+              },
+              content: (
+                <div>
+                  <h3>Lorem ipsum dolor sit amet</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                    diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                    aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                    justo duo dolores et ea rebum. Stet clita kasd gubergren.
+                  </p>
+                </div>
+              ),
+            },
+            {
+              backgroundImage: {
+                src: '/img/image-2.png',
+                alt: 'Image 2',
+              },
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+
+                    <h3 style={{ marginTop: '2rem' }}>
+                      Lorem ipsum dolor sit amet
+                    </h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundVideo: {
+                src: '/test-1.mp4',
+                type: 'video/mp4',
+              },
+              ctaButton: [
+                {
+                  children: 'Lorem ipsum',
+                  href: '#',
+                  variant: 'outlined',
+                  $textColor: primaryColor['50'],
+                },
+              ],
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundVideo: {
+                src: '/test-2.mp4',
+                type: 'video/mp4',
+              },
+              ctaButton: [
+                {
+                  children: 'Lorem ipsum',
+                  href: '#',
+                  variant: 'outlined',
+                  $textColor: primaryColor['50'],
+                },
+                {
+                  children: 'Eirmod',
+                  href: '#',
+                  variant: 'contained',
+                  primaryColor: primaryColor,
+                  $textColor: primaryColor['50'],
+                },
+                {
+                  children: 'Justo duo',
+                  href: '#',
+                  variant: 'contained',
+                  primaryColor: colors.EMERALD,
+                  $textColor: primaryColor['50'],
+                },
+              ],
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+          ]}
+        />,
+        <Slider
+          id="slider-2"
+          slideDuration={7000}
+          $backgroundColor={primaryColor['700']}
+          $outline="light"
+          slides={[
+            {
+              backgroundVideo: {
+                src: '/test-3.mp4',
+                type: 'video/mp4',
+              },
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundVideo: {
+                src: '/test-4.mp4',
+                type: 'video/mp4',
+              },
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundImage: {
+                src: '/img/image-1.png',
+                alt: 'Image 1',
+              },
+              content: (
+                <div>
+                  <h3>Lorem ipsum dolor sit amet</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                    diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                    aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                    justo duo dolores et ea rebum. Stet clita kasd gubergren.
+                  </p>
+                </div>
+              ),
+            },
+            {
+              backgroundImage: {
+                src: '/img/image-2.png',
+                alt: 'Image 2',
+              },
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+
+                    <h3 style={{ marginTop: '2rem' }}>
+                      Lorem ipsum dolor sit amet
+                    </h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundVideo: {
+                src: '/test-1.mp4',
+                type: 'video/mp4',
+              },
+              ctaButton: [
+                {
+                  children: 'Lorem ipsum',
+                  href: '#',
+                  variant: 'outlined',
+                  $textColor: primaryColor['50'],
+                },
+              ],
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+            {
+              backgroundVideo: {
+                src: '/test-2.mp4',
+                type: 'video/mp4',
+              },
+              ctaButton: [
+                {
+                  children: 'Lorem ipsum',
+                  href: '#',
+                  variant: 'outlined',
+                  $textColor: primaryColor['50'],
+                },
+                {
+                  children: 'Eirmod',
+                  href: '#',
+                  variant: 'contained',
+                  primaryColor: primaryColor,
+                  $textColor: primaryColor['50'],
+                },
+                {
+                  children: 'Justo duo',
+                  href: '#',
+                  variant: 'contained',
+                  primaryColor: colors.EMERALD,
+                  $textColor: primaryColor['50'],
+                },
+              ],
+              content: (
+                <>
+                  <div>
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                      magna aliquyam erat, sed diam voluptua. At vero eos et
+                      accusam et justo duo dolores et ea rebum. Stet clita kasd
+                      gubergren.
+                    </p>
+                  </div>
+                </>
+              ),
+            },
+          ]}
+        />,
+      ],
+    },
+  ],
+};
+
 const listElements: ContentElementsSection = {
   name: { de: 'Listen', en: 'Lists' },
   // description: { de: 'Description', en: 'Description' },
@@ -479,6 +871,98 @@ const listElements: ContentElementsSection = {
           $textColor={primaryColor['50']}
           defaultIcon={FaCheck}
           $defaultIconColor={colors.GREEN['500']}
+        />,
+      ],
+    },
+    {
+      name: { de: 'Akkordion', en: 'Accordion' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'accordion',
+      components: [
+        <Accordion
+          items={[
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+          ]}
+        />,
+        <Accordion
+          items={[
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+          ]}
+          $textColor={primaryColor['950']}
+          $backgroundColor={primaryColor['700']}
+        />,
+        <Accordion
+          items={[
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+          ]}
+          initialOpenIndex={0}
+        />,
+        <Accordion
+          items={[
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            {
+              title: 'Lorem ipsum dolor sit amet.',
+              content:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+          ]}
+          initialOpenIndex={0}
+          $textColor={primaryColor['950']}
+          $backgroundColor={primaryColor['700']}
         />,
       ],
     },
@@ -621,6 +1105,7 @@ const core: ContentElementsSection = {
 export const contentElementsSections: ContentElementsSection[] = [
   textElements,
   navigationElements,
+  sliderElements,
   listElements,
   metrcisElements,
   footerElements,
