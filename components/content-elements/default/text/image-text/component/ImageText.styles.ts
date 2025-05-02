@@ -17,21 +17,11 @@ export const Container = styled.div<ContainerProps>`
   flex-direction: ${({ $imagePosition }) => imagePositionMap[$imagePosition]};
   gap: 5rem;
 
-  @media (max-width: 1440px) {
-  }
-  @media (max-width: 1280px) {
-  }
   @media (max-width: 1080px) {
     gap: 1rem;
   }
   @media (max-width: 768px) {
     flex-direction: column;
-  }
-  @media (max-width: 660px) {
-  }
-  @media (max-width: 480px) {
-  }
-  @media (max-width: 370px) {
   }
 
   & > div {
@@ -39,21 +29,11 @@ export const Container = styled.div<ContainerProps>`
       flex: 0 0 calc(50% - 2.5rem - 2rem);
       width: 100%;
 
-      @media (max-width: 1440px) {
-      }
-      @media (max-width: 1280px) {
-      }
       @media (max-width: 1080px) {
         flex: 0 0 calc(50% - 0.5rem);
       }
       @media (max-width: 768px) {
         flex: 0 0 100%;
-      }
-      @media (max-width: 660px) {
-      }
-      @media (max-width: 480px) {
-      }
-      @media (max-width: 370px) {
       }
 
       a {
@@ -62,29 +42,18 @@ export const Container = styled.div<ContainerProps>`
     }
 
     &.image {
-      /* background-color: rgba(0, 0, 0, 0.1); */
       flex: 0 0 calc(50% - 2.5rem + 2rem);
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
 
-      @media (max-width: 1440px) {
-      }
-      @media (max-width: 1280px) {
-      }
       @media (max-width: 1080px) {
         flex: 0 0 calc(50% - 0.5rem);
       }
       @media (max-width: 768px) {
         flex: 0 0 100%;
         margin-top: 2rem;
-      }
-      @media (max-width: 660px) {
-      }
-      @media (max-width: 480px) {
-      }
-      @media (max-width: 370px) {
       }
 
       & > div > div {
@@ -93,8 +62,9 @@ export const Container = styled.div<ContainerProps>`
 
         img {
           width: 100%;
-          height: auto;
+          height: 100%;
           max-width: 100%;
+          border-radius: 1rem;
         }
       }
     }

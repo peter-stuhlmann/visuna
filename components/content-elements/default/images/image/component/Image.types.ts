@@ -1,8 +1,10 @@
+import { StaticImageData } from 'next/image';
+
 export type ImageProps = {
-  src: string;
+  src: string | StaticImageData;
   alt?: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   copyright?: string;
   caption?: string;
   className?: string;

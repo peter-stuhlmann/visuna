@@ -13,6 +13,7 @@
     "youAreHere": "Du bist hier:",
     "notFound": "404 - Seite nicht gefunden",
     "pageNotFound": "Diese Seite wurde nicht gefunden.",
+    "elementNotFound": "Dieses Element wurde nicht gefunden.",
     "copied": "Kopiert!",
     "propsSectionHeading": "Props",
     "propsSectionDescription": "Mit diesen Props kannst Du dieses Content-Element anpassen.",

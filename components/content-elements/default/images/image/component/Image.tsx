@@ -6,6 +6,8 @@ import NextImage from 'next/image';
 import Skeleton from '../../../loading/skeleton';
 import { ImageContainer } from './Image.styles';
 import { ImageProps } from './Image.types';
+import NoJsMessage from '../../../loading/no-js-message';
+import { mergedConfig } from '../../../default.config';
 
 const Image: FC<ImageProps> = ({
   src,
@@ -46,6 +48,7 @@ const Image: FC<ImageProps> = ({
           onError={handleImageError}
         />
         {isLoading && <Skeleton $width={width} $height={height} />}
+        <NoJsMessage className={`${mergedConfig.classPrefix}-skeleton`} />
       </div>
       <div>
         {caption}

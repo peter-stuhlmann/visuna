@@ -3,9 +3,6 @@
 import styled, { css } from 'styled-components';
 
 import { ContainerProps } from './Wrapper.types';
-import { getFontSize } from '../../../constants';
-
-const FONT_SIZE = getFontSize();
 
 const widthMap: Record<string, string> = {
   small: '900px',
@@ -41,7 +38,6 @@ const textAlignMap: Record<string, string> = {
 
 export const Container = styled.section<ContainerProps>`
   position: relative;
-  font-size: ${FONT_SIZE};
   background-color: ${({ $backgroundColor }) => $backgroundColor};
   color: ${({ $textColor }) => $textColor};
   width: 100%;
@@ -56,10 +52,6 @@ export const Container = styled.section<ContainerProps>`
 
   @media (max-width: 1440px) {
     border-radius: 0;
-  }
-
-  @media (max-width: 1280px) {
-    font-size: 0.875rem;
   }
 
   & > div {

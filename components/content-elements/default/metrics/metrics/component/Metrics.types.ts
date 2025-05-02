@@ -5,6 +5,7 @@ export type MetricsProps = {
   $margin?: 'none' | 'small' | 'medium' | 'large';
   animated?: boolean;
   animationDuration?: number;
+  animationOnce?: boolean;
 };
 
 export type MetricItemProps = {

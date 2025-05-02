@@ -15,9 +15,10 @@ const Metrics: FC<MetricsProps> = ({
   $margin = 'none',
   animated = true,
   animationDuration = 4000,
+  animationOnce = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInViewport = useIsInViewport(containerRef);
+  const isInViewport = useIsInViewport(containerRef, 0, animationOnce);
 
   return (
     <Wrapper

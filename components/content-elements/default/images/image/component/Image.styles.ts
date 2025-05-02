@@ -11,8 +11,7 @@ export const ImageContainer = styled.div<{
 
   & > div {
     position: relative;
-    width: ${({ $width }) => $width + 'px'};
-    height: ${({ $height }) => $height + 'px'};
+    height: 100%;
 
     & > img {
       max-width: 100%;

@@ -1,5 +1,11 @@
 import Link from 'next/link';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaPhone, FaTimes } from 'react-icons/fa';
+import {
+  AiFillFacebook,
+  AiFillGithub,
+  AiFillInstagram,
+  AiFillLinkedin,
+} from 'react-icons/ai';
 
 import SubFooter from '@/components/content-elements/default/footer/sub-footer/component';
 import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
@@ -8,6 +14,7 @@ import { Flex } from '@/components/Flex';
 import Colors from '@/components/layout/colors';
 import {
   Button,
+  ContactMap,
   IntroText,
   List,
   Wrapper,
@@ -969,6 +976,169 @@ const listElements: ContentElementsSection = {
   ],
 };
 
+const contactElements: ContentElementsSection = {
+  name: { de: 'Kontakt-Bereiche', en: 'Contact sections' },
+  // description: { de: 'Description', en: 'Description' },
+  elements: [
+    {
+      name: { de: 'Kontakt mit Karte', en: 'Contact with map' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'contact-map',
+      components: [
+        <ContactMap
+          $imagePosition="right"
+          image={{
+            src: '/img/image-2.png',
+            alt: 'Intro image',
+            width: 693,
+            height: 462,
+          }}
+          heading="Contact us"
+          headingType="h2"
+          subHeading="Lorem ipsum dolor sit amet"
+          map={{
+            center: [52.52, 13.405],
+            zoom: 10,
+            markers: [
+              {
+                position: [52.52, 13.405],
+                popup: {
+                  content: 'Lorem ipsum dolor sit amet',
+                },
+              },
+            ],
+          }}
+          listItems={[
+            {
+              label: 'Phone:',
+              value:
+                '<a href="tel:+49 (0) 1234 5678910">+49 (0) 1234 5678910</a>',
+            },
+            {
+              label: 'Fax:',
+              value: '+49 (0) 1234 5678911',
+            },
+            {
+              label: 'Email:',
+              value:
+                '<a href="mailto:contact@example.com">contact@example.com</a>',
+            },
+            {
+              label: 'Website:',
+              value: '<a href="https://example.com">www.example.com</a>',
+            },
+          ]}
+          iconLinks={[
+            {
+              icon: <AiFillLinkedin aria-hidden="true" />,
+              href: 'https://linkedin.com',
+              ariaLabel: 'LinkedIn',
+            },
+            {
+              icon: <AiFillGithub aria-hidden="true" />,
+              href: 'https://github.com',
+              ariaLabel: 'Github',
+            },
+            {
+              icon: <AiFillInstagram aria-hidden="true" />,
+              href: 'https://instagram.com',
+              ariaLabel: 'Instagram',
+            },
+            {
+              icon: <AiFillFacebook aria-hidden="true" />,
+              href: 'https://facebook.com',
+              ariaLabel: 'Facebook',
+            },
+          ]}
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua.
+          </p>
+        </ContactMap>,
+        <ContactMap
+          $backgroundColor={primaryColor['700']}
+          $textColor={primaryColor['50']}
+          $imagePosition="right"
+          image={{
+            src: '/img/image-2.png',
+            alt: 'Intro image',
+            width: 693,
+            height: 462,
+          }}
+          heading="Contact us"
+          headingType="h2"
+          subHeading="Lorem ipsum dolor sit amet"
+          map={{
+            center: [52.52, 13.405],
+            zoom: 10,
+            markers: [
+              {
+                position: [52.52, 13.405],
+                popup: {
+                  content: 'Lorem ipsum dolor sit amet',
+                },
+              },
+            ],
+          }}
+          listItems={[
+            {
+              label: 'Phone:',
+              value:
+                '<a href="tel:+49 (0) 1234 5678910">+49 (0) 1234 5678910</a>',
+            },
+            {
+              label: 'Fax:',
+              value: '+49 (0) 1234 5678911',
+            },
+            {
+              label: 'Email:',
+              value:
+                '<a href="mailto:contact@example.com">contact@example.com</a>',
+            },
+            {
+              label: 'Website:',
+              value: '<a href="https://example.com">www.example.com</a>',
+            },
+          ]}
+          iconLinks={[
+            {
+              icon: <AiFillLinkedin aria-hidden="true" />,
+              href: 'https://linkedin.com',
+              ariaLabel: 'LinkedIn',
+            },
+            {
+              icon: <AiFillGithub aria-hidden="true" />,
+              href: 'https://github.com',
+              ariaLabel: 'Github',
+            },
+            {
+              icon: <AiFillInstagram aria-hidden="true" />,
+              href: 'https://instagram.com',
+              ariaLabel: 'Instagram',
+            },
+            {
+              icon: <AiFillFacebook aria-hidden="true" />,
+              href: 'https://facebook.com',
+              ariaLabel: 'Facebook',
+            },
+          ]}
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua.
+          </p>
+        </ContactMap>,
+      ],
+    },
+  ],
+};
+
 const metrcisElements: ContentElementsSection = {
   name: { de: 'Metricselemente', en: 'Metrics elements' },
   // description: { de: 'Description', en: 'Description' },
@@ -1107,6 +1277,7 @@ export const contentElementsSections: ContentElementsSection[] = [
   navigationElements,
   sliderElements,
   listElements,
+  contactElements,
   metrcisElements,
   footerElements,
   core,

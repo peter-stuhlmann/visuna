@@ -2,19 +2,27 @@ import { useState, useEffect, RefObject } from 'react';
 
 function useIsInViewport<T extends HTMLElement>(
   elementRef: RefObject<T | null>,
-  threshold: number = 0
+  threshold: number = 0,
+  once: boolean = false
 ): boolean {
   const [isInViewport, setIsInViewport] = useState<boolean>(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        const [entry] = entries; // es gibt nur ein beobachtetes Element
-        setIsInViewport(entry.isIntersecting); // true, wenn im Viewport
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setIsInViewport(true);
+          if (once) {
+            observer.disconnect(); // stoppt weitere Beobachtungen
+          }
+        } else if (!once) {
+          setIsInViewport(false);
+        }
       },
       {
         root: null,
-        threshold: threshold, // wann es als sichtbar gilt (0 = sobald auch nur 1px sichtbar ist)
+        threshold: threshold,
       }
     );
 
@@ -24,13 +32,11 @@ function useIsInViewport<T extends HTMLElement>(
     }
 
     return () => {
-      if (currentElement) {
-        observer.unobserve(currentElement);
-      }
+      observer.disconnect();
     };
-  }, [elementRef, threshold]);
+  }, [elementRef, threshold, once]);
 
-  return isInViewport; // Gibt true zurück, wenn das Element im Viewport ist
+  return isInViewport;
 }
 
 export default useIsInViewport;

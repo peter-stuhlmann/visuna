@@ -4,6 +4,9 @@ export type { BreadcrumbsProps } from './breadcrumbs/breadcrumbs';
 export { default as Button } from './button/button';
 export type { ButtonProps } from './button/button';
 
+export { default as ContactMap } from './contact/contact-map';
+export type { ContactMapProps } from './contact/contact-map';
+
 export { default as Heading } from './text/heading';
 export type { HeadingProps } from './text/heading';
 

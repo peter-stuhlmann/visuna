@@ -31,7 +31,6 @@ export const SliderContainer = styled.div<{
   .${mergedConfig.classPrefix}-slider-slides {
     width: 100%;
     height: 100%;
-    overflow: hidden;
     box-sizing: border-box;
 
     @media (max-width: 1280px) {
@@ -283,7 +282,6 @@ export const SlideContainer = styled.div<{
     width: 100%;
     height: 100%;
     border-radius: 1rem;
-    box-shadow: 0px 0px 0.5rem 0px rgba(0, 0, 0, 0.25);
     box-shadow: ${({ $isActive = false, $outline = 'light' }) =>
       $isActive
         ? $outline === 'light'

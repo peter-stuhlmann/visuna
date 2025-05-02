@@ -13,6 +13,7 @@
     "youAreHere": "You are here:",
     "notFound": "404 - Page not found",
     "pageNotFound": "This page does not exist.",
+    "elementNotFound": "This element does not exist.",
     "copied": "Copied!",
     "propsSectionHeading": "Props",
     "propsSectionDescription": "With these props you can customize this content element.",

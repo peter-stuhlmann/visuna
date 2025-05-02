@@ -11,6 +11,7 @@ export const SkeletonContainer = styled.div<SkeletonStyleProps>`
   background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
   background-size: 200% 100%;
   opacity: 0.7;
+  border-radius: 1rem;
   aspect-ratio: 1 / ${({ $width, $height }) => ($width ? $width / $height : 1)};
 
   @keyframes shimmer {
