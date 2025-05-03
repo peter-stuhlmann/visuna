@@ -31,7 +31,7 @@ const footerData: FooterData = {
             de: 'Demo-Projekt',
             en: 'Demo Project',
           },
-          href: '#',
+          href: 'demo',
         },
       ],
     },

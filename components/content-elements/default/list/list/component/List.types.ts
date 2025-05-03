@@ -14,4 +14,5 @@ export type ListProps = {
   $textColor?: string;
   defaultIcon?: ElementType;
   $defaultIconColor?: string;
+  unwrapped?: boolean;
 };

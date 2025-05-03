@@ -14,6 +14,10 @@ export type SliderProps = {
 
 export type Slide = {
   content: SlideContent;
+  overlay?: 'none' | 'dark-gradient';
+  isHighlighted?: boolean;
+  $highlightedTextBackgroundColor?: string | null;
+  $textColor?: string | null;
   backgroundColor?: string | null;
   backgroundImage?: {
     src: string;

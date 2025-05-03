@@ -62,7 +62,7 @@ export const SliderContainer = styled.div<{
         padding: 0;
         height: 100%;
         width: calc(${({ $totalSlides }) => $totalSlides} * 100%);
-        transition: transform 0.5s ease-in-out;
+        transition: transform 1s ease-in-out;
         transform: translateX(${({ $slideOffset }) => $slideOffset});
 
         & > .${mergedConfig.classPrefix}-slider-slide {
@@ -226,9 +226,11 @@ export const SliderControl = styled.div<{ $progress: number }>`
 export const SlideContainer = styled.div<{
   $isInViewport: boolean;
   $outline?: 'light' | 'dark';
+  $textColor?: string;
   $isActive?: boolean;
+  $highlightedTextBackgroundColor: string;
 }>`
-  color: #fff;
+  color: ${({ $textColor }) => $textColor};
   width: 100%;
   height: 800px;
   max-height: calc(100vh - 2rem);
@@ -285,9 +287,9 @@ export const SlideContainer = styled.div<{
     box-shadow: ${({ $isActive = false, $outline = 'light' }) =>
       $isActive
         ? $outline === 'light'
-          ? 'rgba(0, 0, 0, 1) 0px 50px 120px -70px'
+          ? 'rgba(0, 0, 0, 0.25) 0px 50px 120px -70px'
           : 'rgba(0, 0, 0, 0.5) 0px 50px 100px -20px,rgba(0, 0, 0, 0.3) 0px 30px 60px -30px'
-        : '0px 0px 0.5rem 0px rgba(0, 0, 0, 0.25)'};
+        : '0px 0px 0.5rem 0px rgba(0, 0, 0, 0.025)'};
     transition: box-shadow 0.5s ease-in-out;
     position: relative;
     overflow: hidden;
@@ -332,6 +334,21 @@ export const SlideContainer = styled.div<{
       & > div {
         max-height: 100%;
 
+        &.highlighted-text {
+          h3,
+          p {
+            & > span {
+              background-color: ${({ $highlightedTextBackgroundColor }) =>
+                $highlightedTextBackgroundColor};
+              color: ${({ $textColor }) => $textColor};
+              display: inline;
+              padding: 0.5rem;
+              box-decoration-break: clone;
+              -webkit-box-decoration-break: clone;
+            }
+          }
+        }
+
         & > div {
           height: 100%;
           max-width: 600px;
@@ -355,8 +372,10 @@ export const SlideContainer = styled.div<{
           }
 
           h3 {
-            font-size: 2rem;
             margin: 0 0 1rem 0;
+            font-size: 2rem;
+            line-height: 1.4;
+            text-transform: uppercase;
 
             @media (max-width: 768px) {
               font-size: 1.5rem;
@@ -365,7 +384,6 @@ export const SlideContainer = styled.div<{
 
           p {
             font-size: 1rem;
-            line-height: 1.3;
             margin: 0;
           }
         }

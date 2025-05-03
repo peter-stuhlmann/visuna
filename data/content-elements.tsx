@@ -16,6 +16,7 @@ import {
   Button,
   ContactMap,
   IntroText,
+  LargeCard,
   List,
   Wrapper,
 } from '@/components/content-elements/default';
@@ -417,6 +418,48 @@ const navigationElements: ContentElementsSection = {
             ]}
           />
         </Wrapper>,
+      ],
+    },
+  ],
+};
+
+const cardsElements: ContentElementsSection = {
+  name: { de: 'Cards', en: 'Cards' },
+  // description: { de: 'Description', en: 'Description' },
+  elements: [
+    {
+      name: { de: 'Große Card', en: 'Large Card' },
+      description: {
+        de: <></>,
+        en: <></>,
+      },
+      slug: 'large-card',
+      components: [
+        <LargeCard
+          isHighlighted
+          $backgroundImage={{
+            src: '/img/image-2.png',
+            alt: 'Image 2',
+          }}
+        >
+          <h3>
+            <span>Lorem ipsum</span>
+          </h3>
+          <p>
+            <span>Lorem ipsum dolor sit amet.</span>
+          </p>
+          <List
+            items={[
+              { text: 'Lorem ipsum dolor sit amet' },
+              { text: 'Lorem ipsum dolor sit amet, consetetur sadipscing' },
+              { text: 'Lorem ipsum dolor sit amet, consetetur' },
+              { text: 'Lorem ipsum dolor sit amet' },
+            ]}
+            defaultIcon={FaCheck}
+            $defaultIconColor={colors.GREEN['500']}
+            unwrapped
+          />
+        </LargeCard>,
       ],
     },
   ],
@@ -1275,6 +1318,7 @@ const core: ContentElementsSection = {
 export const contentElementsSections: ContentElementsSection[] = [
   textElements,
   navigationElements,
+  cardsElements,
   sliderElements,
   listElements,
   contactElements,

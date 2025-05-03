@@ -43,7 +43,7 @@ export const Container = styled.section<ContainerProps>`
   width: 100%;
   max-width: ${({ $width }) => widthMap[$width!]};
   margin: ${({ $margin }) => marginMap[$margin!]};
-  border-radius: ${({ $width }) => ($width === 'large' ? 0 : '0.25rem')};
+  border-radius: ${({ $width }) => ($width === 'large' ? 0 : '1rem')};
   ${({ $withShadow = false }) =>
     $withShadow &&
     css`

@@ -120,11 +120,17 @@ const Slider: FC<SliderProps> = ({
                       backgroundColor={slide.backgroundColor ?? null}
                       backgroundVideo={slide.backgroundVideo ?? null}
                       backgroundImage={slide.backgroundImage ?? null}
+                      overlay={slide.overlay ?? 'none'}
                       videoStatus={videoStatus}
                       setIsSlideChangePlaying={setIsSlideChangePlaying}
                       setVideoStatus={setVideoStatus}
                       ctaButton={slide.ctaButton ?? []}
                       $outline={$outline}
+                      $textColor={slide.$textColor ?? null}
+                      isHighlighted={slide.isHighlighted ?? false}
+                      $highlightedTextBackgroundColor={
+                        slide.$highlightedTextBackgroundColor ?? null
+                      }
                     >
                       {slide.content}
                     </Slide>

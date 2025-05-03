@@ -5,6 +5,7 @@ export type ImageProps = {
   alt?: string;
   width?: number;
   height?: number;
+  fill?: boolean;
   copyright?: string;
   caption?: string;
   className?: string;

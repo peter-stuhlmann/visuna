@@ -24,6 +24,10 @@ const Slide: FC<{
   setVideoStatus: (videoStatus: VideoStatus) => void;
   ctaButton: ButtonProps[];
   $outline: 'light' | 'dark';
+  $textColor?: string | null;
+  overlay?: 'none' | 'dark-gradient';
+  isHighlighted?: boolean;
+  $highlightedTextBackgroundColor?: string | null;
 }> = ({
   id,
   children,
@@ -39,6 +43,10 @@ const Slide: FC<{
   setVideoStatus,
   ctaButton,
   $outline,
+  $textColor,
+  overlay = 'none',
+  isHighlighted = false,
+  $highlightedTextBackgroundColor,
 }) => {
   const slideRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -167,10 +175,14 @@ const Slide: FC<{
       $isInViewport={isInViewport}
       $isActive={slideIndex === activeSlideIndex}
       $outline={$outline}
+      $textColor={$textColor || getPrimaryColor()['950']}
+      $highlightedTextBackgroundColor={
+        $highlightedTextBackgroundColor || getPrimaryColor()['200']
+      }
     >
       <div
         ref={slideRef}
-        style={{ backgroundColor: backgroundColor || getPrimaryColor()['800'] }}
+        style={{ backgroundColor: backgroundColor || 'transparent' }}
       >
         {backgroundVideo && (
           <>
@@ -202,9 +214,11 @@ const Slide: FC<{
             )}
           </>
         )}
-        <div className="overlay" />
+        {overlay && overlay === 'dark-gradient' && <div className="overlay" />}
         <div className="content">
-          <div>{children}</div>
+          <div className={isHighlighted ? 'highlighted-text' : 'text'}>
+            {children}
+          </div>
           {ctaButton.length > 0 && (
             <div className="cta-buttons">
               {ctaButton.map((button: ButtonProps, idx: number) => (
@@ -221,7 +235,6 @@ const Slide: FC<{
             </div>
           )}
         </div>
-
         {backgroundImage && (
           <Image src={backgroundImage.src} alt={backgroundImage.alt} fill />
         )}

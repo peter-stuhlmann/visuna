@@ -12,8 +12,8 @@ import { mergedConfig } from '../../../default.config';
 const Image: FC<ImageProps> = ({
   src,
   alt,
-  width = 750,
-  height = 500,
+  width = 1425,
+  height = 0,
   copyright = '',
   caption = '',
   className = '',

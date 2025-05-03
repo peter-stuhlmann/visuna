@@ -1,4 +1,4 @@
-import { createElement, FC } from 'react';
+import { createElement, FC, Fragment } from 'react';
 import { ListItem, ListProps } from './List.types';
 import { ListContainer } from './List.styles';
 import getElementClassName from '@/components/content-elements/default/utils/getElementClassName';
@@ -14,23 +14,18 @@ const List: FC<ListProps> = ({
   $textColor,
   defaultIcon = CaretRightIcon,
   $defaultIconColor = getPrimaryColor()['700'],
+  unwrapped = false,
 }) => {
-  const elementClassName = getElementClassName(`list`);
+  const elementClassName = getElementClassName('list');
 
-  return (
-    <Wrapper
-      width="large"
-      innerWidth={$innerWidth}
-      backgroundColor={$backgroundColor}
-      textColor={$textColor}
-      className={`${elementClassName} ${className}`}
-    >
-      <ListContainer>
-        {items.map((item: ListItem, idx: number) => {
-          const IconComponent = item.icon || defaultIcon;
+  const Content = (
+    <ListContainer>
+      {items.map((item: ListItem, idx: number) => {
+        const IconComponent = item.icon || defaultIcon;
 
-          return (
-            <li key={'list-item' + idx}>
+        return (
+          <li key={'list-item' + idx}>
+            <span>
               {IconComponent && (
                 <div className={elementClassName + '-icon'} aria-hidden="true">
                   {createElement(IconComponent, {
@@ -39,10 +34,24 @@ const List: FC<ListProps> = ({
                 </div>
               )}
               {item.text}
-            </li>
-          );
-        })}
-      </ListContainer>
+            </span>
+          </li>
+        );
+      })}
+    </ListContainer>
+  );
+
+  return unwrapped ? (
+    <Fragment>{Content}</Fragment>
+  ) : (
+    <Wrapper
+      width="large"
+      innerWidth={$innerWidth}
+      backgroundColor={$backgroundColor}
+      textColor={$textColor}
+      className={`${elementClassName} ${className}`}
+    >
+      {Content}
     </Wrapper>
   );
 };

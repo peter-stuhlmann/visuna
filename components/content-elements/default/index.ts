@@ -19,6 +19,9 @@ export type { ImageTextProps } from './text/image-text';
 export { default as IntroText } from './text/intro-text';
 export type { IntroTextProps } from './text/intro-text';
 
+export { default as LargeCard } from './cards/large-card';
+export type { LargeCardProps } from './cards/large-card';
+
 export { default as List } from './list/list';
 export type { ListProps } from './list/list';
 
