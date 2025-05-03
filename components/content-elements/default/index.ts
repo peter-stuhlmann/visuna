@@ -25,6 +25,9 @@ export type { LargeCardProps } from './cards/large-card';
 export { default as List } from './list/list';
 export type { ListProps } from './list/list';
 
+export { default as LogoGrid } from './list/logo-grid';
+export type { LogoGridProps } from './list/logo-grid';
+
 export { default as Metrics } from './metrics/metrics';
 export type { MetricsProps } from './metrics/metrics';
 

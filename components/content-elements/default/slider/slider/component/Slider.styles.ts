@@ -32,6 +32,7 @@ export const SliderContainer = styled.div<{
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    overflow: hidden;
 
     @media (max-width: 1280px) {
       padding: 0.5rem 0;
@@ -346,6 +347,9 @@ export const SlideContainer = styled.div<{
               box-decoration-break: clone;
               -webkit-box-decoration-break: clone;
             }
+          }
+          p {
+            line-height: 1.8;
           }
         }
 

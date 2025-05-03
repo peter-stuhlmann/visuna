@@ -45,7 +45,7 @@ const LargeCard: FC<LargeCardProps> = ({
         $cardBackgroundColor={$cardBackgroundColor}
         $textColor={$textColor || getPrimaryColor()['950']}
         $highlightedTextBackgroundColor={
-          $highlightedTextBackgroundColor || getPrimaryColor()['200']
+          $highlightedTextBackgroundColor || getPrimaryColor()['100']
         }
       >
         <div>

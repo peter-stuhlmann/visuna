@@ -86,6 +86,9 @@ export const LargeCardContainer = styled.div<{
               -webkit-box-decoration-break: clone;
             }
           }
+          p {
+            line-height: 1.8;
+          }
           ul {
             gap: 0;
 
