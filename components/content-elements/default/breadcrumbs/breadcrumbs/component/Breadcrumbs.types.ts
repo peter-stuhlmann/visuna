@@ -1,15 +1,22 @@
-import { CSSProperties } from 'react';
+import { WrapperProps } from '../../../layout/wrapper';
 
 export type BreadcrumbItem = {
   label: string;
-  href: string | null;
+  href?: string | null;
   title: string;
   isActive?: boolean;
 };
 
 export type BreadcrumbsProps = {
   links: BreadcrumbItem[];
-  margin?: 'none' | 'small' | 'medium' | 'large';
-  className?: string;
-  style?: CSSProperties;
+  textColor?: string;
+  activeTextColor?: string;
+  dividerColor?: string;
+  unwrapped?: boolean;
+} & WrapperProps;
+
+export type BreadcrumbsStyleProps = {
+  $textColor?: BreadcrumbsProps['textColor'];
+  $activeTextColor?: BreadcrumbsProps['activeTextColor'];
+  $dividerColor?: BreadcrumbsProps['dividerColor'];
 };

@@ -1,17 +1,16 @@
 import { ReactNode } from 'react';
 import { ButtonProps } from '../../../../default';
+import { AlignOptions } from '../../../types';
 
 export type IntroTextProps = {
-  children?: string | ReactNode;
-  heading?: string | ReactNode;
-  headingType?: 'h1' | 'h2' | 'h3';
-  backgroundColor?: string;
+  children?: ReactNode;
   textColor?: string;
   ctaButton?: Partial<ButtonProps>;
+  align?: AlignOptions;
   className?: string;
-  margin?: 'none' | 'small' | 'medium' | 'large';
-  padding?: 'none' | 'small' | 'medium' | 'large';
-  width?: 'small' | 'medium' | 'large';
-  innerWidth?: 'small' | 'medium' | 'large';
-  align?: 'left' | 'center' | 'right';
+};
+
+export type IntroTextStyleProps = {
+  $textColor?: IntroTextProps['textColor'];
+  $align?: IntroTextProps['align'];
 };

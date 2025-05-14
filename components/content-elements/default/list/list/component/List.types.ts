@@ -1,18 +1,25 @@
-import { ElementType } from 'react';
+import { WrapperProps } from '../../../layout/wrapper';
+import { IconName } from '../../../icons/icon/component/Icon.types';
 
-export type ListItem = {
+export type ListItemProps = {
   text: string;
-  icon?: ElementType;
+  icon?: IconName;
   iconColor?: string;
 };
 
 export type ListProps = {
-  items: ListItem[];
-  className?: string;
-  $innerWidth?: 'small' | 'medium' | 'large';
-  $backgroundColor?: string;
-  $textColor?: string;
-  defaultIcon?: ElementType;
-  $defaultIconColor?: string;
+  items: ListItemProps[];
+  textColor?: string;
+  highlightColor?: string;
+  defaultIcon?: IconName;
+  defaultIconColor?: string;
   unwrapped?: boolean;
+} & WrapperProps;
+
+export type ListStyleProps = {
+  $textColor?: string;
+};
+
+export type ListItemStyleProps = {
+  $highlightColor?: string;
 };

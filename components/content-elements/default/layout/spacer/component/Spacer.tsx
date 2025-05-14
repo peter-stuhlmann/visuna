@@ -7,8 +7,8 @@ import { SpacerProps } from './Spacer.types';
 const Spacer: FC<SpacerProps> = ({
   className = '',
   style = {},
-  $size = 'medium',
-  $backgroundColor = 'transparent',
+  size = 'l',
+  backgroundColor = 'transparent',
 }) => {
   const elementClassName = getElementClassName('spacer');
 
@@ -16,8 +16,8 @@ const Spacer: FC<SpacerProps> = ({
     <SpacerContainer
       className={`${elementClassName} ${className}`}
       style={style}
-      $size={$size}
-      $backgroundColor={$backgroundColor}
+      $size={size}
+      $backgroundColor={backgroundColor}
       aria-hidden="true"
     />
   );

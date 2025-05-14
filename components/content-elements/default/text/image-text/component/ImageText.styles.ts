@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 type ContainerProps = {
   $imagePosition: 'left' | 'right';
+  $textColor: string;
 };
 
 const imagePositionMap: Record<string, string> = {
@@ -16,6 +17,7 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
   flex-direction: ${({ $imagePosition }) => imagePositionMap[$imagePosition]};
   gap: 5rem;
+  color: ${({ $textColor }) => $textColor};
 
   @media (max-width: 1080px) {
     gap: 1rem;

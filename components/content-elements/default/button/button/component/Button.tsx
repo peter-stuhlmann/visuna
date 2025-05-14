@@ -6,6 +6,7 @@ import { ButtonContainer } from './Button.styles';
 import getElementClassName from '@/components/content-elements/default/utils/getElementClassName';
 import Ripple from '../../../ripple/ripple';
 import { getPrimaryColor, getRippleSpeed } from '../../../constants';
+import Icon from '../../../icons/icon';
 
 const rippleSpeed = getRippleSpeed();
 
@@ -24,10 +25,12 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       onClick,
       style,
       disabledRipple = false,
-      $textColor,
+      textColor,
       ariaLabel,
       tabIndex = 0,
       type = 'button',
+      icon,
+      iconPosition = 'start',
     } = props;
 
     if (!children) {
@@ -57,7 +60,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       'aria-label': ariaLabel,
       tabIndex: tabIndex,
       $primaryColor: resolvedPrimaryColor,
-      $textColor: $textColor,
+      $textColor: textColor,
       $variant: variant,
       $fontWeight: fontWeight,
       $size: size,
@@ -71,8 +74,11 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         href={href}
         target={target}
         rel="noreferrer noopener"
+        $iconPosition={iconPosition}
+        $gap={icon ? '0.5rem' : '0'}
         {...sharedProps}
       >
+        {icon && <Icon name={icon} />}
         <div>{children}</div>
         {!disabledRipple && (
           <Ripple duration={rippleSpeed} color={resolvedPrimaryColor['500']} />
@@ -83,9 +89,14 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         as={'button'}
         ref={buttonRef}
         type={type}
+        $iconPosition={iconPosition}
+        $gap={icon ? '0.5rem' : '0'}
         {...sharedProps}
       >
-        <div>{children}</div>
+        <div>
+          {icon && <Icon name={icon} />}
+          <div>{children}</div>
+        </div>
         {!disabledRipple && (
           <Ripple duration={rippleSpeed} color={resolvedPrimaryColor['500']} />
         )}

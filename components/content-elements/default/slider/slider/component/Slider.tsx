@@ -2,28 +2,22 @@
 
 import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
 
-import { Slide as SlideProps, SliderProps, VideoStatus } from './Slider.types';
+import { SlideProps, SliderProps, VideoStatus } from './Slider.types';
 import SliderControlMenu from './SliderControlMenu';
 import useIsInViewport from '../../../utils/useIsInViewport';
 import { SliderContainer } from './Slider.styles';
-import Wrapper from '../../../layout/wrapper';
-import getElementClassName from '../../../utils/getElementClassName';
 import Slide from './Slide';
 import { useDrag } from '@use-gesture/react';
 import NoJsMessage from '../../../loading/no-js-message';
 
 const Slider: FC<SliderProps> = ({
-  id = 'slider-1',
   isLooping = false,
   slideDuration = 7000,
   slides = [],
-  className = '',
-  $backgroundColor,
   $outline = 'dark',
   slideAnimationDefaultPlay = true,
+  className,
 }) => {
-  const elementClassName = getElementClassName('slider');
-
   const [activeSlideIndex, setActiveSlideIndexState] = useState<number>(0);
   const [isManualChange, setIsManualChange] = useState<boolean>(false);
 
@@ -79,80 +73,71 @@ const Slider: FC<SliderProps> = ({
   useEffect(() => {
     if (isManualChange) {
       const slideElement = document.getElementById(
-        `${id}-slide-${activeSlideIndex}`
+        `${className}-slide-${activeSlideIndex}`
       );
       if (slideElement) {
         (slideElement as HTMLElement).focus({ preventScroll: false });
       }
       setIsManualChange(false);
     }
-  }, [activeSlideIndex, isManualChange]);
+  }, [activeSlideIndex, isManualChange, className]);
 
   return (
     <>
-      <Wrapper
-        width="large"
-        innerWidth="large"
-        padding="none"
-        backgroundColor={$backgroundColor}
-        className={`${elementClassName} ${className}`}
+      <SliderContainer
         ref={elementRef}
-        id={id}
+        className={`${className}-container`}
+        $totalSlides={totalSlides}
+        $activeSlideIndex={activeSlideIndex}
+        $slideOffset={`-${activeSlideIndex * (100 / totalSlides)}%`}
       >
-        <SliderContainer
-          className={`${elementClassName}-container`}
-          $totalSlides={totalSlides}
-          $activeSlideIndex={activeSlideIndex}
-          $slideOffset={`-${activeSlideIndex * (100 / totalSlides)}%`}
-        >
-          <div className={`${elementClassName}-slides`} {...bind()}>
+        <div className={`${className}-slides`} {...bind()}>
+          <div>
             <div>
-              <div>
-                {slides.map((slide: SlideProps, idx: number) => {
-                  return (
-                    <Slide
-                      key={idx}
-                      id={`${id}-slide-${idx}`}
-                      slideIndex={idx}
-                      setActiveSlideIndex={setActiveSlideIndex}
-                      activeSlideIndex={activeSlideIndex}
-                      totalSlides={totalSlides}
-                      backgroundColor={slide.backgroundColor ?? null}
-                      backgroundVideo={slide.backgroundVideo ?? null}
-                      backgroundImage={slide.backgroundImage ?? null}
-                      overlay={slide.overlay ?? 'none'}
-                      videoStatus={videoStatus}
-                      setIsSlideChangePlaying={setIsSlideChangePlaying}
-                      setVideoStatus={setVideoStatus}
-                      ctaButton={slide.ctaButton ?? []}
-                      $outline={$outline}
-                      $textColor={slide.$textColor ?? null}
-                      isHighlighted={slide.isHighlighted ?? false}
-                      $highlightedTextBackgroundColor={
-                        slide.$highlightedTextBackgroundColor ?? null
-                      }
-                    >
-                      {slide.content}
-                    </Slide>
-                  );
-                })}
-              </div>
+              {slides.map((slide: SlideProps, idx: number) => {
+                return (
+                  <Slide
+                    key={idx}
+                    id={`${className}-slide-${idx}`}
+                    slideIndex={idx}
+                    setActiveSlideIndex={setActiveSlideIndex}
+                    activeSlideIndex={activeSlideIndex}
+                    totalSlides={totalSlides}
+                    backgroundColor={slide.backgroundColor ?? null}
+                    backgroundVideo={slide.backgroundVideo ?? null}
+                    backgroundImage={slide.backgroundImage ?? null}
+                    overlay={slide.overlay ?? 'none'}
+                    videoStatus={videoStatus}
+                    setIsSlideChangePlaying={setIsSlideChangePlaying}
+                    setVideoStatus={setVideoStatus}
+                    ctaButton={slide.ctaButton ?? []}
+                    $outline={$outline}
+                    $textColor={slide.$textColor ?? null}
+                    isHighlighted={slide.isHighlighted ?? false}
+                    $highlightedTextBackgroundColor={
+                      slide.$highlightedTextBackgroundColor ?? null
+                    }
+                  >
+                    {slide.content}
+                  </Slide>
+                );
+              })}
             </div>
           </div>
-          <SliderControlMenu
-            slides={slides}
-            isInViewport={isInViewport}
-            isLooping={isLooping}
-            slideDuration={slideDuration}
-            totalSlides={totalSlides}
-            activeSlideIndex={activeSlideIndex}
-            setActiveSlideIndex={setActiveSlideIndex}
-            isSlideChangePlaying={isSlideChangePlaying}
-            setIsSlideChangePlaying={setIsSlideChangePlaying}
-          />
-        </SliderContainer>
-      </Wrapper>
-      <NoJsMessage className={elementClassName} />
+        </div>
+        <SliderControlMenu
+          slides={slides}
+          isInViewport={isInViewport}
+          isLooping={isLooping}
+          slideDuration={slideDuration}
+          totalSlides={totalSlides}
+          activeSlideIndex={activeSlideIndex}
+          setActiveSlideIndex={setActiveSlideIndex}
+          isSlideChangePlaying={isSlideChangePlaying && isInViewport}
+          setIsSlideChangePlaying={setIsSlideChangePlaying}
+        />
+      </SliderContainer>
+      <NoJsMessage hideElement={`.${className} .${className}-wrapper`} />
     </>
   );
 };

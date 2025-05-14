@@ -2,15 +2,9 @@
 
 import styled from 'styled-components';
 import { mergedConfig } from '../../../default.config';
+import { LargeCardStyleProps } from './LargeCard.types';
 
-export const LargeCardContainer = styled.div<{
-  $isInViewport: boolean;
-  $outline?: 'light' | 'dark';
-  $cardBackgroundColor?: string;
-  $textColor?: string;
-  $isActive?: boolean;
-  $highlightedTextBackgroundColor: string;
-}>`
+export const LargeCardContainer = styled.div<LargeCardStyleProps>`
   color: ${({ $textColor }) => $textColor};
   width: 100%;
   height: 500px;
@@ -77,8 +71,7 @@ export const LargeCardContainer = styled.div<{
           p,
           ul li {
             & > span {
-              background-color: ${({ $highlightedTextBackgroundColor }) =>
-                $highlightedTextBackgroundColor};
+              background-color: ${({ $highlightColor }) => $highlightColor};
               color: ${({ $textColor }) => $textColor};
               display: inline;
               padding: 0.5rem;

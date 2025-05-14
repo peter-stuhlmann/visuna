@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { FaCheck, FaPhone, FaTimes } from 'react-icons/fa';
 import {
   AiFillFacebook,
   AiFillGithub,
@@ -25,11 +24,13 @@ import {
   Translation,
 } from '@/app/[locale]/content-elements/[slug]/utils/getContentElement';
 import { getPrimaryColor } from '@/components/content-elements/default/constants';
-import { ImageText } from '@/components/content-elements/default';
-import Slider from '@/components/content-elements/default/slider/slider';
-import Metrics from '@/components/content-elements/default/metrics/metrics';
+import {
+  Slider,
+  Metrics,
+  Accordion,
+  ImageText,
+} from '@/components/content-elements/default';
 import colors from '@/components/content-elements/default/constants/colors';
-import Accordion from '@/components/content-elements/default/list/accordion';
 
 export type ContentElementsSection = {
   name: Translation;
@@ -46,8 +47,8 @@ const textElements: ContentElementsSection = {
     {
       name: { de: 'Button', en: 'Button' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'button',
       components: [
@@ -59,112 +60,22 @@ const textElements: ContentElementsSection = {
           </Flex>
         </Wrapper>,
       ],
-      elementProps: [
-        {
-          name: 'children',
-          required: true,
-          type: ['string', 'React.ReactNode'],
-          description: {
-            de: 'Button-Text',
-            en: 'Button text',
-          },
-        },
-        {
-          name: 'className',
-          type: ['string'],
-          default: '.[prefix]-button',
-          description: {
-            de: 'CSS-Klasse für benutzerdefinierte Stile wird ergänzt.',
-            en: 'Additional CSS class for custom styles.',
-          },
-        },
-        {
-          name: 'variant',
-          type: ['"text"', '"contained"', '"outlined"'],
-          default: '"outlined"',
-          description: {
-            de: 'Button-Stil',
-            en: 'Button style',
-          },
-        },
-        {
-          name: 'fontWeight',
-          type: ['400', '700'],
-          default: '700',
-          description: {
-            de: 'Normal- oder Fettdruck',
-            en: 'Button text',
-          },
-        },
-        {
-          name: 'size',
-          type: ['"small"', '"medium"', '"large"'],
-          default: '"medium"',
-          description: {
-            de: 'Buttongröße',
-            en: 'Button size',
-          },
-        },
-        {
-          name: 'margin',
-          type: ['"none"', '"small"', '"medium"', '"large"'],
-          default: '"none"',
-          description: {
-            de: 'Vertikaler Abstand',
-            en: 'Vertical spacing',
-          },
-        },
-        {
-          name: 'href',
-          type: ['string'],
-          description: {
-            de: 'Link des Call-To-Action-Buttons',
-            en: 'Link of the call-to-action button',
-          },
-        },
-        {
-          name: 'target',
-          type: ['"_self"', '"_blank"', '"_parent"', '"_top"'],
-          default: '"_self"',
-          description: {
-            de: 'Linkziel des Call-To-Action-Buttons',
-            en: 'Link target of the call-to-action button',
-          },
-        },
-        {
-          name: 'onClick',
-          type: ['React.MouseEventHandler<HTMLElement>'],
-          description: {
-            de: 'Funktion, die beim Klicken auf den Button aufgerufen wird',
-            en: 'Function called when the button is clicked',
-          },
-        },
-        {
-          name: 'style',
-          type: ['React.CSSProperties'],
-          description: {
-            de: 'Inline-CSS-Stile',
-            en: 'Inline CSS styles',
-          },
-        },
-      ],
     },
     {
       name: { de: 'Intro-Text', en: 'Intro text' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'intro-text',
       components: [
         <IntroText
-          heading="Lorem ipsum"
+          elementHeading={{ value: 'Lorem ipsum', element: 'h2' }}
           ctaButton={{ children: 'Call-To-Action' }}
           align="center"
           backgroundColor={primaryColor['700']}
           textColor={primaryColor['100']}
-          padding="large"
-          margin="none"
+          padding="l"
         >
           <p>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
@@ -184,144 +95,25 @@ const textElements: ContentElementsSection = {
           </p>
         </IntroText>,
       ],
-      elementProps: [
-        {
-          name: 'children',
-          type: ['string', 'React.ReactNode'],
-          default: '""',
-          description: {
-            de: 'Text',
-            en: 'Text',
-          },
-        },
-        {
-          name: 'className',
-          type: ['string'],
-          default: '.[prefix]-intro-text',
-          description: {
-            de: 'CSS-Klasse für benutzerdefinierte Stile wird ergänzt.',
-            en: 'Additional CSS class for custom styles.',
-          },
-        },
-        {
-          name: 'heading',
-          type: ['string', 'React.ReactNode'],
-          default: '""',
-          description: {
-            de: 'Überschrift',
-            en: 'Heading',
-          },
-        },
-        {
-          name: 'headingType',
-          type: ['"h1"', '"h2"', '"h3"'],
-          default: '"h1"',
-          description: {
-            de: 'Level der Überschrift',
-            en: 'Heading level',
-          },
-        },
-        {
-          name: 'backgroundColor',
-          type: ['string'],
-          default: 'transparent',
-          description: {
-            de: 'Hintergrundfarbe',
-            en: 'Background color',
-          },
-        },
-        {
-          name: 'textColor',
-          type: ['string'],
-          default: 'primaryColor["900"]',
-          description: {
-            de: 'Textfarbe',
-            en: 'Text color',
-          },
-        },
-        {
-          name: 'ctaButton',
-          type: [{ name: 'Button', href: '/content-elements/button' }],
-          description: {
-            de: 'Link des Call-To-Action-Buttons',
-            en: 'Link of the call-to-action button',
-          },
-        },
-        {
-          name: 'margin',
-          type: ['"none"', '"small"', '"medium"', '"large"'],
-          default: '"small"',
-          description: {
-            de: 'Abstand zum nächsten Element',
-            en: 'Spacing to the next element',
-          },
-        },
-        {
-          name: 'width',
-          type: ['"small"', '"medium"', '"large"'],
-          default: '"large"',
-          description: {
-            de: 'Gesamtbreite des Elements',
-            en: 'Overall width of the element',
-          },
-        },
-        {
-          name: 'innerWidth',
-          type: ['"small"', '"medium"', '"large"'],
-          default: '"small"',
-          description: {
-            de: 'Wrapper-Breite des Elements',
-            en: 'Wrapper width of the element',
-          },
-        },
-        {
-          name: 'align',
-          type: ['"left"', '"center"', '"right"'],
-          default: '"left"',
-          description: {
-            de: 'Inline-CSS-Stile',
-            en: 'Inline CSS styles',
-          },
-        },
-        {
-          name: 'padding',
-          type: ['"none"', '"small"', '"medium"', '"large"'],
-          default: '"medium"',
-          description: {
-            de: 'Innenabstand des Elements',
-            en: 'Inner padding of the element',
-          },
-        },
-        {
-          name: 'style',
-          type: ['React.CSSProperties'],
-          default: '{}',
-          description: {
-            de: 'Inline-CSS-Stile',
-            en: 'Inline CSS styles',
-          },
-        },
-      ],
     },
     {
       name: { de: 'Text mit Bild', en: 'Text with image' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'image-text',
       components: [
         <ImageText
-          $imagePosition="left"
+          imagePosition="left"
           image={{
             src: '/img/image-1.png',
             alt: 'Intro image',
             width: 693,
             height: 462,
           }}
-          heading="Lorem ipsum"
-          headingType="h2"
-          subHeading="Lorem ipsum dolor sit amet"
+          heading={{ value: 'Lorem ipsum', element: 'h2' }}
+          overline={{ value: 'Lorem ipsum dolor sit amet' }}
           // ctaButton={{ children: 'Call-To-Action' }}
         >
           <p>
@@ -337,21 +129,20 @@ const textElements: ContentElementsSection = {
           </p>
         </ImageText>,
         <ImageText
-          $imagePosition="right"
-          $backgroundColor={primaryColor['700']}
-          $textColor={primaryColor['50']}
+          imagePosition="right"
+          backgroundColor={primaryColor['700']}
+          textColor={primaryColor['50']}
           image={{
             src: '/img/image-2.png',
             alt: 'Intro image',
             width: 693,
             height: 462,
           }}
-          heading="Lorem ipsum"
-          headingType="h2"
-          subHeading="Lorem ipsum dolor sit amet"
+          heading={{ value: 'Lorem ipsum', element: 'h2' }}
+          overline={{ value: 'Lorem ipsum dolor sit amet' }}
           ctaButton={{
             children: 'Lorem ipsum',
-            $textColor: primaryColor['50'],
+            textColor: primaryColor['50'],
           }}
         >
           <p>
@@ -395,7 +186,7 @@ const navigationElements: ContentElementsSection = {
               Breadcrumbs are a practical navigation tool that always gives you
               an overview of your current location on the website. They display
               the path from the homepage to your current page in a clear
-              hierarchy, allowing you to easily jump back to higher-level
+              hierarchy, allowing you to easily jump back to higher-element
               sections. This saves you time and keeps you well-oriented—ideal
               when navigating complex websites or extensive content areas.
             </p>
@@ -404,20 +195,18 @@ const navigationElements: ContentElementsSection = {
       },
       slug: 'breadcrumbs',
       components: [
-        <Wrapper>
-          <Breadcrumbs
-            links={[
-              { label: 'Home', title: 'Go to Home', href: '#' },
-              { label: 'Products', title: 'Go to Products page', href: '#' },
-              {
-                label: 'Product 1',
-                title: 'You are currently on Product 1',
-                href: null,
-                isActive: true,
-              },
-            ]}
-          />
-        </Wrapper>,
+        <Breadcrumbs
+          links={[
+            { label: 'Home', title: 'Go to Home', href: '#' },
+            { label: 'Products', title: 'Go to Products page', href: '#' },
+            {
+              label: 'Product 1',
+              title: 'You are currently on Product 1',
+              href: null,
+              isActive: true,
+            },
+          ]}
+        />,
       ],
     },
   ],
@@ -430,14 +219,13 @@ const cardsElements: ContentElementsSection = {
     {
       name: { de: 'Große Card', en: 'Large Card' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'large-card',
       components: [
         <LargeCard
-          isHighlighted
-          $backgroundImage={{
+          backgroundImage={{
             src: '/img/image-2.png',
             alt: 'Image 2',
           }}
@@ -453,11 +241,10 @@ const cardsElements: ContentElementsSection = {
               { text: 'Lorem ipsum dolor sit amet' },
               { text: 'Lorem ipsum dolor sit amet, consetetur sadipscing' },
               { text: 'Lorem ipsum dolor sit amet, consetetur' },
-              { text: 'Lorem ipsum dolor sit amet' },
+              { text: 'Lorem ipsum dolor sit amet', icon: 'MdClear' },
             ]}
-            defaultIcon={FaCheck}
-            $defaultIconColor={colors.GREEN['500']}
-            unwrapped
+            defaultIcon={'MdCheck'}
+            defaultIconColor={colors.GREEN['500']}
           />
         </LargeCard>,
       ],
@@ -472,15 +259,15 @@ const sliderElements: ContentElementsSection = {
     {
       name: { de: 'Slider', en: 'Slider' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'slider',
       components: [
         <Slider
           id="slider-1"
           slideDuration={7000}
-          $backgroundColor={primaryColor['0']}
+          backgroundColor={primaryColor['0']}
           slides={[
             {
               backgroundVideo: {
@@ -601,7 +388,7 @@ const sliderElements: ContentElementsSection = {
                   children: 'Lorem ipsum',
                   href: '#',
                   variant: 'outlined',
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
               ],
               content: (
@@ -629,21 +416,21 @@ const sliderElements: ContentElementsSection = {
                   children: 'Lorem ipsum',
                   href: '#',
                   variant: 'outlined',
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
                 {
                   children: 'Eirmod',
                   href: '#',
                   variant: 'contained',
                   primaryColor: primaryColor,
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
                 {
                   children: 'Justo duo',
                   href: '#',
                   variant: 'contained',
                   primaryColor: colors.EMERALD,
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
               ],
               content: (
@@ -666,7 +453,7 @@ const sliderElements: ContentElementsSection = {
         <Slider
           id="slider-2"
           slideDuration={7000}
-          $backgroundColor={primaryColor['700']}
+          backgroundColor={primaryColor['700']}
           $outline="light"
           slides={[
             {
@@ -788,7 +575,7 @@ const sliderElements: ContentElementsSection = {
                   children: 'Lorem ipsum',
                   href: '#',
                   variant: 'outlined',
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
               ],
               content: (
@@ -816,21 +603,21 @@ const sliderElements: ContentElementsSection = {
                   children: 'Lorem ipsum',
                   href: '#',
                   variant: 'outlined',
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
                 {
                   children: 'Eirmod',
                   href: '#',
                   variant: 'contained',
                   primaryColor: primaryColor,
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
                 {
                   children: 'Justo duo',
                   href: '#',
                   variant: 'contained',
                   primaryColor: colors.EMERALD,
-                  $textColor: primaryColor['50'],
+                  textColor: primaryColor['50'],
                 },
               ],
               content: (
@@ -862,8 +649,8 @@ const listElements: ContentElementsSection = {
     {
       name: { de: 'Liste', en: 'List' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'list',
       components: [
@@ -875,7 +662,6 @@ const listElements: ContentElementsSection = {
             { text: 'Lorem ipsum dolor sit amet.' },
             { text: 'Lorem ipsum dolor sit amet.' },
           ]}
-          $textColor={primaryColor['950']}
         />,
         <List
           items={[
@@ -885,25 +671,9 @@ const listElements: ContentElementsSection = {
             { text: 'Lorem ipsum dolor sit amet.' },
             { text: 'Lorem ipsum dolor sit amet.' },
           ]}
-          $backgroundColor={primaryColor['700']}
-          $textColor={primaryColor['50']}
-          $defaultIconColor={primaryColor['50']}
-        />,
-        <List
-          items={[
-            {
-              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            },
-            { text: 'Lorem ipsum dolor sit amet.' },
-            {
-              text: 'Lorem ipsum dolor sit amet.',
-              icon: FaTimes,
-              iconColor: colors.RED[500],
-            },
-          ]}
-          $textColor={primaryColor['950']}
-          defaultIcon={FaCheck}
-          $defaultIconColor={colors.GREEN['500']}
+          backgroundColor={primaryColor['700']}
+          textColor={primaryColor['50']}
+          defaultIconColor={primaryColor['50']}
         />,
         <List
           items={[
@@ -913,22 +683,37 @@ const listElements: ContentElementsSection = {
             { text: 'Lorem ipsum dolor sit amet.' },
             {
               text: 'Lorem ipsum dolor sit amet.',
-              icon: FaTimes,
+              icon: 'MdClear',
               iconColor: colors.RED[500],
             },
           ]}
-          $backgroundColor={primaryColor['700']}
-          $textColor={primaryColor['50']}
-          defaultIcon={FaCheck}
-          $defaultIconColor={colors.GREEN['500']}
+          defaultIcon={'MdCheck'}
+          defaultIconColor={colors.GREEN['500']}
+        />,
+        <List
+          items={[
+            {
+              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            },
+            { text: 'Lorem ipsum dolor sit amet.' },
+            {
+              text: 'Lorem ipsum dolor sit amet.',
+              icon: 'MdClear',
+              iconColor: colors.RED[500],
+            },
+          ]}
+          backgroundColor={primaryColor['700']}
+          textColor={primaryColor['50']}
+          defaultIcon={'MdCheck'}
+          defaultIconColor={colors.GREEN['500']}
         />,
       ],
     },
     {
       name: { de: 'Akkordion', en: 'Accordion' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'accordion',
       components: [
@@ -969,8 +754,8 @@ const listElements: ContentElementsSection = {
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             },
           ]}
-          $textColor={primaryColor['950']}
-          $backgroundColor={primaryColor['700']}
+          textColor={primaryColor['950']}
+          backgroundColor={primaryColor['700']}
         />,
         <Accordion
           items={[
@@ -1011,8 +796,8 @@ const listElements: ContentElementsSection = {
             },
           ]}
           initialOpenIndex={0}
-          $textColor={primaryColor['950']}
-          $backgroundColor={primaryColor['700']}
+          textColor={primaryColor['950']}
+          backgroundColor={primaryColor['700']}
         />,
       ],
     },
@@ -1026,22 +811,21 @@ const contactElements: ContentElementsSection = {
     {
       name: { de: 'Kontakt mit Karte', en: 'Contact with map' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'contact-map',
       components: [
         <ContactMap
-          $imagePosition="right"
+          imagePosition="right"
           image={{
             src: '/img/image-2.png',
             alt: 'Intro image',
             width: 693,
             height: 462,
           }}
-          heading="Contact us"
-          headingType="h2"
-          subHeading="Lorem ipsum dolor sit amet"
+          heading={{ value: 'Contact us', element: 'h2' }}
+          overline={{ value: 'Lorem ipsum dolor sit amet' }}
           map={{
             center: [52.52, 13.405],
             zoom: 10,
@@ -1104,18 +888,17 @@ const contactElements: ContentElementsSection = {
           </p>
         </ContactMap>,
         <ContactMap
-          $backgroundColor={primaryColor['700']}
-          $textColor={primaryColor['50']}
-          $imagePosition="right"
+          backgroundColor={primaryColor['700']}
+          textColor={primaryColor['50']}
+          imagePosition="right"
           image={{
             src: '/img/image-2.png',
             alt: 'Intro image',
             width: 693,
             height: 462,
           }}
-          heading="Contact us"
-          headingType="h2"
-          subHeading="Lorem ipsum dolor sit amet"
+          heading={{ value: 'Contact us', element: 'h2' }}
+          overline={{ value: 'Lorem ipsum dolor sit amet' }}
           map={{
             center: [52.52, 13.405],
             zoom: 10,
@@ -1189,8 +972,8 @@ const metrcisElements: ContentElementsSection = {
     {
       name: { de: 'Metrics', en: 'Metrics' },
       description: {
-        de: <></>,
-        en: <></>,
+        de: '',
+        en: '',
       },
       slug: 'metrics',
       components: [
@@ -1211,8 +994,8 @@ const metrcisElements: ContentElementsSection = {
           ]}
         />,
         <Metrics
-          $backgroundColor={primaryColor['700']}
-          $textColor={primaryColor['50']}
+          backgroundColor={primaryColor['700']}
+          textColor={primaryColor['50']}
           data={[
             {
               value: 30,

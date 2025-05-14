@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import { mergedConfig } from '../../../default.config';
 
-export const AccordionContainer = styled.div<{ $panelBackgroundColor: string }>`
+export const AccordionContainer = styled.div<{
+  $panelBackgroundColor: string;
+  $textColor: string;
+}>`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+  color: ${({ $textColor }) => $textColor};
 
   .${mergedConfig.classPrefix}-accordion-item {
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.075);

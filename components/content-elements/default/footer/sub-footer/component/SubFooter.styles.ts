@@ -16,10 +16,6 @@ const fontSizeMap: Record<string, string> = {
 };
 
 export const SubFooterContainer = styled.footer<SubFooterContainerProps>`
-  background-color: ${({ $backgroundColor, theme }) =>
-    $backgroundColor ?? theme.subFooter?.backgroundColor ?? '#fff'};
-  color: ${({ $textColor, theme }) =>
-    $textColor ?? theme.subFooter?.textColor ?? 'var(--primary-text-color)'};
   width: 100%;
 
   & > .wrapper {

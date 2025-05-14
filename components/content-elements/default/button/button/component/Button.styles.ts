@@ -2,16 +2,7 @@
 
 import styled, { css } from 'styled-components';
 import { getPrimaryColor } from '../../../constants';
-
-type ContainerProps = {
-  $margin?: 'none' | 'small' | 'medium' | 'large';
-  $size?: 'small' | 'medium' | 'large';
-  $variant?: 'text' | 'contained' | 'outlined';
-  $fontWeight?: number;
-  $speed?: number;
-  $primaryColor: Record<string, string>;
-  $textColor?: string;
-};
+import { ButtonStyleProps } from './Button.types';
 
 const marginMap: Record<string, string> = {
   none: '0',
@@ -26,7 +17,7 @@ const sizeMap: Record<string, string> = {
   large: '1rem 2rem',
 };
 
-export const ButtonContainer = styled.button<ContainerProps>`
+export const ButtonContainer = styled.button<ButtonStyleProps>`
   font-size: 1rem;
   font-weight: ${({ $fontWeight }) => $fontWeight};
   border-radius: 1000rem;
@@ -108,6 +99,7 @@ export const ButtonContainer = styled.button<ContainerProps>`
       pointer-events: none;
       padding: ${({ $size }) => sizeMap[$size!]};
       cursor: pointer;
+      gap: ${({ $gap }) => $gap};
     }
   }
 `;

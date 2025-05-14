@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { BaseTextProps } from '../../base-text';
+import { BaseTextStyleProps } from '../../base-text/component/BaseText.types';
 
-export type HeadingProps = {
-  children?: string | ReactNode;
-  level?: 'h1' | 'h2' | 'h3';
-};
+export type HeadingProps = BaseTextProps;
 
-export type HeadingStylingProps = {
-  $level: HeadingProps['level'];
-};
+export type HeadingStyleProps = BaseTextStyleProps;

@@ -6,7 +6,6 @@ import { getTranslations } from 'next-intl/server';
 import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
 import { getElement } from './utils/getContentElement';
 import { generateElementMetadata } from './utils/generateElementspageMetadata';
-import PropsTable from '@/components/props-table';
 import { IntroText } from '@/components/content-elements/default';
 import Spacer from '@/components/content-elements/default/layout/spacer/component';
 
@@ -48,8 +47,10 @@ const ContentElementPage: FC<ContentElementPageProps> = async ({ params }) => {
         ]}
       />
       <IntroText
-        heading={element.name[locale]}
-        headingType="h1"
+        elementHeading={{
+          value: element.name[locale] as string,
+          element: 'h1',
+        }}
         ctaButton={{
           children: (
             <>
@@ -63,18 +64,14 @@ const ContentElementPage: FC<ContentElementPageProps> = async ({ params }) => {
           href: `/${locale}/content-elements`,
         }}
         align="center"
-        margin="none"
-        padding="small"
+        padding="s"
       >
         {element.description[locale]}
       </IntroText>
-      <Spacer $size="large" aria-hidden="true" />
+      <Spacer size="l" aria-hidden="true" />
       {element?.components?.map((component: ReactNode, idx: number) => (
         <Fragment key={idx}>{component}</Fragment>
       ))}
-      {element?.elementProps && (
-        <PropsTable contentElementProps={element.elementProps} />
-      )}
     </main>
   );
 };

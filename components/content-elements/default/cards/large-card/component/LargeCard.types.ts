@@ -1,23 +1,29 @@
 import { ReactNode } from 'react';
 
-import { WrapperStyleProps } from '../../../layout/wrapper/component';
+import { WrapperProps } from '../../../layout/wrapper';
 import { ButtonProps } from '../../../button/button';
 
 export type LargeCardProps = {
   children?: string | ReactNode;
-  className?: string;
-  $cardBackgroundColor?: string;
-  $backgroundImage?: {
+  cardBackgroundColor?: string;
+  textColor?: string;
+  highlightColor?: string | null;
+  backgroundImage?: {
     src?: string;
     alt?: string;
     width?: number;
     height?: number;
   };
-  $textColor?: string;
-  overlay?: 'none' | 'dark-gradient';
-  ariaLabel?: string;
-  animationOnce?: boolean;
-  isHighlighted?: boolean;
-  $highlightedTextBackgroundColor?: string | null;
+  viewportTriggerOnce?: boolean;
   ctaButton?: ButtonProps[];
-} & WrapperStyleProps;
+  overlay?: 'none' | 'dark-gradient';
+  unwrapped?: boolean;
+} & WrapperProps;
+
+export type LargeCardStyleProps = {
+  $isInViewport: boolean;
+  $isActive?: boolean;
+  $cardBackgroundColor?: string;
+  $textColor?: string;
+  $highlightColor: string;
+};

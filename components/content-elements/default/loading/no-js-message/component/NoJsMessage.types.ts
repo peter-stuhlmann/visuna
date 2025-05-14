@@ -1,10 +1,8 @@
+import { WrapperProps } from '../../../layout/wrapper';
+
 export type NoJsMessageProps = {
-  className?: string;
-  children?: React.ReactNode;
-  $backgroundColor?: string;
-  $textColor?: string;
-  $width?: 'small' | 'large' | 'medium';
-  $innerWidth?: 'small' | 'large' | 'medium';
-  $padding?: 'small' | 'large' | 'medium' | 'none';
-  $margin?: 'small' | 'large' | 'medium' | 'none';
-};
+  hideElement?: string;
+  message?: string;
+  textColor?: string;
+  unwrapped?: boolean;
+} & WrapperProps;

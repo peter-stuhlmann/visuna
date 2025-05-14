@@ -20,7 +20,7 @@ const MapLeaflet = dynamic(() => import('./MapLeaflet'), {
 });
 
 const Map: FC<MapProps> = ({
-  $textColor = getPrimaryColor()['950'],
+  textColor = getPrimaryColor()['950'],
   map,
   placeholderImage,
 }) => {
@@ -52,8 +52,8 @@ const Map: FC<MapProps> = ({
               {map?.enableMapButtonText || 'Click to enable map'}
             </Button>
             <NoJsMessage
-              className={elementClassName + '-overlay'}
-              $textColor={$textColor}
+              hideElement={`.${elementClassName}-overlay`}
+              textColor={textColor}
             >
               Bitte aktviere Javascript in Deinen Browsereinstellungen, um die
               Karte nutzen zu können.

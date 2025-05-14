@@ -63,6 +63,7 @@ const SliderControlMenu: FC<SliderControlMenuProps> = ({
     isLooping,
     slideDuration,
     totalSlides,
+    setIsSlideChangePlaying,
   ]);
 
   useLayoutEffect(() => {
@@ -111,7 +112,7 @@ const SliderControlMenu: FC<SliderControlMenuProps> = ({
     return () => {
       document.removeEventListener('focusin', handleFocusIn);
     };
-  }, []);
+  }, [setIsSlideChangePlaying]);
 
   const togglePlayPause = () => {
     if (isReset) {

@@ -6,6 +6,8 @@ export function getLocalizedFooter(
   locale: Locale
 ): LocalizedFooterData {
   return {
+    backgroundColor: data.backgroundColor,
+    textColor: data.textColor,
     title: data.title[locale],
     nav: data.nav.map((section) => ({
       title: section.title[locale],

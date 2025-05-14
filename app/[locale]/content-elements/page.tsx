@@ -42,7 +42,7 @@ const ContentElementsPage: FC<ContentElementsPageProps> = async ({
           },
         ]}
       />
-      <Wrapper innerWidth="small" textAlign="center">
+      <Wrapper innerWidth="s">
         <h1>{t('contentElements')}</h1>
         {contentElementsSections.map(
           (section: ContentElementsSection, idx: number) => (

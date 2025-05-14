@@ -3,39 +3,40 @@ import { FC } from 'react';
 import { Container } from './Wrapper.styles';
 import { WrapperProps } from './Wrapper.types';
 import getElementClassName from '../../../utils/getElementClassName';
-import { getPrimaryColor } from '../../../constants';
-
-const primaryColor = getPrimaryColor();
 
 const Wrapper: FC<WrapperProps> = ({
   ref,
-  id = 'element-1',
+  id = '',
   children,
-  withShadow = false,
-  width = 'medium',
-  innerWidth = 'medium',
-  margin = 'none',
-  textAlign = 'left',
+  width = 'full',
+  innerWidth = 'xxl',
+  marginBottom = 'none',
+  marginTop = 'none',
+  borderRadius = 'none',
+  innerBorderRadius = 'l',
   backgroundColor = 'transparent',
-  textColor = primaryColor['1000'],
-  padding = 'medium',
+  padding = 'm',
   className = '',
+  element = 'section',
+  style = {},
 }) => {
   const elementClassName = getElementClassName(`wrapper`);
 
   return (
     <Container
       ref={ref}
-      $withShadow={withShadow}
-      $width={width}
-      $innerWidth={innerWidth}
-      $margin={margin}
-      $textAlign={textAlign}
-      $backgroundColor={backgroundColor}
-      $textColor={textColor}
-      $padding={padding}
       id={id}
       className={`${elementClassName} ${className}`}
+      style={style}
+      as={element}
+      $width={width}
+      $innerWidth={innerWidth}
+      $marginBottom={marginBottom}
+      $marginTop={marginTop}
+      $borderRadius={borderRadius}
+      $innerBorderRadius={innerBorderRadius}
+      $backgroundColor={backgroundColor}
+      $padding={padding}
     >
       <div>{children}</div>
     </Container>

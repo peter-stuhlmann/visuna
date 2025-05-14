@@ -1,6 +1,9 @@
-import { FooterData } from '@/components/footer/Footer.types';
+import { getPrimaryColor } from '@/components/content-elements/default/constants';
+import { FooterData } from '@/components/content-elements/default/footer/footer/component/Footer.types';
 
 const footerData: FooterData = {
+  backgroundColor: getPrimaryColor()['700'],
+  textColor: getPrimaryColor()['50'],
   title: {
     de: '&#091;<span>PS</span><span>UI</span>&#093;<span>Content Elemente</span>',
     en: '&#091;<span>PS</span><span>UI</span>&#093;<span>Content Elements</span>',

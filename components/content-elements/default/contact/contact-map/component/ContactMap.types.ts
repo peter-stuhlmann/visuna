@@ -1,16 +1,19 @@
 import { ReactNode } from 'react';
 
-import { WrapperStyleProps } from '../../../layout/wrapper/component';
 import { ImageProps } from '../../../images/image';
 import { MapLeafletProps } from '../../../map/map/component/Map.types';
+import { HeadingProps } from '../../../text/heading';
+import { WrapperProps } from '../../../layout/wrapper';
+import { OverlineProps } from '../../../text/overline';
+import { SublineProps } from '../../../text/subline';
 
 export type ContactMapProps = {
   children?: string | ReactNode;
-  className?: string;
+  textColor?: string;
   image?: ImageProps;
-  heading?: string | ReactNode;
-  headingType?: 'h1' | 'h2' | 'h3';
-  subHeading?: string | ReactNode;
+  heading?: HeadingProps;
+  overline?: OverlineProps;
+  subline?: SublineProps;
   map?: MapLeafletProps;
   iconLinks?:
     | {
@@ -27,5 +30,5 @@ export type ContactMapProps = {
         value?: string;
       }[]
     | null;
-  $imagePosition?: 'left' | 'right';
-} & WrapperStyleProps;
+  imagePosition?: 'left' | 'right';
+} & WrapperProps;

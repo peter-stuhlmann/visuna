@@ -1,11 +1,12 @@
-import { WrapperStyleProps } from '../../../layout/wrapper/component';
+import { WrapperProps } from '../../../layout/wrapper/component';
 import { ImageProps } from '../../../images/image';
 
 export type MapProps = {
   className?: string;
   placeholderImage?: ImageProps;
+  textColor?: string;
   map?: MapLeafletProps & { enableMapButtonText?: string };
-} & WrapperStyleProps;
+} & WrapperProps;
 
 export type MapLeafletProps = {
   center?: [number, number];

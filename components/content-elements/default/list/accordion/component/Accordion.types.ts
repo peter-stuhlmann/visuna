@@ -1,4 +1,5 @@
 import { ElementType, ReactNode } from 'react';
+import { WrapperProps } from '../../../layout/wrapper';
 
 export type AccordionItem = {
   title: string;
@@ -9,16 +10,14 @@ export type AccordionItem = {
 
 export type AccordionProps = {
   items: AccordionItem[];
-  className?: string;
-  $innerWidth?: 'small' | 'medium' | 'large';
-  $backgroundColor?: string;
-  $panelBackgroundColor?: string;
-  $textColor?: string;
+  panelBackgroundColor?: string;
+  textColor?: string;
   defaultIcon?: ElementType;
-  $defaultIconColor?: string;
+  defaultIconColor?: string;
   allowMultiple?: boolean; // <— steuert ob mehrere Panels gleichzeitig offen sein dürfen
   initialOpenIndex?: number | null;
-};
+  unwrapped?: boolean;
+} & WrapperProps;
 
 export type AccordionPanelProps = {
   id: string;

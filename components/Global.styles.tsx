@@ -18,6 +18,8 @@ export const GlobalStyles = createGlobalStyle`
   
   html {
     font-size: var(--font-size);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -54,9 +56,12 @@ export const GlobalStyles = createGlobalStyle`
       white-space: nowrap;
       border: 0;
     }
+  }
 
-    /* :focus-visible {
-      outline: 3px solid red;
-    } */
+  html.no-scroll,
+  body.no-scroll {
+    overflow: hidden !important;
+    height: 100%;
+    touch-action: none; /* verhindert Scroll auf Touch-Geräten */
   }
 `;

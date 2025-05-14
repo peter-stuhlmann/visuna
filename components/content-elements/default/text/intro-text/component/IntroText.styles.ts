@@ -1,14 +1,9 @@
 'use client';
 
 import styled from 'styled-components';
+import { IntroTextStyleProps } from './IntroText.types';
 
-type ContainerProps = {
-  $textColor?: string;
-  $align?: 'left' | 'center' | 'right';
-};
-
-export const IntroTextContainer = styled.div<ContainerProps>`
-  font-size: 1rem;
+export const IntroTextContainer = styled.div<IntroTextStyleProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,13 +11,5 @@ export const IntroTextContainer = styled.div<ContainerProps>`
   width: 100%;
   gap: 2rem;
   color: ${({ $textColor }) => $textColor};
-
-  & > div {
-    width: 100%;
-  }
-
-  a,
-  span {
-    font-size: 1rem;
-  }
+  text-align: ${({ $align }) => $align};
 `;

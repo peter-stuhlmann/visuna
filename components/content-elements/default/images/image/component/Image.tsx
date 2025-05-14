@@ -12,8 +12,8 @@ import { mergedConfig } from '../../../default.config';
 const Image: FC<ImageProps> = ({
   src,
   alt,
-  width = 1425,
-  height = 0,
+  width = 1500,
+  height = 1000,
   copyright = '',
   caption = '',
   className = '',
@@ -48,7 +48,7 @@ const Image: FC<ImageProps> = ({
           onError={handleImageError}
         />
         {isLoading && <Skeleton $width={width} $height={height} />}
-        <NoJsMessage className={`${mergedConfig.classPrefix}-skeleton`} />
+        <NoJsMessage hideElement={`.${mergedConfig.classPrefix}-skeleton`} />
       </div>
       <div>
         {caption}

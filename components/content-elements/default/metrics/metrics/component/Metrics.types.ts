@@ -1,12 +1,14 @@
+import { WrapperProps } from '../../../layout/wrapper';
+
 export type MetricsProps = {
   data: Metric[];
-  $backgroundColor?: string;
-  $textColor?: string;
-  $margin?: 'none' | 'small' | 'medium' | 'large';
+  textColor?: string;
   animated?: boolean;
   animationDuration?: number;
   animationOnce?: boolean;
-};
+  unwrapped?: boolean;
+  padding?: WrapperProps['padding'];
+} & WrapperProps;
 
 export type MetricItemProps = {
   label: number | string;

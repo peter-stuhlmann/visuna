@@ -2,18 +2,15 @@ import React, { FC } from 'react';
 import { HeaderContainer } from './Header.styles';
 import LocaleSwitcherSelect from '../LocaleSwitcherSelect';
 import Link from 'next/link';
+import Logo from '../Logo';
 
 const Header: FC = () => {
   return (
     <HeaderContainer>
       <div>
-        <div className="logo">
-          &#091;
-          <span>PS</span>
-          <span>UI</span>
-          &#093;
-          <span>Content Elements</span>
-        </div>
+        <Link href="/" className="logo">
+          <Logo />
+        </Link>
         <div>
           <noscript>
             <div style={{ display: 'flex', gap: '1rem' }}>

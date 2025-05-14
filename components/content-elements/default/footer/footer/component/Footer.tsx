@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { FooterContainer } from './Footer.styles';
-import SubFooter from '../content-elements/default/footer/sub-footer/component';
+import SubFooter from '../../sub-footer/component';
 import { FooterProps } from './Footer.types';
 
-const Footer: FC<FooterProps> = async ({ data }) => {
+const Footer: FC<FooterProps> = async ({ data, className = '' }) => {
   return (
-    <FooterContainer>
+    <FooterContainer className={className}>
       <div className="main-footer">
         <div
           className="title"

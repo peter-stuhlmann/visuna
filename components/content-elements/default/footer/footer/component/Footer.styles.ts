@@ -2,10 +2,7 @@
 
 import styled from 'styled-components';
 
-export const FooterContainer = styled.footer`
-  font-size: 16px;
-  background-color: #fff;
-  box-sizing: border-box;
+export const FooterContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   gap: 50px;
@@ -13,17 +10,20 @@ export const FooterContainer = styled.footer`
   align-items: flex-start;
   min-height: 70px;
   width: 100%;
+  padding-bottom: 0;
+  box-sizing: border-box;
 
-  @media (max-width: 1280px) {
+  @media (max-width: 768px) {
     flex-direction: column;
     gap: 20px;
+    padding-bottom: 0;
   }
 
   & > .main-footer {
     flex: 0 0 100%;
-    padding: 50px 20px 80px 20px;
     box-sizing: border-box;
     display: flex;
+    flex-flow: row wrap;
     gap: 50px;
     width: 100%;
     max-width: 1440px;
@@ -31,10 +31,6 @@ export const FooterContainer = styled.footer`
 
     @media (max-width: 1280px) {
       flex-direction: column;
-    }
-
-    & > div {
-      min-width: 200px;
     }
 
     .title {
@@ -45,31 +41,28 @@ export const FooterContainer = styled.footer`
       font-size: 0.9rem;
       letter-spacing: 0.05rem;
       margin-bottom: 10px;
+      flex: 1;
     }
 
     & > nav {
       flex: 0 0 auto;
       display: flex;
-      justify-content: flex-end;
-      gap: 20px;
-      flex: 1;
+      gap: 100px;
 
       @media (max-width: 1280px) {
         width: 100%;
         justify-content: flex-start;
       }
 
-      @media (max-width: 1024px) {
+      @media (max-width: 768px) {
         flex-flow: row wrap;
         gap: 50px 20px;
       }
 
       & > div {
-        @media (max-width: 1280px) {
-          flex: 1;
-        }
+        flex: 0 0 auto;
 
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
           flex: 0 0 calc(100% / 2 - (1 / 2 * 20px));
         }
 
@@ -83,7 +76,6 @@ export const FooterContainer = styled.footer`
           margin: 0;
           padding: 0;
           list-style-type: none;
-          min-width: 220px;
 
           @media (max-width: 1280px) {
             width: 100%;
@@ -93,7 +85,7 @@ export const FooterContainer = styled.footer`
 
           & > li {
             & > a {
-              color: rgba(0, 0, 0, 1);
+              color: inherit;
               text-decoration: none;
               padding: 5px 0;
               display: inline-block;

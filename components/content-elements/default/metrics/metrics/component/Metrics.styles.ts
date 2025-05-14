@@ -8,7 +8,6 @@ export const MetricsContainer = styled.div<{
 }>`
   display: flex;
   gap: 1rem;
-  padding: 1rem 0;
 
   @media (max-width: 660px) {
     flex-flow: row wrap;

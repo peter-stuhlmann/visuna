@@ -2,17 +2,15 @@ import { ReactNode } from 'react';
 import { ButtonProps } from '../../../button/button';
 
 export type SliderProps = {
-  id?: string;
-  slides: Slide[];
+  slides: SlideProps[];
   isLooping?: boolean;
   slideDuration?: number;
-  className?: string;
-  $backgroundColor?: string;
   $outline?: 'light' | 'dark';
   slideAnimationDefaultPlay?: boolean;
+  className?: string;
 };
 
-export type Slide = {
+export type SlideProps = {
   content: SlideContent;
   overlay?: 'none' | 'dark-gradient';
   isHighlighted?: boolean;
@@ -36,7 +34,7 @@ export type SliderControlMenuProps = {
   isInViewport: boolean;
   isLooping: boolean;
   slideDuration: number;
-  slides: Slide[];
+  slides: SlideProps[];
   totalSlides: number;
   activeSlideIndex: number;
   setActiveSlideIndex: (activeSlideIndex: number) => void;
@@ -49,4 +47,10 @@ export type VideoStatus = {
   isPlaying: boolean;
   isEnded: boolean;
   buttonLabel: 'Play' | 'Pause' | 'Reset';
+};
+
+export type SliderStyleProps = {
+  $totalSlides: number;
+  $activeSlideIndex: number;
+  $slideOffset: string;
 };

@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
+import { IconName } from '../../../icons/icon/component/Icon.types';
 
 export type ButtonProps = {
   children: string | ReactNode;
@@ -13,8 +14,23 @@ export type ButtonProps = {
   className?: string;
   style?: CSSProperties;
   disabledRipple?: boolean;
-  $textColor?: string;
+  textColor?: string;
   ariaLabel?: string;
   tabIndex?: number;
   type?: 'button' | 'submit' | 'reset';
+  icon?: IconName;
+  iconPosition?: 'start' | 'end';
+  gap?: string;
+};
+
+export type ButtonStyleProps = {
+  $margin?: 'none' | 'small' | 'medium' | 'large';
+  $size?: 'small' | 'medium' | 'large';
+  $variant?: 'text' | 'contained' | 'outlined';
+  $fontWeight?: number;
+  $speed?: number;
+  $primaryColor: Record<string, string>;
+  $textColor?: string;
+  $iconPosition?: 'start' | 'end';
+  $gap?: ButtonProps['gap'];
 };

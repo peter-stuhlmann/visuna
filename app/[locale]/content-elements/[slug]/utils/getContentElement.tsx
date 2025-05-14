@@ -1,4 +1,3 @@
-import { ElementProp } from '@/components/props-table/PropsTable.types';
 import contentElements from '@/data/content-elements';
 import { ReactNode } from 'react';
 
@@ -11,7 +10,6 @@ export type ContentElement = {
   description: Translation;
   slug: string;
   components?: ReactNode[];
-  elementProps?: ElementProp[];
 };
 
 export const getElement = async (

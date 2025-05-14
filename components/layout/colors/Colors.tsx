@@ -44,11 +44,7 @@ const Colors: FC = () => {
   };
 
   return (
-    <Wrapper
-      backgroundColor={primaryColor['700']}
-      textColor={primaryColor['100']}
-      width="large"
-    >
+    <Wrapper backgroundColor={primaryColor['700']} width="l">
       <Container
         $columns={shadeKeys.length}
         onKeyDown={handleContainerKeyDown}
@@ -66,8 +62,8 @@ const Colors: FC = () => {
               const colorValue = colors[colorName][shade];
               const textColor = getContrastColor(
                 colorValue,
-                primaryColor['0'],
-                primaryColor['1000']
+                primaryColor['50'],
+                primaryColor['950']
               );
               return (
                 <ColorBlockWrapper key={shade}>

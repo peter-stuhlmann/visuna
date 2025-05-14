@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 import { mergedConfig } from '../../../default.config';
+import { SliderStyleProps } from './Slider.types';
 
-export const SliderContainer = styled.div<{
-  $totalSlides: number;
-  $activeSlideIndex: number;
-  $slideOffset: string;
-}>`
+export const SliderContainer = styled.div<SliderStyleProps>`
   &.${mergedConfig.classPrefix}-slider-container {
     height: calc(800px + 48px + 2rem);
     margin: 0;
@@ -92,7 +89,8 @@ export const SliderContainer = styled.div<{
 `;
 
 export const SliderControl = styled.div<{ $progress: number }>`
-  position: sticky;
+  position: fixed;
+  z-index: 5000;
   bottom: 2rem;
   width: 100%;
   height: 48px;
@@ -134,6 +132,12 @@ export const SliderControl = styled.div<{ $progress: number }>`
 
   .slide-animation-control-button {
     min-width: 48px;
+
+    & > div > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.5);

@@ -1,6 +1,7 @@
 'use client';
 
 import styled from 'styled-components';
+import { getPrimaryColor } from '../content-elements/default/constants';
 
 export const HeaderContainer = styled.header`
   background-color: #fff;
@@ -19,23 +20,22 @@ export const HeaderContainer = styled.header`
     margin: 0 auto;
 
     .logo {
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: 0.9rem;
-      letter-spacing: 0.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      & > span {
-        &:nth-of-type(1) {
-          color: rgb(209, 0, 105);
-        }
-        &:nth-of-type(3) {
-          color: rgb(209, 0, 105);
-        }
+      svg {
+        fill: ${getPrimaryColor()['700']};
+        width: auto;
+        height: 24px;
       }
     }
 
     svg {
       color: rgba(0, 0, 0, 0.6);
+      fill: rgba(0, 0, 0, 0.6);
+      width: 24px;
+      height: 24px;
     }
   }
 `;

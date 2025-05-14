@@ -79,7 +79,13 @@ const Slide: FC<{
     } else {
       video.pause();
     }
-  }, [videoStatus.isPlaying, activeSlideIndex, slideIndex, isInViewport]);
+  }, [
+    videoStatus.isPlaying,
+    activeSlideIndex,
+    slideIndex,
+    isInViewport,
+    setVideoStatus,
+  ]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -225,7 +231,7 @@ const Slide: FC<{
                 <Button
                   key={idx}
                   variant={button.variant}
-                  $textColor={button.$textColor}
+                  textColor={button.textColor}
                   primaryColor={button.primaryColor}
                   tabIndex={isSlideActive ? 0 : -1}
                 >

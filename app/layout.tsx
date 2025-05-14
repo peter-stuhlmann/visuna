@@ -1,10 +1,6 @@
 import { primaryFont, secondaryFont, tertiaryFont } from '@/assets/fonts';
-import Footer from '@/components/footer';
-import { getLocalizedFooter } from '@/components/footer/utils/getLocalizedFooter';
 import { GlobalStyles } from '@/components/Global.styles';
-import Header from '@/components/header';
 import StyledComponentsRegistry from '@/components/StyledComponentsRegistry';
-import footerData from '@/data/footer-data';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
@@ -23,7 +19,6 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages();
   const locale = await getLocale();
-  const localizedFooter = getLocalizedFooter(footerData, locale as Locale);
 
   return (
     <StyledComponentsRegistry>
@@ -33,11 +28,7 @@ export default async function RootLayout({
           <body
             className={`${primaryFont.variable} ${secondaryFont.variable} ${tertiaryFont.variable}`}
           >
-            <div>
-              <Header />
-              {children}
-            </div>
-            <Footer data={localizedFooter} />
+            <div>{children}</div>
           </body>
         </html>
       </NextIntlClientProvider>

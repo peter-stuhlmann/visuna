@@ -2,31 +2,34 @@
 
 import styled from 'styled-components';
 import { mergedConfig } from '../../../default.config';
+import { ListItemStyleProps, ListStyleProps } from './List.types';
 
-export const ListContainer = styled.ul`
+export const ListContainer = styled.ul<ListStyleProps>`
   margin: 0;
   padding: 0;
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   width: 100%;
+  color: ${({ $textColor }) => $textColor};
+`;
 
-  & > li {
+export const ListItem = styled.li<ListItemStyleProps>`
+  &.${mergedConfig.classPrefix + '-'}list-item {
     display: flex;
     justify-content: flex-start;
+    overflow: hidden;
 
-    & > span {
+    & > div {
       display: flex;
       justify-content: flex-start;
-      gap: 0.5rem;
 
-      .${mergedConfig.classPrefix + '-'}list-icon {
-        width: 1rem;
-        flex: 0 0 1rem;
-        display: flex;
-        justify-content: center;
-        padding-top: 0.25rem;
+      &.highlighted-text {
+        span {
+          background-color: ${({ $highlightColor }) => $highlightColor};
+          padding: 0.25rem 0.5rem;
+          display: inline;
+        }
       }
     }
   }
