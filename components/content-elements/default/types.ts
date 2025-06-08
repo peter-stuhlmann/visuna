@@ -19,3 +19,7 @@ export type FontWeightOptions = 'normal' | 'bold';
 export type Full = 'full';
 export type None = 'none';
 export type ScreenSizeOptions = 's' | 'm' | 'l' | 'xl' | 'xxl' | '3xl' | '4xl';
+
+export type Status = 'success' | 'error' | 'warning' | 'default';
+
+export type Role = 'admin' | 'redakteur';

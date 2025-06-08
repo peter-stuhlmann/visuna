@@ -4,7 +4,9 @@ import {
   FontWeightOptions,
   InnerWidthOptions,
   MarginOptions,
+  Role,
   ScreenSizeOptions,
+  Status,
   WidthOptions,
 } from './types';
 
@@ -33,12 +35,21 @@ export const paddingMap: Record<string, string> = {
   l: '8rem 5rem',
 };
 
-export const paddingMobileMap: Record<string, string> = {
+export const paddingXMap: Record<MarginOptions, string> = {
   none: '0',
   s: '1rem',
-  m: '4rem 1rem',
-  l: '8rem 1rem',
+  m: '2rem',
+  l: '4rem',
+  xl: '8rem',
+  xxl: '12rem',
 };
+
+// export const paddingMobileMap: Record<string, string> = {
+//   none: '0',
+//   s: '1rem',
+//   m: '4rem 1rem',
+//   l: '8rem 1rem',
+// };
 
 export const innerWidthMap: Record<InnerWidthOptions, string> = {
   s: '480px',
@@ -82,4 +93,18 @@ export const screenSizeMap: Record<ScreenSizeOptions, number> = {
   xxl: 1440,
   '3xl': 1920,
   '4xl': 2560,
+};
+
+// BACKEND
+
+export const roleColorMap: Record<Role, string> = {
+  admin: '#00ffd9',
+  redakteur: '#ffeb00',
+};
+
+export const statusColorsMap: Record<Status, string> = {
+  default: '#ccc',
+  success: 'green',
+  error: '#ff0000',
+  warning: '#ff9900',
 };

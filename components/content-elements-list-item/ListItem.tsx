@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react';
-import EastIcon from '@mui/icons-material/East';
 
 import { Container } from './ListItem.styles';
 import { Button } from '../content-elements/default';
@@ -16,11 +15,7 @@ const ListItem: FC<ListItemProps> = ({ description, link, linkText, name }) => {
     <Container>
       <h3>{name}</h3>
       <div>{description}</div>
-      <Button variant="outlined" href={link}>
-        <EastIcon
-          sx={{ marginTop: '-2px', marginRight: '0.5rem' }}
-          aria-hidden="true"
-        />
+      <Button variant="outlined" href={link} icon="MdArrowForward">
         {linkText}
       </Button>
     </Container>

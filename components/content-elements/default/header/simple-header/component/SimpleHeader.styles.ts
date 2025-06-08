@@ -20,6 +20,11 @@ export const SimpleHeaderContainer = styled.div`
     }
   }
 
+  & > div {
+    display: flex;
+    gap: 1rem;
+  }
+
   .menu-button {
     display: none;
 

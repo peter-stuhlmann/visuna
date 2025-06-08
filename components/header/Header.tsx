@@ -1,37 +1,30 @@
 import React, { FC } from 'react';
-import { HeaderContainer } from './Header.styles';
-import LocaleSwitcherSelect from '../LocaleSwitcherSelect';
 import Link from 'next/link';
 import Logo from '../Logo';
+import { getWorkspaces } from '@/app/[locale]/(backend)/workspaces/getWorkspaces';
+import { getLoggedInUser } from '@/utils/getLoggedInUser';
+import HeaderBackendPartial from './HeaderBackendPartial';
+import { SimpleHeaderContainer } from '../content-elements/default/header/simple-header/component/SimpleHeader.styles';
+import { Wrapper } from '../content-elements/default';
 
-const Header: FC = () => {
+const Header: FC = async () => {
+  const loggedInUser = await getLoggedInUser();
+  const workspaces = await getWorkspaces();
+
   return (
-    <HeaderContainer>
-      <div>
-        <Link href="/" className="logo">
+    <Wrapper>
+      <SimpleHeaderContainer>
+        <Link href="/" className="logo" aria-label="Go to homepage">
           <Logo />
         </Link>
         <div>
-          <noscript>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <Link
-                href="/de"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                Deutsch
-              </Link>
-              <Link
-                href="/en"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                English
-              </Link>
-            </div>
-          </noscript>
-          <LocaleSwitcherSelect />
+          <HeaderBackendPartial
+            workspaces={workspaces || []}
+            loggedInUser={loggedInUser}
+          />
         </div>
-      </div>
-    </HeaderContainer>
+      </SimpleHeaderContainer>
+    </Wrapper>
   );
 };
 

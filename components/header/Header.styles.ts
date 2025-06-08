@@ -31,6 +31,16 @@ export const HeaderContainer = styled.header`
       }
     }
 
+    & > div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      @media (max-width: 768px) {
+        gap: 0;
+      }
+    }
+
     svg {
       color: rgba(0, 0, 0, 0.6);
       fill: rgba(0, 0, 0, 0.6);

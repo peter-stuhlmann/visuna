@@ -8,3 +8,7 @@ export type RippleData = {
   y: number;
   size: number;
 };
+
+export type RippleHandle = {
+  createRipple: (event: React.MouseEvent<HTMLElement>) => void;
+};

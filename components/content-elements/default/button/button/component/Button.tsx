@@ -1,12 +1,13 @@
 'use client';
 
-import { forwardRef, Ref } from 'react';
+import { forwardRef, Ref, useRef } from 'react';
 import { ButtonProps } from './Button.types';
 import { ButtonContainer } from './Button.styles';
 import getElementClassName from '@/components/content-elements/default/utils/getElementClassName';
 import Ripple from '../../../ripple/ripple';
 import { getPrimaryColor, getRippleSpeed } from '../../../constants';
 import Icon from '../../../icons/icon';
+import { RippleHandle } from '../../../ripple/ripple/component/Ripple.types';
 
 const rippleSpeed = getRippleSpeed();
 
@@ -26,11 +27,16 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       style,
       disabledRipple = false,
       textColor,
+      borderRadius = 'full',
+      fullWidth,
+      align = 'center',
       ariaLabel,
       tabIndex = 0,
       type = 'button',
       icon,
       iconPosition = 'start',
+      disabled,
+      showOnlyIconOnMobile = false,
     } = props;
 
     if (!children) {
@@ -52,19 +58,34 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
 
     const buttonRef = ref as Ref<HTMLButtonElement>;
     const anchorRef = ref as Ref<HTMLAnchorElement>;
+    const rippleRef = useRef<RippleHandle>(null);
+
+    const handleClick = (
+      event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+    ) => {
+      rippleRef.current?.createRipple(event);
+      onClick?.(event);
+    };
 
     const sharedProps = {
-      onClick,
+      onClick: handleClick,
       style,
       className: `${elementClassName} ${className}`,
       'aria-label': ariaLabel,
       tabIndex: tabIndex,
+      disabled: disabled,
       $primaryColor: resolvedPrimaryColor,
       $textColor: textColor,
       $variant: variant,
       $fontWeight: fontWeight,
       $size: size,
       $margin: margin,
+      $gap: icon ? '0.5rem' : '0',
+      $borderRadius: borderRadius,
+      $fullWidth: fullWidth,
+      $align: align,
+      $iconPosition: iconPosition,
+      $showOnlyIconOnMobile: showOnlyIconOnMobile,
     };
 
     return isLink ? (
@@ -74,14 +95,20 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         href={href}
         target={target}
         rel="noreferrer noopener"
-        $iconPosition={iconPosition}
-        $gap={icon ? '0.5rem' : '0'}
         {...sharedProps}
       >
-        {icon && <Icon name={icon} />}
-        <div>{children}</div>
+        {icon && (
+          <div className="icon">
+            <Icon name={icon} />
+          </div>
+        )}
+        <div className="button-text">{children}</div>
         {!disabledRipple && (
-          <Ripple duration={rippleSpeed} color={resolvedPrimaryColor['500']} />
+          <Ripple
+            ref={rippleRef}
+            duration={rippleSpeed}
+            color={resolvedPrimaryColor['500']}
+          />
         )}
       </ButtonContainer>
     ) : (
@@ -89,16 +116,22 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         as={'button'}
         ref={buttonRef}
         type={type}
-        $iconPosition={iconPosition}
-        $gap={icon ? '0.5rem' : '0'}
         {...sharedProps}
       >
         <div>
-          {icon && <Icon name={icon} />}
-          <div>{children}</div>
+          {icon && (
+            <div className="icon">
+              <Icon name={icon} />
+            </div>
+          )}
+          <div className="button-text">{children}</div>
         </div>
         {!disabledRipple && (
-          <Ripple duration={rippleSpeed} color={resolvedPrimaryColor['500']} />
+          <Ripple
+            ref={rippleRef}
+            duration={rippleSpeed}
+            color={resolvedPrimaryColor['500']}
+          />
         )}
       </ButtonContainer>
     );

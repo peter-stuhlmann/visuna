@@ -15,7 +15,10 @@ const Wrapper: FC<WrapperProps> = ({
   borderRadius = 'none',
   innerBorderRadius = 'l',
   backgroundColor = 'transparent',
-  padding = 'm',
+  paddingTop = 'm',
+  paddingBottom = 'm',
+  paddingLeft = 'm',
+  paddingRight = 'm',
   className = '',
   element = 'section',
   style = {},
@@ -36,7 +39,10 @@ const Wrapper: FC<WrapperProps> = ({
       $borderRadius={borderRadius}
       $innerBorderRadius={innerBorderRadius}
       $backgroundColor={backgroundColor}
-      $padding={padding}
+      $paddingTop={paddingTop}
+      $paddingBottom={paddingBottom}
+      $paddingLeft={paddingLeft}
+      $paddingRight={paddingRight}
     >
       <div>{children}</div>
     </Container>

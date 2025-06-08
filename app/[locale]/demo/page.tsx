@@ -23,7 +23,10 @@ const DemoPage: FC = async () => {
         overlayOpacity={0}
         innerWidth="full"
         innerBorderRadius="none"
-        padding="none"
+        paddingTop="none"
+        paddingBottom="none"
+        paddingLeft="none"
+        paddingRight="none"
         overline={{ value: 'Ich erstelle Deine Website!' }}
         heading={{ value: 'Ich erstelle Deine Website!' }}
         videos={{
@@ -118,7 +121,10 @@ const DemoPage: FC = async () => {
           defaultIcon={'MdCheck'}
           defaultIconColor={colors.GREEN['500']}
           unwrapped
-          padding="none"
+          paddingTop="none"
+          paddingBottom="none"
+          paddingLeft="none"
+          paddingRight="none"
         />
       </LargeCard>
 
@@ -148,7 +154,10 @@ const DemoPage: FC = async () => {
         slideDuration={7000}
         $outline="light"
         innerWidth="full"
-        padding="none"
+        paddingTop="none"
+        paddingBottom="none"
+        paddingLeft="none"
+        paddingRight="none"
         marginTop="l"
         elementHeading={{ value: 'Portfolio', element: 'h2', align: 'center' }}
         elementSubline={{

@@ -16,7 +16,6 @@ export const RippleContainer = styled.div<RippleContainerProps>`
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: transparent;
 
   & > span {
     position: absolute;

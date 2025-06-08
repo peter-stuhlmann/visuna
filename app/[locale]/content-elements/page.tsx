@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { FC } from 'react';
 import { getTranslations } from 'next-intl/server';
 
-import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
+import { Breadcrumbs, Spacer } from '@/components/content-elements/default';
 import contentElementsSections, {
   ContentElementsSection,
 } from '@/data/content-elements';
@@ -42,7 +42,7 @@ const ContentElementsPage: FC<ContentElementsPageProps> = async ({
           },
         ]}
       />
-      <Wrapper innerWidth="s">
+      <Wrapper>
         <h1>{t('contentElements')}</h1>
         {contentElementsSections.map(
           (section: ContentElementsSection, idx: number) => (
@@ -73,6 +73,7 @@ const ContentElementsPage: FC<ContentElementsPageProps> = async ({
           )
         )}
       </Wrapper>
+      <Spacer size="l" aria-hidden="true" />
     </main>
   );
 };

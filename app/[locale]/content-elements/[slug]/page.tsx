@@ -1,12 +1,11 @@
 import { FC, Fragment, ReactNode } from 'react';
 import { notFound } from 'next/navigation';
-import WestIcon from '@mui/icons-material/West';
 import { getTranslations } from 'next-intl/server';
 
 import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
 import { getElement } from './utils/getContentElement';
 import { generateElementMetadata } from './utils/generateElementspageMetadata';
-import { IntroText } from '@/components/content-elements/default';
+import { Icon, IntroText } from '@/components/content-elements/default';
 import Spacer from '@/components/content-elements/default/layout/spacer/component';
 
 export const generateMetadata = generateElementMetadata;
@@ -54,17 +53,13 @@ const ContentElementPage: FC<ContentElementPageProps> = async ({ params }) => {
         ctaButton={{
           children: (
             <>
-              <WestIcon
-                sx={{ marginTop: '-2px', marginRight: '0.5rem' }}
-                aria-hidden="true"
-              />
+              <Icon name="MdArrowBack" />
               {t('backToContentElementsList')}
             </>
           ),
           href: `/${locale}/content-elements`,
         }}
         align="center"
-        padding="s"
       >
         {element.description[locale]}
       </IntroText>
@@ -72,6 +67,7 @@ const ContentElementPage: FC<ContentElementPageProps> = async ({ params }) => {
       {element?.components?.map((component: ReactNode, idx: number) => (
         <Fragment key={idx}>{component}</Fragment>
       ))}
+      <Spacer size="l" aria-hidden="true" />
     </main>
   );
 };

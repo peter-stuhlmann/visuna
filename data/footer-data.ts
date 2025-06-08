@@ -36,6 +36,13 @@ const footerData: FooterData = {
           },
           href: 'demo',
         },
+        {
+          name: {
+            de: 'Backend-Login',
+            en: 'Backend-Login',
+          },
+          href: 'login',
+        },
       ],
     },
     {

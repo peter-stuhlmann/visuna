@@ -32,6 +32,15 @@ export type { ImageProps } from './images/image';
 export { default as Video } from './base/video';
 export type { VideoProps } from './base/video';
 
+export { default as Grid } from './layout/grid';
+export type { GridProps } from './layout/grid';
+
+export { default as DropdownMenu } from './inputs/dropdown-menu';
+export type { DropdownMenuProps } from './inputs/dropdown-menu';
+
+export { default as TextInput } from './inputs/text';
+export type { TextInputProps } from './inputs/text';
+
 // CONTENT-ELEMENTE mit Wrapper
 import LargeCardComponent from './cards/large-card';
 export { default as UnwrappedLargeCard } from './cards/large-card';

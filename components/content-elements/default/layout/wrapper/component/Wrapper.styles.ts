@@ -8,10 +8,16 @@ import {
   borderRadiusMap,
   innerWidthMap,
   marginMap,
-  paddingMap,
-  paddingMobileMap,
+  paddingXMap,
   widthMap,
 } from '../../../styles.config';
+
+const halve = (value: string) => {
+  const match = value.match(/^([\d.]+)([a-z%]+)$/);
+  if (!match) return value;
+  const [, num, unit] = match;
+  return `${parseFloat(num) / 2}${unit}`;
+};
 
 export const Container = styled.section<WrapperStyleProps>`
   position: relative;
@@ -32,7 +38,10 @@ export const Container = styled.section<WrapperStyleProps>`
 
   & > div {
     max-width: ${({ $innerWidth }) => innerWidthMap[$innerWidth!]};
-    padding: ${({ $padding }) => paddingMap[$padding!]};
+    padding-top: ${({ $paddingTop }) => paddingXMap[$paddingTop!]};
+    padding-right: ${({ $paddingRight }) => paddingXMap[$paddingRight!]};
+    padding-bottom: ${({ $paddingBottom }) => paddingXMap[$paddingBottom!]};
+    padding-left: ${({ $paddingLeft }) => paddingXMap[$paddingLeft!]};
     border-radius: ${({ $innerBorderRadius }) =>
       borderRadiusMap[$innerBorderRadius!]};
     box-sizing: border-box;
@@ -40,7 +49,12 @@ export const Container = styled.section<WrapperStyleProps>`
     position: relative;
 
     @media (max-width: 768px) {
-      padding: ${({ $padding }) => paddingMobileMap[$padding!]};
+      padding-top: ${({ $paddingTop }) => halve(paddingXMap[$paddingTop!])};
+      padding-right: ${({ $paddingRight }) =>
+        halve(paddingXMap[$paddingRight!])};
+      padding-bottom: ${({ $paddingBottom }) =>
+        halve(paddingXMap[$paddingBottom!])};
+      padding-left: ${({ $paddingLeft }) => halve(paddingXMap[$paddingLeft!])};
     }
   }
 `;

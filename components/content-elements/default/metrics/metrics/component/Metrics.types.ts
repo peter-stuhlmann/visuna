@@ -7,7 +7,7 @@ export type MetricsProps = {
   animationDuration?: number;
   animationOnce?: boolean;
   unwrapped?: boolean;
-  padding?: WrapperProps['padding'];
+  // padding?: WrapperProps['padding'];
 } & WrapperProps;
 
 export type MetricItemProps = {

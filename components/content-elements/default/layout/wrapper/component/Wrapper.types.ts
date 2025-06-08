@@ -16,7 +16,10 @@ export type WrapperStyleProps = {
   $innerWidth: WrapperProps['innerWidth'];
   $marginTop: WrapperProps['marginTop'];
   $marginBottom: WrapperProps['marginBottom'];
-  $padding: WrapperProps['padding'];
+  $paddingTop: WrapperProps['paddingTop'];
+  $paddingBottom: WrapperProps['paddingBottom'];
+  $paddingLeft: WrapperProps['paddingLeft'];
+  $paddingRight: WrapperProps['paddingRight'];
   $backgroundColor: WrapperProps['backgroundColor'];
   $borderRadius: WrapperProps['borderRadius'];
   $innerBorderRadius: WrapperProps['innerBorderRadius'];
@@ -35,7 +38,10 @@ export type WrapperProps = {
   innerBorderRadius?: InnerBorderRadiusOptions;
   marginBottom?: MarginOptions;
   marginTop?: MarginOptions;
-  padding?: PaddingOptions;
+  paddingTop?: PaddingOptions;
+  paddingBottom?: PaddingOptions;
+  paddingLeft?: PaddingOptions;
+  paddingRight?: PaddingOptions;
   backgroundColor?: string;
   elementOverline?: OverlineProps;
   elementHeading?: HeadingProps;

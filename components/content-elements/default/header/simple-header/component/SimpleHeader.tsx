@@ -14,8 +14,7 @@ const LocaleSwitcherSelect = dynamic(
 );
 
 const SimpleHeader: FC<SimpleHeaderProps> = ({ data, className }) => {
-  console.log('SimpleHeader', data);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
     <SimpleHeaderContainer className={className}>

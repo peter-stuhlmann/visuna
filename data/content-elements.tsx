@@ -75,7 +75,6 @@ const textElements: ContentElementsSection = {
           align="center"
           backgroundColor={primaryColor['700']}
           textColor={primaryColor['100']}
-          padding="l"
         >
           <p>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam

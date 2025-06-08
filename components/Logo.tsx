@@ -8,6 +8,7 @@ const Logo: FC = () => {
       width="6985pt"
       height="1602pt"
       viewBox="0 0 6985 1602"
+      aria-hidden="true"
     >
       <g transform="translate(0,1602) scale(0.1,-0.1)" stroke="none">
         <path

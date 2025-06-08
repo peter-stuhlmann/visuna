@@ -3,6 +3,8 @@
 import styled, { css } from 'styled-components';
 import { getPrimaryColor } from '../../../constants';
 import { ButtonStyleProps } from './Button.types';
+import { borderRadiusMap } from '../../../styles.config';
+// import { AlignOptions } from '../../../types';
 
 const marginMap: Record<string, string> = {
   none: '0',
@@ -17,28 +19,47 @@ const sizeMap: Record<string, string> = {
   large: '1rem 2rem',
 };
 
+// const alignFlexMap: Record<AlignOptions, string> = {
+//   left: 'flex-start',
+//   right: 'flex-end',
+//   center: 'center',
+//   justify: 'flex-start',
+// };
+
 export const ButtonContainer = styled.button<ButtonStyleProps>`
   font-size: 1rem;
   font-weight: ${({ $fontWeight }) => $fontWeight};
-  border-radius: 1000rem;
+  border-radius: ${({ $borderRadius }) => borderRadiusMap[$borderRadius!]};
   cursor: pointer;
   text-decoration: none;
   color: ${({ $textColor }) => $textColor || getPrimaryColor()['900']};
   margin: ${({ $margin }) => marginMap[$margin!]};
   position: relative;
   overflow: hidden;
-  width: fit-content;
+  width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
   min-width: 48px;
   min-height: 48px;
   box-sizing: border-box;
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
     border 0.2s ease-in-out;
   line-height: 1.5;
-  text-align: center;
+  text-align: ${({ $align }) => $align};
+  background-color: red;
   padding: 0;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    ${({ $showOnlyIconOnMobile }) =>
+      $showOnlyIconOnMobile && `width: 48px; height: 48px;`};
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
 
   ${({ $variant, $primaryColor }) => {
     switch ($variant) {
@@ -90,16 +111,39 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
   }
 
   & > div {
-    &:first-of-type {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-      pointer-events: none;
-      padding: ${({ $size }) => sizeMap[$size!]};
-      cursor: pointer;
-      gap: ${({ $gap }) => $gap};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    padding: ${({ $size }) => sizeMap[$size!]};
+    cursor: pointer;
+    gap: ${({ $gap }) => $gap};
+
+    .icon {
+      padding-right: 0;
+      display: flex;
+    }
+
+    .button-text {
+      width: 100%;
+      justify-content: ${({ $align }) => $align};
+
+      @media (max-width: 768px) {
+        display: ${({ $showOnlyIconOnMobile }) =>
+          $showOnlyIconOnMobile ? 'none' : 'block'};
+      }
+    }
+
+    &.ripple {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 0;
     }
   }
 `;
