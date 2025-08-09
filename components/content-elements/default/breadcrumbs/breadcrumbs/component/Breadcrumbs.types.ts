@@ -3,7 +3,7 @@ import { WrapperProps } from '../../../layout/wrapper';
 export type BreadcrumbItem = {
   label: string;
   href?: string | null;
-  title: string;
+  title?: string;
   isActive?: boolean;
 };
 

@@ -1,5 +1,5 @@
-import { WrapperProps } from '../../../layout/wrapper';
 import { IconName } from '../../../icons/icon/component/Icon.types';
+import { ListData } from '../../../types';
 
 export type ListItemProps = {
   text: string;
@@ -7,14 +7,7 @@ export type ListItemProps = {
   iconColor?: string;
 };
 
-export type ListProps = {
-  items: ListItemProps[];
-  textColor?: string;
-  highlightColor?: string;
-  defaultIcon?: IconName;
-  defaultIconColor?: string;
-  unwrapped?: boolean;
-} & WrapperProps;
+export type ListProps = ListData;
 
 export type ListStyleProps = {
   $textColor?: string;

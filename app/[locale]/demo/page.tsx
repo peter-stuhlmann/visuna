@@ -1,46 +1,48 @@
 import { FC } from 'react';
 
-import { getPrimaryColor } from '@/components/content-elements/default/constants';
+// import { getPrimaryColor } from '@/components/content-elements/default/constants';
 import {
-  ContactMap,
+  // ContactMap,
   ImageText,
-  LargeCard,
-  List,
-  LogoGrid,
+  // LargeCard,
+  // List,
+  // LogoGrid,
   Metrics,
-  VideoHero,
-  Slider,
+  // VideoHero,
+  // Slider,
 } from '@/components/content-elements/default';
-import colors from '@/components/content-elements/default/constants/colors';
-import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from 'react-icons/ai';
+// import colors from '@/components/content-elements/default/constants/colors';
+// import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from 'react-icons/ai';
 
 const DemoPage: FC = async () => {
-  const primaryColor = getPrimaryColor();
+  // const primaryColor = getPrimaryColor();
 
   return (
     <main>
-      <VideoHero
-        overlayOpacity={0}
-        innerWidth="full"
-        innerBorderRadius="none"
-        paddingTop="none"
-        paddingBottom="none"
-        paddingLeft="none"
-        paddingRight="none"
-        overline={{ value: 'Ich erstelle Deine Website!' }}
-        heading={{ value: 'Ich erstelle Deine Website!' }}
-        videos={{
-          s: {
-            src: '/test-1.mp4',
-          },
-          m: {
-            src: '/test-9.mp4',
-          },
-          l: {
-            src: '/test-9.mp4',
+      {/* <VideoHero
+        data={{
+          overlayOpacity: 0,
+          innerWidth: 'full',
+          innerBorderRadius: 'none',
+          paddingTop: 'none',
+          paddingLeft: 'none',
+          paddingRight: 'none',
+          paddingBottom: 'none',
+          videos: {
+            s: {
+              src: '/test-1.mp4',
+            },
+            m: {
+              src: '/test-9.mp4',
+            },
+            l: {
+              src: '/test-9.mp4',
+            },
           },
         }}
-      />
+        // overline={{ value: 'Ich erstelle Deine Website!' }}
+        // heading={{ value: 'Ich erstelle Deine Website!' }}
+      /> */}
 
       <ImageText
         imagePosition="left"
@@ -53,7 +55,7 @@ const DemoPage: FC = async () => {
         heading={{ value: 'Peter R. Stuhlmann', element: 'h2' }}
         overline={{ value: 'Webentwickler aus Berlin' }}
         ctaButton={{ children: 'Lebenslauf (PDF)' }}
-        marginTop="l"
+        data={{ marginTop: 'l' }}
       >
         <p>
           Ich bin Peter, 29 Jahre alt und wohne in Berlin. Seit 2016 bin ich
@@ -63,72 +65,77 @@ const DemoPage: FC = async () => {
       </ImageText>
 
       <Metrics
-        marginTop="none"
-        marginBottom="none"
-        data={[
-          {
-            value: 9,
-            label: 'Jahre Praxiserfahrung',
-          },
-          {
-            value: 80,
-            label: 'zufriedene Kunden',
-          },
-          {
-            value: 130,
-            label: 'umgesetzte Projekte',
-          },
-        ]}
+        data={{
+          metrics: [
+            {
+              value: 9,
+              label: 'Jahre Praxiserfahrung',
+            },
+            {
+              value: 80,
+              label: 'zufriedene Kunden',
+            },
+            {
+              value: 130,
+              label: 'umgesetzte Projekte',
+            },
+          ],
+          marginTop: 'none',
+          marginBottom: 'none',
+        }}
       />
 
-      <LargeCard
-        id={'large-card-1'}
-        marginBottom="l"
-        backgroundImage={{
-          src: '/img/image-3.png',
-          alt: 'Image 3',
-        }}
-        elementHeading={{
-          value: 'Services',
-          element: 'h2',
-          align: 'center',
-        }}
-        elementSubline={{
-          value:
+      {/* <LargeCard
+        data={{
+          id: 'large-card-1',
+          marginBottom: 'l',
+          backgroundImage: {
+            src: '/img/image-3.png',
+            alt: 'Image 3',
+          },
+          headingValue: 'Services',
+          headingElement: 'h2',
+          sublineValue:
             'Was eine Website in 2025 bieten sollte und was ich Dir bieten kann:',
-          align: 'center',
+          highlightColor: primaryColor['100'],
+          children: (
+            <>
+              <h3>
+                <span>Lorem ipsum</span>
+              </h3>
+              <p>
+                <span>Lorem ipsum dolor sit amet.</span>
+              </p>
+              <List
+                data={{
+                  marginTop: 'none',
+                  marginBottom: 'none',
+                  defaultIcon: 'MdCheck',
+                  defaultIconColor: colors.GREEN['500'],
+                  paddingTop: 'none',
+                  paddingBottom: 'none',
+                  paddingLeft: 'none',
+                  paddingRight: 'none',
+                  items: [
+                    {
+                      text: 'Optimierung für gängige Screen- und Mobile-Devices',
+                    },
+                    {
+                      text: 'Entwicklung barrierefreier Websites',
+                    },
+                    { text: 'Suchmaschinenoptimierung (SEO)' },
+                    { text: 'Lorem ipsum dolor sit amet' },
+                    {
+                      text: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
+                    },
+                  ],
+                }}
+              />
+            </>
+          ),
         }}
-        highlightColor={primaryColor['100']}
-      >
-        <h3>
-          <span>Lorem ipsum</span>
-        </h3>
-        <p>
-          <span>Lorem ipsum dolor sit amet.</span>
-        </p>
-        <List
-          items={[
-            {
-              text: 'Optimierung für gängige Screen- und Mobile-Devices',
-            },
-            {
-              text: 'Entwicklung barrierefreier Websites',
-            },
-            { text: 'Suchmaschinenoptimierung (SEO)' },
-            { text: 'Lorem ipsum dolor sit amet' },
-            { text: 'Lorem ipsum dolor sit amet, consetetur sadipscing' },
-          ]}
-          defaultIcon={'MdCheck'}
-          defaultIconColor={colors.GREEN['500']}
-          unwrapped
-          paddingTop="none"
-          paddingBottom="none"
-          paddingLeft="none"
-          paddingRight="none"
-        />
-      </LargeCard>
-
-      <ImageText
+      /> */}
+      {/* <ImageText
         imagePosition="right"
         image={{
           src: '/img/computer.jpg',
@@ -147,9 +154,9 @@ const DemoPage: FC = async () => {
           Im Angebotskalkulator werden alle wichtigen Informationen abgefragt,
           die für eine unverbindliche Angebotserstellung benötigt werden.
         </p>
-      </ImageText>
+      </ImageText> */}
 
-      <Slider
+      {/* <Slider
         id="slider-1"
         slideDuration={7000}
         $outline="light"
@@ -348,9 +355,9 @@ const DemoPage: FC = async () => {
             ),
           },
         ]}
-      />
+      /> */}
 
-      <LogoGrid
+      {/* <LogoGrid
         id="logo-grid-1"
         innerWidth="l"
         elementHeading={{ element: 'h2', value: 'Tech Stack', align: 'center' }}
@@ -449,9 +456,9 @@ const DemoPage: FC = async () => {
             },
           },
         ]}
-      />
+      /> */}
 
-      <ContactMap
+      {/* <ContactMap
         imagePosition="right"
         marginTop="l"
         marginBottom="l"
@@ -510,7 +517,7 @@ const DemoPage: FC = async () => {
           nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
           sed diam voluptua.
         </p>
-      </ContactMap>
+      </ContactMap> */}
     </main>
   );
 };

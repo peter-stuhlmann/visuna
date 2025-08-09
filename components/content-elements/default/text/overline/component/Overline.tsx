@@ -7,8 +7,7 @@ import BaseText from '../../base-text';
 const Overline: FC<OverlineProps> = ({
   textTransform = 'none',
   align = 'left',
-  color = getPrimaryColor()['950'],
-  fontWeight = 'normal',
+  textColor = getPrimaryColor()['950'],
   element = 'div',
   value = '',
 }) => {
@@ -16,8 +15,7 @@ const Overline: FC<OverlineProps> = ({
     <BaseText
       textTransform={textTransform}
       align={align}
-      color={color}
-      fontWeight={fontWeight}
+      textColor={textColor}
       element={element}
       value={value}
     />

@@ -111,7 +111,7 @@ const WorkspaceDeleteDialog: FC<{
           type="text"
           label="Workspace-Name"
           value={deleteConfirmation}
-          onChange={setDeleteConfirmation}
+          onChange={(value) => setDeleteConfirmation(value)}
           status={deleteConfirmation === workspace.name ? 'success' : 'error'}
         />
         <p>
@@ -121,11 +121,12 @@ const WorkspaceDeleteDialog: FC<{
           type="text"
           label="Bestätigung"
           value={verificationConfirmation}
-          onChange={setVerificationConfirmation}
+          onChange={(value) => setVerificationConfirmation(value)}
           status={
             verificationConfirmation === DELETE_CONFIRM_2 ? 'success' : 'error'
           }
         />
+
         <ButtonGroup>
           <Button onClick={() => setIsDeleteDialogOpen(false)}>
             Abbrechen

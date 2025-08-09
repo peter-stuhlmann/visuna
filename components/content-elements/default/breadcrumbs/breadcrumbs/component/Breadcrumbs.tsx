@@ -10,7 +10,6 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
   textColor = getPrimaryColor()['950'],
   activeTextColor = getPrimaryColor()['500'],
   dividerColor = getPrimaryColor()['400'],
-  className = '',
 }) => {
   if (!links || links.length === 0) {
     console.error(
@@ -20,7 +19,6 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 
   return (
     <BreadcrumbsContainer
-      className={className}
       $textColor={textColor}
       $activeTextColor={activeTextColor}
       $dividerColor={dividerColor}

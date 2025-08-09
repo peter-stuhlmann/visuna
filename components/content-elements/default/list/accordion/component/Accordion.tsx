@@ -16,7 +16,6 @@ const Accordion: FC<AccordionProps> = ({
   initialOpenIndex = null,
   textColor = getPrimaryColor()['950'],
   panelBackgroundColor = getPrimaryColor()['0'],
-  className = '',
 }) => {
   const elementClassName = getElementClassName('accordion');
 
@@ -46,7 +45,6 @@ const Accordion: FC<AccordionProps> = ({
     <AccordionContainer
       $panelBackgroundColor={panelBackgroundColor}
       $textColor={textColor}
-      className={className}
     >
       {items.map((item: AccordionItem, idx: number) => (
         <AccordionPanel

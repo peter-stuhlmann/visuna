@@ -31,7 +31,7 @@ const ImageText: FC<ImageTextProps> = ({
           {children}
           {ctaButton?.children && (
             <>
-              <Spacer size="s" />
+              <Spacer data={{ size: 's' }} />
               <Button
                 href={ctaButton.href}
                 target={ctaButton.target}

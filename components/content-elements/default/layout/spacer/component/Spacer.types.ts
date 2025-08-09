@@ -1,14 +1,9 @@
-import { CSSProperties } from 'react';
-import { SizeOptions } from '../../../types';
+import { SpacerData } from '../../../types';
 
 export type SpacerProps = {
-  className?: string;
-  style?: CSSProperties;
-  size?: SizeOptions;
-  backgroundColor?: string;
+  data?: SpacerData;
 };
 
 export type SpacerStyleProps = {
-  $size?: SpacerProps['size'];
-  $backgroundColor?: string;
+  $size?: SpacerData['size'];
 };

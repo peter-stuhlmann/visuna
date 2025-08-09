@@ -7,8 +7,7 @@ import { getPrimaryColor } from '../../../constants';
 const BaseText: FC<BaseTextProps> = ({
   textTransform = 'none',
   align = 'left',
-  color = getPrimaryColor()['950'],
-  fontWeight = 'normal',
+  textColor = getPrimaryColor()['950'],
   element = 'div',
   value = '',
 }) => {
@@ -17,8 +16,7 @@ const BaseText: FC<BaseTextProps> = ({
       as={element}
       $textTransform={textTransform}
       $align={align}
-      $color={color}
-      $fontWeight={fontWeight}
+      $color={textColor}
     >
       {value}
     </StyledBaseText>

@@ -13,7 +13,6 @@ import { getPrimaryColor } from '../../../constants';
 import { allowMapTemporarily } from './utils/allowMapTemporarily';
 import { isMapConsentGiven } from './utils/isMapConsentGiven';
 
-// Dynamischer Import der Leaflet-Karte
 const MapLeaflet = dynamic(() => import('./MapLeaflet'), {
   ssr: false,
   loading: () => null,
@@ -54,10 +53,10 @@ const Map: FC<MapProps> = ({
             <NoJsMessage
               hideElement={`.${elementClassName}-overlay`}
               textColor={textColor}
-            >
-              Bitte aktviere Javascript in Deinen Browsereinstellungen, um die
-              Karte nutzen zu können.
-            </NoJsMessage>
+              message={
+                'Bitte aktiviere Javascript in Deinen Browsereinstellungen, um die Karte nutzen zu können.'
+              }
+            />
           </div>
         </>
       ) : (

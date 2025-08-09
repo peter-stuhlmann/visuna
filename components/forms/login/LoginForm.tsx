@@ -13,6 +13,9 @@ type LoginFormProps = {
 const LoginForm: FC<LoginFormProps> = ({ setStatusMessage }) => {
   const router = useRouter();
 
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [showPassword, setShowPassword] = useState<boolean>(false);
   const showPassword = false;
@@ -31,11 +34,9 @@ const LoginForm: FC<LoginFormProps> = ({ setStatusMessage }) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-
     const response = await signIn('credentials', {
-      email: formData.get('email'),
-      password: formData.get('password'),
+      email: email,
+      password: password,
       redirect: false,
     });
 
@@ -66,7 +67,9 @@ const LoginForm: FC<LoginFormProps> = ({ setStatusMessage }) => {
         label="E-Mail"
         name="email"
         required
+        value={email}
         type={'email'}
+        onChange={(value) => setEmail(value)}
         autoFocus
       />
 
@@ -74,8 +77,10 @@ const LoginForm: FC<LoginFormProps> = ({ setStatusMessage }) => {
         id="password"
         label="Passwort"
         name="password"
+        value={password}
         required
         type={showPassword ? 'text' : 'password'}
+        onChange={(value) => setPassword(value)}
       />
 
       <Button type="submit" variant="contained" disabled={isLoading}>

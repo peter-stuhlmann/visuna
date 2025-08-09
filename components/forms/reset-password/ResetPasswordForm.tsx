@@ -40,10 +40,15 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({
     <form
       onSubmit={handleSubmit}
       noValidate
-      style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        alignItems: 'flex-start',
+      }}
     >
       <TextInput id="email" label="E-Mail" type="email" required />
-      <Button type="submit" fullWidth variant="contained" disabled={isLoading}>
+      <Button type="submit" variant="contained" disabled={isLoading}>
         {isLoading ? 'Loading...' : 'Passwort zurücksetzen'}
       </Button>
     </form>

@@ -1,50 +1,31 @@
 import { CSSProperties, ReactNode, Ref } from 'react';
-import {
-  BorderRadiusOptions,
-  InnerBorderRadiusOptions,
-  InnerWidthOptions,
-  MarginOptions,
-  PaddingOptions,
-  WidthOptions,
-} from '../../../types';
-import { OverlineProps } from '../../../text/overline';
-import { HeadingProps } from '../../../text/heading';
-import { SublineProps } from '../../../text/subline';
+import { BasePageElementData } from '../../../types';
 
 export type WrapperStyleProps = {
-  $width: WrapperProps['width'];
-  $innerWidth: WrapperProps['innerWidth'];
-  $marginTop: WrapperProps['marginTop'];
-  $marginBottom: WrapperProps['marginBottom'];
-  $paddingTop: WrapperProps['paddingTop'];
-  $paddingBottom: WrapperProps['paddingBottom'];
-  $paddingLeft: WrapperProps['paddingLeft'];
-  $paddingRight: WrapperProps['paddingRight'];
-  $backgroundColor: WrapperProps['backgroundColor'];
-  $borderRadius: WrapperProps['borderRadius'];
-  $innerBorderRadius: WrapperProps['innerBorderRadius'];
+  $width: BasePageElementData['width'];
+  $innerWidth: BasePageElementData['innerWidth'];
+  $marginTop: BasePageElementData['marginTop'];
+  $marginBottom: BasePageElementData['marginBottom'];
+  $paddingTop: BasePageElementData['paddingTop'];
+  $paddingBottom: BasePageElementData['paddingBottom'];
+  $paddingLeft: BasePageElementData['paddingLeft'];
+  $paddingRight: BasePageElementData['paddingRight'];
+  $backgroundColor: BasePageElementData['backgroundColor'];
+  $borderRadius: BasePageElementData['borderRadius'];
+  $innerBorderRadius: BasePageElementData['innerBorderRadius'];
 };
 
 export type WrapperProps = {
+  data?: BasePageElementData;
+  className?: string;
+};
+
+export type WrapperPropsFromData = {
   id?: string;
   className?: string;
   style?: CSSProperties;
   element?: 'section' | 'div' | 'header' | 'footer';
   ref?: Ref<HTMLDivElement>;
   children?: ReactNode;
-  width?: WidthOptions;
-  innerWidth?: InnerWidthOptions;
-  borderRadius?: BorderRadiusOptions;
-  innerBorderRadius?: InnerBorderRadiusOptions;
-  marginBottom?: MarginOptions;
-  marginTop?: MarginOptions;
-  paddingTop?: PaddingOptions;
-  paddingBottom?: PaddingOptions;
-  paddingLeft?: PaddingOptions;
-  paddingRight?: PaddingOptions;
-  backgroundColor?: string;
-  elementOverline?: OverlineProps;
-  elementHeading?: HeadingProps;
-  elementSubline?: SublineProps;
-  unwrapped?: boolean;
+  data: BasePageElementData;
 };

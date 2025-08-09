@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { FC } from 'react';
 import { getTranslations } from 'next-intl/server';
 
-import { Breadcrumbs, Spacer } from '@/components/content-elements/default';
+import { Breadcrumbs } from '@/components/content-elements/default';
 import contentElementsSections, {
   ContentElementsSection,
 } from '@/data/content-elements';
@@ -42,38 +42,43 @@ const ContentElementsPage: FC<ContentElementsPageProps> = async ({
           },
         ]}
       />
-      <Wrapper>
-        <h1>{t('contentElements')}</h1>
-        {contentElementsSections.map(
-          (section: ContentElementsSection, idx: number) => (
-            <section
-              key={(section.name[locale] as string) + idx}
-              style={{ margin: '0 0 4rem 0' }}
-            >
-              <h2>{section?.name[locale]}</h2>
-              {section?.description?.[locale] && (
-                <div>{section.description[locale]}</div>
+      <Wrapper
+        data={{
+          children: (
+            <>
+              <h1>{t('contentElements')}</h1>
+              {contentElementsSections.map(
+                (section: ContentElementsSection, idx: number) => (
+                  <section
+                    key={(section.name[locale] as string) + idx}
+                    style={{ margin: '0 0 4rem 0' }}
+                  >
+                    <h2>{section?.name[locale]}</h2>
+                    {section?.description?.[locale] && (
+                      <div>{section.description[locale]}</div>
+                    )}
+                    {section?.elements && (
+                      <List>
+                        {section.elements.map(
+                          (element: ContentElement, idx: number) => (
+                            <ListItem
+                              key={(element.name[locale] as string) + idx}
+                              description={element.description[locale]}
+                              name={element.name[locale] as string}
+                              link={`/${locale}/content-elements/${element.slug}`}
+                              linkText={t('goToPreview')}
+                            />
+                          )
+                        )}
+                      </List>
+                    )}
+                  </section>
+                )
               )}
-              {section?.elements && (
-                <List>
-                  {section.elements.map(
-                    (element: ContentElement, idx: number) => (
-                      <ListItem
-                        key={(element.name[locale] as string) + idx}
-                        description={element.description[locale]}
-                        name={element.name[locale] as string}
-                        link={`/${locale}/content-elements/${element.slug}`}
-                        linkText={t('goToPreview')}
-                      />
-                    )
-                  )}
-                </List>
-              )}
-            </section>
-          )
-        )}
-      </Wrapper>
-      <Spacer size="l" aria-hidden="true" />
+            </>
+          ),
+        }}
+      />
     </main>
   );
 };

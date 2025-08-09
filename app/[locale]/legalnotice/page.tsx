@@ -20,9 +20,9 @@ const LegalNoticePage: FC = async () => {
           },
         ]}
       />
-      <IntroText elementHeading={{ value: 'Legal notice' }}>
-        Lorem ipsum
-      </IntroText>
+      <IntroText
+        data={{ headingValue: 'Legal notice', children: 'Lorem ipsum' }}
+      />
     </main>
   );
 };

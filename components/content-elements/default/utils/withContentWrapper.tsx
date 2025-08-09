@@ -1,56 +1,59 @@
 import React, { ComponentType, FC } from 'react';
-import Wrapper, { WrapperProps } from '../layout/wrapper';
+import Wrapper from '../layout/wrapper';
 import Heading from '../text/heading';
 import Overline from '../text/overline';
 import Subline from '../text/subline';
 import Spacer from '../layout/spacer';
 import getElementClassName from './getElementClassName';
+import { PageElementData } from '../types';
+
+type WithDataWrapperProps = {
+  data?: PageElementData; // data ist optional
+};
 
 export function withContentElementWrapper<P extends object>(
   Component: ComponentType<P>,
   baseClassName?: string
-): FC<P & WrapperProps> {
-  const WrappedComponent: FC<P & WrapperProps> = (props) => {
-    const {
-      elementOverline,
-      elementHeading,
-      elementSubline,
-      className,
-      unwrapped = false,
-      ...restProps
-    } = props;
+): FC<P & WithDataWrapperProps> {
+  const WrappedComponent: FC<P & WithDataWrapperProps> = (props) => {
+    const { data: rawData, ...rest } = props;
+
+    const data: PageElementData = rawData ?? {};
+
+    const unwrapped = data.unwrapped ?? false;
 
     const elementClassName = baseClassName
       ? getElementClassName(baseClassName)
       : '';
 
-    if (unwrapped) {
-      return (
+    const content = (
+      <>
+        {data.overlineValue && (
+          <Overline value={data.overlineValue as string} />
+        )}
+        {data.headingValue && <Heading value={data.headingValue as string} />}
+        {data.sublineValue && <Subline value={data.sublineValue as string} />}
+        {(data.overlineValue || data.headingValue || data.sublineValue) && (
+          <Spacer />
+        )}
         <Component
-          className={`${className ?? ''} ${elementClassName}`}
-          {...(restProps as P)}
+          {...(rest as P)}
+          data={data}
+          className={`${elementClassName}`}
         />
-      );
-    }
+      </>
+    );
+
+    if (unwrapped) return content;
 
     return (
       <Wrapper
-        className={`${elementClassName}-wrapper ${
-          className ? className + '-wrapper' : ''
-        }`}
-        {...restProps}
-      >
-        {elementOverline?.value && <Overline {...elementOverline} />}
-        {elementHeading?.value && <Heading {...elementHeading} />}
-        {elementSubline?.value && <Subline {...elementSubline} />}
-        {(elementOverline?.value ||
-          elementHeading?.value ||
-          elementSubline?.value) && <Spacer />}
-        <Component
-          className={`${className ?? ''} ${elementClassName}`}
-          {...(restProps as P)}
-        />
-      </Wrapper>
+        className={`${elementClassName}-wrapper`}
+        data={{
+          ...data,
+          children: content,
+        }}
+      />
     );
   };
 

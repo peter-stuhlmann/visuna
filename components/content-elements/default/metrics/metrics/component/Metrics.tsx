@@ -7,14 +7,18 @@ import { getPrimaryColor } from '../../../constants';
 import useIsInViewport from '../../../utils/useIsInViewport';
 import MetricItem from './MetricItem';
 
-const Metrics: FC<MetricsProps> = ({
-  data = [],
-  textColor = getPrimaryColor()['950'],
-  animated = true,
-  animationDuration = 2500,
-  animationOnce = true,
+const Metrics: FC<{ data: MetricsProps; className?: string }> = ({
+  data,
   className,
 }) => {
+  const {
+    metrics = [],
+    textColor = getPrimaryColor()['950'],
+    animated = true,
+    animationDuration = 2500,
+    animationOnce = true,
+  } = data;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const isInViewport = useIsInViewport(containerRef, 0, animationOnce);
 
@@ -22,10 +26,10 @@ const Metrics: FC<MetricsProps> = ({
     <MetricsContainer
       ref={containerRef}
       className={className}
-      $totalItems={data.length}
+      $totalItems={metrics.length}
       $textColor={textColor}
     >
-      {data.map((item: Metric, idx: number) => {
+      {metrics.map((item: Metric, idx: number) => {
         const isNumber = typeof item.value === 'number';
 
         return (

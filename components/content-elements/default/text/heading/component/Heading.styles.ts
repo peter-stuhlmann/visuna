@@ -24,7 +24,6 @@ export const StyledHeading = styled(BaseText)<HeadingStyleProps>`
   color: ${({ $color }) => $color};
   text-align: ${({ $align }) => $align};
   text-transform: ${({ $textTransform }) => $textTransform};
-  font-weight: ${({ $fontWeight }) => $fontWeight};
   position: relative;
   font-size: ${({ as }) => headingLevelMap[as as string]};
 

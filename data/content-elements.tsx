@@ -52,13 +52,17 @@ const textElements: ContentElementsSection = {
       },
       slug: 'button',
       components: [
-        <Wrapper>
-          <Flex $gap="1rem" $justifyContent="center">
-            <Button variant="text">text</Button>
-            <Button variant="contained">contained</Button>
-            <Button variant="outlined">outlined</Button>
-          </Flex>
-        </Wrapper>,
+        <Wrapper
+          data={{
+            children: (
+              <Flex $gap="1rem" $justifyContent="center">
+                <Button variant="text">text</Button>
+                <Button variant="contained">contained</Button>
+                <Button variant="outlined">outlined</Button>
+              </Flex>
+            ),
+          }}
+        />,
       ],
     },
     {
@@ -70,29 +74,36 @@ const textElements: ContentElementsSection = {
       slug: 'intro-text',
       components: [
         <IntroText
-          elementHeading={{ value: 'Lorem ipsum', element: 'h2' }}
-          ctaButton={{ children: 'Call-To-Action' }}
-          align="center"
-          backgroundColor={primaryColor['700']}
-          textColor={primaryColor['100']}
-        >
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. <b>Stet clita kasd gubergren</b>, no sea takimata
-            sanctus est Lorem ipsum dolor sit amet.
-          </p>
-          <p>
-            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
-            kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-            amet. <b>Lorem ipsum dolor sit amet</b>, consetetur sadipscing
-            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-            magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet,
-            consetetur sadipscing elitr, <b>sed diam nonumy eirmod</b> tempor
-            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-          </p>
-        </IntroText>,
+          data={{
+            overlineValue: 'Lorem ipsum dolor sit amet',
+            elementHeadingValue: 'Lorem ipsum',
+            elementHeadingElement: 'h2',
+            ctaButton: { children: 'Call-To-Action' },
+            backgroundColor: primaryColor['700'],
+            children: (
+              <>
+                <p>
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum.{' '}
+                  <b>Stet clita kasd gubergren</b>, no sea takimata sanctus est
+                  Lorem ipsum dolor sit amet.
+                </p>
+                <p>
+                  At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                  dolor sit amet. <b>Lorem ipsum dolor sit amet</b>, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
+                  ipsum dolor sit amet, consetetur sadipscing elitr,{' '}
+                  <b>sed diam nonumy eirmod</b> tempor invidunt ut labore et
+                  dolore magna aliquyam erat, sed diam voluptua.
+                </p>
+              </>
+            ),
+          }}
+        />,
       ],
     },
     {
@@ -128,8 +139,8 @@ const textElements: ContentElementsSection = {
           </p>
         </ImageText>,
         <ImageText
+          data={{ backgroundColor: primaryColor['700'] }}
           imagePosition="right"
-          backgroundColor={primaryColor['700']}
           textColor={primaryColor['50']}
           image={{
             src: '/img/image-2.png',
@@ -224,28 +235,35 @@ const cardsElements: ContentElementsSection = {
       slug: 'large-card',
       components: [
         <LargeCard
-          backgroundImage={{
-            src: '/img/image-2.png',
-            alt: 'Image 2',
+          data={{
+            backgroundImage: {
+              src: '/img/image-2.png',
+              alt: 'Image 2',
+            },
+            children: (
+              <>
+                <h3>
+                  <span>Lorem ipsum</span>
+                </h3>
+                <p>
+                  <span>Lorem ipsum dolor sit amet.</span>
+                </p>
+                <List
+                  items={[
+                    { text: 'Lorem ipsum dolor sit amet' },
+                    {
+                      text: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
+                    },
+                    { text: 'Lorem ipsum dolor sit amet, consetetur' },
+                    { text: 'Lorem ipsum dolor sit amet', icon: 'MdClear' },
+                  ]}
+                  defaultIcon={'MdCheck'}
+                  defaultIconColor={colors.GREEN['500']}
+                />
+              </>
+            ),
           }}
-        >
-          <h3>
-            <span>Lorem ipsum</span>
-          </h3>
-          <p>
-            <span>Lorem ipsum dolor sit amet.</span>
-          </p>
-          <List
-            items={[
-              { text: 'Lorem ipsum dolor sit amet' },
-              { text: 'Lorem ipsum dolor sit amet, consetetur sadipscing' },
-              { text: 'Lorem ipsum dolor sit amet, consetetur' },
-              { text: 'Lorem ipsum dolor sit amet', icon: 'MdClear' },
-            ]}
-            defaultIcon={'MdCheck'}
-            defaultIconColor={colors.GREEN['500']}
-          />
-        </LargeCard>,
+        />,
       ],
     },
   ],
@@ -264,9 +282,11 @@ const sliderElements: ContentElementsSection = {
       slug: 'slider',
       components: [
         <Slider
-          id="slider-1"
+          data={{
+            id: 'slider-1',
+            backgroundColor: primaryColor['0'],
+          }}
           slideDuration={7000}
-          backgroundColor={primaryColor['0']}
           slides={[
             {
               backgroundVideo: {
@@ -450,9 +470,8 @@ const sliderElements: ContentElementsSection = {
           ]}
         />,
         <Slider
-          id="slider-2"
+          data={{ id: 'slider-2', backgroundColor: primaryColor['700'] }}
           slideDuration={7000}
-          backgroundColor={primaryColor['700']}
           $outline="light"
           slides={[
             {
@@ -662,50 +681,6 @@ const listElements: ContentElementsSection = {
             { text: 'Lorem ipsum dolor sit amet.' },
           ]}
         />,
-        <List
-          items={[
-            {
-              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            },
-            { text: 'Lorem ipsum dolor sit amet.' },
-            { text: 'Lorem ipsum dolor sit amet.' },
-          ]}
-          backgroundColor={primaryColor['700']}
-          textColor={primaryColor['50']}
-          defaultIconColor={primaryColor['50']}
-        />,
-        <List
-          items={[
-            {
-              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            },
-            { text: 'Lorem ipsum dolor sit amet.' },
-            {
-              text: 'Lorem ipsum dolor sit amet.',
-              icon: 'MdClear',
-              iconColor: colors.RED[500],
-            },
-          ]}
-          defaultIcon={'MdCheck'}
-          defaultIconColor={colors.GREEN['500']}
-        />,
-        <List
-          items={[
-            {
-              text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            },
-            { text: 'Lorem ipsum dolor sit amet.' },
-            {
-              text: 'Lorem ipsum dolor sit amet.',
-              icon: 'MdClear',
-              iconColor: colors.RED[500],
-            },
-          ]}
-          backgroundColor={primaryColor['700']}
-          textColor={primaryColor['50']}
-          defaultIcon={'MdCheck'}
-          defaultIconColor={colors.GREEN['500']}
-        />,
       ],
     },
     {
@@ -736,6 +711,7 @@ const listElements: ContentElementsSection = {
           ]}
         />,
         <Accordion
+          data={{ backgroundColor: primaryColor['700'] }}
           items={[
             {
               title: 'Lorem ipsum dolor sit amet.',
@@ -754,7 +730,6 @@ const listElements: ContentElementsSection = {
             },
           ]}
           textColor={primaryColor['950']}
-          backgroundColor={primaryColor['700']}
         />,
         <Accordion
           items={[
@@ -777,6 +752,7 @@ const listElements: ContentElementsSection = {
           initialOpenIndex={0}
         />,
         <Accordion
+          data={{ backgroundColor: primaryColor['700'] }}
           items={[
             {
               title: 'Lorem ipsum dolor sit amet.',
@@ -796,7 +772,6 @@ const listElements: ContentElementsSection = {
           ]}
           initialOpenIndex={0}
           textColor={primaryColor['950']}
-          backgroundColor={primaryColor['700']}
         />,
       ],
     },
@@ -816,149 +791,57 @@ const contactElements: ContentElementsSection = {
       slug: 'contact-map',
       components: [
         <ContactMap
-          imagePosition="right"
-          image={{
-            src: '/img/image-2.png',
-            alt: 'Intro image',
-            width: 693,
-            height: 462,
-          }}
-          heading={{ value: 'Contact us', element: 'h2' }}
-          overline={{ value: 'Lorem ipsum dolor sit amet' }}
-          map={{
-            center: [52.52, 13.405],
-            zoom: 10,
-            markers: [
-              {
-                position: [52.52, 13.405],
-                popup: {
-                  content: 'Lorem ipsum dolor sit amet',
+          data={{
+            imagePosition: 'right',
+            image: {
+              src: '/img/image-2.png',
+              alt: 'Intro image',
+              width: 693,
+              height: 462,
+            },
+            elementHeadingValue: 'Contact us',
+            elementHeadingElement: 'h2',
+            overlineValue: 'Lorem ipsum dolor sit amet',
+            map: {
+              center: { lat: 52.52, lng: 13.405 },
+              zoom: 10,
+              markers: [
+                {
+                  lat: 52.52,
+                  lng: 13.405,
                 },
+              ],
+            },
+            listItems: [
+              {
+                label: 'Phone:',
+                value:
+                  '<a href="tel:+49 (0) 1234 5678910">+49 (0) 1234 5678910</a>',
+              },
+              {
+                label: 'Fax:',
+                value: '+49 (0) 1234 5678911',
+              },
+              {
+                label: 'Email:',
+                value:
+                  '<a href="mailto:contact@example.com">contact@example.com</a>',
+              },
+              {
+                label: 'Website:',
+                value: '<a href="https://example.com">www.example.com</a>',
               },
             ],
+            iconLinks: [],
+            children: (
+              <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua.
+              </p>
+            ),
           }}
-          listItems={[
-            {
-              label: 'Phone:',
-              value:
-                '<a href="tel:+49 (0) 1234 5678910">+49 (0) 1234 5678910</a>',
-            },
-            {
-              label: 'Fax:',
-              value: '+49 (0) 1234 5678911',
-            },
-            {
-              label: 'Email:',
-              value:
-                '<a href="mailto:contact@example.com">contact@example.com</a>',
-            },
-            {
-              label: 'Website:',
-              value: '<a href="https://example.com">www.example.com</a>',
-            },
-          ]}
-          iconLinks={[
-            {
-              icon: <AiFillLinkedin aria-hidden="true" />,
-              href: 'https://linkedin.com',
-              ariaLabel: 'LinkedIn',
-            },
-            {
-              icon: <AiFillGithub aria-hidden="true" />,
-              href: 'https://github.com',
-              ariaLabel: 'Github',
-            },
-            {
-              icon: <AiFillInstagram aria-hidden="true" />,
-              href: 'https://instagram.com',
-              ariaLabel: 'Instagram',
-            },
-            {
-              icon: <AiFillFacebook aria-hidden="true" />,
-              href: 'https://facebook.com',
-              ariaLabel: 'Facebook',
-            },
-          ]}
-        >
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua.
-          </p>
-        </ContactMap>,
-        <ContactMap
-          backgroundColor={primaryColor['700']}
-          textColor={primaryColor['50']}
-          imagePosition="right"
-          image={{
-            src: '/img/image-2.png',
-            alt: 'Intro image',
-            width: 693,
-            height: 462,
-          }}
-          heading={{ value: 'Contact us', element: 'h2' }}
-          overline={{ value: 'Lorem ipsum dolor sit amet' }}
-          map={{
-            center: [52.52, 13.405],
-            zoom: 10,
-            markers: [
-              {
-                position: [52.52, 13.405],
-                popup: {
-                  content: 'Lorem ipsum dolor sit amet',
-                },
-              },
-            ],
-          }}
-          listItems={[
-            {
-              label: 'Phone:',
-              value:
-                '<a href="tel:+49 (0) 1234 5678910">+49 (0) 1234 5678910</a>',
-            },
-            {
-              label: 'Fax:',
-              value: '+49 (0) 1234 5678911',
-            },
-            {
-              label: 'Email:',
-              value:
-                '<a href="mailto:contact@example.com">contact@example.com</a>',
-            },
-            {
-              label: 'Website:',
-              value: '<a href="https://example.com">www.example.com</a>',
-            },
-          ]}
-          iconLinks={[
-            {
-              icon: <AiFillLinkedin aria-hidden="true" />,
-              href: 'https://linkedin.com',
-              ariaLabel: 'LinkedIn',
-            },
-            {
-              icon: <AiFillGithub aria-hidden="true" />,
-              href: 'https://github.com',
-              ariaLabel: 'Github',
-            },
-            {
-              icon: <AiFillInstagram aria-hidden="true" />,
-              href: 'https://instagram.com',
-              ariaLabel: 'Instagram',
-            },
-            {
-              icon: <AiFillFacebook aria-hidden="true" />,
-              href: 'https://facebook.com',
-              ariaLabel: 'Facebook',
-            },
-          ]}
-        >
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua.
-          </p>
-        </ContactMap>,
+        />,
       ],
     },
   ],
@@ -977,38 +860,41 @@ const metrcisElements: ContentElementsSection = {
       slug: 'metrics',
       components: [
         <Metrics
-          data={[
-            {
-              value: 30,
-              label: 'Lorem ipsum dolor sit amet',
-            },
-            {
-              value: 100,
-              label: 'Lorem ipsum dolor sit amet',
-            },
-            {
-              value: 45,
-              label: 'Lorem ipsum dolor sit amet',
-            },
-          ]}
+          data={{
+            metrics: [
+              {
+                value: 30,
+                label: 'Lorem ipsum dolor sit amet',
+              },
+              {
+                value: 100,
+                label: 'Lorem ipsum dolor sit amet',
+              },
+              {
+                value: 45,
+                label: 'Lorem ipsum dolor sit amet',
+              },
+            ],
+          }}
         />,
         <Metrics
-          backgroundColor={primaryColor['700']}
-          textColor={primaryColor['50']}
-          data={[
-            {
-              value: 30,
-              label: 'Lorem ipsum dolor sit amet',
-            },
-            {
-              value: 100,
-              label: 'Lorem ipsum dolor sit amet',
-            },
-            {
-              value: 45,
-              label: 'Lorem ipsum dolor sit amet',
-            },
-          ]}
+          data={{
+            metrics: [
+              {
+                value: 30,
+                label: 'Lorem ipsum dolor sit amet',
+              },
+              {
+                value: 100,
+                label: 'Lorem ipsum dolor sit amet',
+              },
+              {
+                value: 45,
+                label: 'Lorem ipsum dolor sit amet',
+              },
+            ],
+            backgroundColor: primaryColor['700'],
+          }}
         />,
       ],
     },

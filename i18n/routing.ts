@@ -5,7 +5,7 @@ import { generateRouting } from './generateRouting';
 export const routing = defineRouting({
   locales: ['en', 'de'],
   // Setze hier defaultLocale auf 'de'
-  defaultLocale: 'en',
+  defaultLocale: 'de',
   pathnames: generateRouting(),
 });
 

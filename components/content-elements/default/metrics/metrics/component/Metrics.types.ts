@@ -1,14 +1,15 @@
-import { WrapperProps } from '../../../layout/wrapper';
+export type Metric = {
+  label: string;
+  value: string | number;
+};
 
 export type MetricsProps = {
-  data: Metric[];
+  metrics: Metric[];
   textColor?: string;
   animated?: boolean;
   animationDuration?: number;
   animationOnce?: boolean;
-  unwrapped?: boolean;
-  // padding?: WrapperProps['padding'];
-} & WrapperProps;
+};
 
 export type MetricItemProps = {
   label: number | string;
@@ -17,9 +18,4 @@ export type MetricItemProps = {
   isInViewport: boolean;
   animated: boolean;
   animationDuration: number;
-};
-
-export type Metric = {
-  label: string | number;
-  value: string | number;
 };

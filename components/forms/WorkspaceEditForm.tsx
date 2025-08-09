@@ -61,7 +61,12 @@ const WorkspaceEditForm: FC<WorkspaceEditFormProps> = ({
       noValidate
       style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
     >
-      <TextInput label="Name" value={name} onChange={setName} type="text" />
+      <TextInput
+        label="Name"
+        value={name}
+        onChange={(value) => setName(value)}
+        type="text"
+      />
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}

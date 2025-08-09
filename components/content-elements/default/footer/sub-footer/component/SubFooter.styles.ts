@@ -24,8 +24,7 @@ export const SubFooterContainer = styled.footer<SubFooterContainerProps>`
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    text-align: ${({ $align, theme }) =>
-      $align ?? theme.subFooter?.align ?? 'left'};
+    text-align: ${({ $align }) => $align};
     font-size: ${({ $fontSize = 'medium' }) => fontSizeMap[$fontSize]};
   }
 

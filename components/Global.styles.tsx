@@ -1,7 +1,6 @@
 'use client';
 
 import { createGlobalStyle } from 'styled-components';
-import { getPrimaryColor } from './content-elements/default/constants';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
@@ -26,8 +25,8 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: var(--primary-font), sans-serif;
     line-height: var(--line-height);
-    color: var(--text-color);
-    background-color: ${getPrimaryColor()['0']};
+    color: var(--text-color) !important;
+    background-color: rgb(255, 255, 255);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -63,5 +62,12 @@ export const GlobalStyles = createGlobalStyle`
     overflow: hidden !important;
     height: 100%;
     touch-action: none; /* verhindert Scroll auf Touch-Geräten */
+  }
+
+  .flex-row {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
   }
 `;

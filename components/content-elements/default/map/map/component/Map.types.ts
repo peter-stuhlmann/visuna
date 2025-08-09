@@ -1,4 +1,3 @@
-import { WrapperProps } from '../../../layout/wrapper/component';
 import { ImageProps } from '../../../images/image';
 
 export type MapProps = {
@@ -6,17 +5,15 @@ export type MapProps = {
   placeholderImage?: ImageProps;
   textColor?: string;
   map?: MapLeafletProps & { enableMapButtonText?: string };
-} & WrapperProps;
+};
 
 export type MapLeafletProps = {
-  center?: [number, number];
+  center?: { lat: number; lng: number };
   zoom?: number;
   markers?: Marker[];
 };
 
 export type Marker = {
-  position: [number, number];
-  popup: {
-    content: string;
-  };
+  lat: number;
+  lng: number;
 };

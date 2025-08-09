@@ -1,24 +1,18 @@
 import { FC } from 'react';
-
 import { IntroTextContainer } from './IntroText.styles';
 import { Button } from '../../..';
 import { IntroTextProps } from './IntroText.types';
-import { getPrimaryColor } from '../../../constants';
 
-const IntroText: FC<IntroTextProps> = ({
-  children = '',
-  textColor = getPrimaryColor()['950'],
-  ctaButton,
-  align = 'left',
-  className = '',
-}) => {
+const IntroText: FC<{ data: IntroTextProps }> = ({ data }) => {
+  const { children, textColor = '#000', ctaButton } = data || {};
+
   return (
-    <IntroTextContainer
-      className={className}
-      $textColor={textColor}
-      $align={align}
-    >
-      {children && <div>{children}</div>}
+    <IntroTextContainer $textColor={textColor}>
+      {children && typeof children === 'string' ? (
+        <div dangerouslySetInnerHTML={{ __html: children }} />
+      ) : (
+        <>{children}</>
+      )}
       {ctaButton?.children && (
         <div>
           <Button

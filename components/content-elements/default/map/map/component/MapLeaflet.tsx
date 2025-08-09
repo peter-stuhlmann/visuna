@@ -5,13 +5,14 @@ import {
   MapContainer as LeafletMapContainer,
   TileLayer,
   Marker,
-  Popup,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import DefaultMarker from '../../../assets/marker-icon.png';
-import DefaultMarkerShadow from '../../../assets/marker-shadow.png';
+
 import { MapLeafletProps } from './Map.types';
+
+import DefaultMarker from './assets/marker-icon.png';
+import DefaultMarkerShadow from './assets/marker-shadow.png';
 
 const defaultIcon = L.icon({
   iconUrl: DefaultMarker.src,
@@ -23,7 +24,7 @@ const defaultIcon = L.icon({
 });
 
 const MapLeaflet: FC<MapLeafletProps> = ({
-  center = [0, 0],
+  center = { lat: 0, lng: 0 },
   zoom = 10,
   markers = [],
 }) => {
@@ -41,12 +42,10 @@ const MapLeaflet: FC<MapLeafletProps> = ({
 
       {markers.map((marker, idx: number) => (
         <Marker
-          key={'marker' + idx}
-          position={[52.52, 13.405]}
+          key={idx}
+          position={[marker.lat, marker.lng]}
           icon={defaultIcon}
-        >
-          {marker.popup.content && <Popup>{marker.popup.content}</Popup>}
-        </Marker>
+        ></Marker>
       ))}
     </LeafletMapContainer>
   );

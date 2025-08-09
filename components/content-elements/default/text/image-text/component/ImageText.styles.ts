@@ -7,7 +7,7 @@ type ContainerProps = {
   $textColor: string;
 };
 
-const imagePositionMap: Record<string, string> = {
+const imagePositionMap: Record<'left' | 'right', string> = {
   left: 'row-reverse',
   right: 'row',
 };
@@ -19,10 +19,12 @@ export const Container = styled.div<ContainerProps>`
   gap: 5rem;
   color: ${({ $textColor }) => $textColor};
 
-  @media (max-width: 1080px) {
+  /* Container Query ersetzen Media Queries */
+  @container resizable-area (max-width: 1080px) {
     gap: 1rem;
   }
-  @media (max-width: 768px) {
+
+  @container resizable-area (max-width: 768px) {
     flex-direction: column;
   }
 
@@ -31,10 +33,11 @@ export const Container = styled.div<ContainerProps>`
       flex: 0 0 calc(50% - 2.5rem - 2rem);
       width: 100%;
 
-      @media (max-width: 1080px) {
+      @container resizable-area (max-width: 1080px) {
         flex: 0 0 calc(50% - 0.5rem);
       }
-      @media (max-width: 768px) {
+
+      @container resizable-area (max-width: 768px) {
         flex: 0 0 100%;
       }
 
@@ -50,10 +53,11 @@ export const Container = styled.div<ContainerProps>`
       justify-content: center;
       align-items: center;
 
-      @media (max-width: 1080px) {
+      @container resizable-area (max-width: 1080px) {
         flex: 0 0 calc(50% - 0.5rem);
       }
-      @media (max-width: 768px) {
+
+      @container resizable-area (max-width: 768px) {
         flex: 0 0 100%;
         margin-top: 2rem;
       }

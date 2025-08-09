@@ -1,24 +1,26 @@
-import { ReactNode } from 'react';
+// import React from 'react';
+// import { ButtonProps } from '../../../button/button';
+import { LargeCardData } from '../../../types';
 
-import { WrapperProps } from '../../../layout/wrapper';
-import { ButtonProps } from '../../../button/button';
+// export type LargeCardData = {
+//   children?: React.ReactNode;
+//   cardBackgroundColor?: string;
+//   textColor?: string;
+//   highlightColor?: string | null;
+//   backgroundImage?: {
+//     src: string;
+//     alt: string;
+//     width?: number;
+//     height?: number;
+//   };
+//   viewportTriggerOnce?: boolean;
+//   ctaButton?: ButtonProps[];
+//   overlay?: 'none' | 'dark-gradient';
+// };
 
 export type LargeCardProps = {
-  children?: string | ReactNode;
-  cardBackgroundColor?: string;
-  textColor?: string;
-  highlightColor?: string | null;
-  backgroundImage?: {
-    src?: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-  };
-  viewportTriggerOnce?: boolean;
-  ctaButton?: ButtonProps[];
-  overlay?: 'none' | 'dark-gradient';
-  unwrapped?: boolean;
-} & WrapperProps;
+  data?: LargeCardData;
+};
 
 export type LargeCardStyleProps = {
   $isInViewport: boolean;

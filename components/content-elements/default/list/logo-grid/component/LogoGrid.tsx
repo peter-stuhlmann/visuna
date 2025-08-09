@@ -6,14 +6,12 @@ import Image from 'next/image';
 
 const LogoGrid: FC<LogoGridProps> = ({
   items = [],
-  unwrapped = false,
   itemsPerRow = 5,
   itemsGap = 'm',
   itemBackgroundColor = 'transparent',
   itemBorderRadius = 'l',
   itemBorderColor = 'transparent',
   itemAspectRatio = 'auto',
-  ...props
 }) => {
   const elementClassName = getElementClassName('logo-grid');
 
@@ -21,7 +19,7 @@ const LogoGrid: FC<LogoGridProps> = ({
     <GridWrapper
       $itemsPerRow={itemsPerRow}
       $itemsGap={itemsGap}
-      className={unwrapped ? `${elementClassName} ${props.className}` : ''}
+      className={`${elementClassName}`}
     >
       {items.map((item: GridItemProps, idx: number) => (
         <GridItem

@@ -11,8 +11,16 @@ import {
   paddingXMap,
   widthMap,
 } from '../../../styles.config';
+import {
+  BorderRadiusOptions,
+  InnerWidthOptions,
+  MarginOptions,
+  PaddingOptions,
+  Width,
+} from '../../../types';
 
 const halve = (value: string) => {
+  if (typeof value !== 'string') return value;
   const match = value.match(/^([\d.]+)([a-z%]+)$/);
   if (!match) return value;
   const [, num, unit] = match;
@@ -23,12 +31,14 @@ export const Container = styled.section<WrapperStyleProps>`
   position: relative;
   background-color: ${({ $backgroundColor }) => $backgroundColor};
   width: 100%;
-  max-width: ${({ $width }) => widthMap[$width!]};
-  margin-top: ${({ $marginTop }) => marginMap[$marginTop!]};
-  margin-bottom: ${({ $marginBottom }) => marginMap[$marginBottom!]};
+  max-width: ${({ $width }) => widthMap[$width as Width]};
+  margin-top: ${({ $marginTop }) => marginMap[$marginTop as MarginOptions]};
+  margin-bottom: ${({ $marginBottom }) =>
+    marginMap[$marginBottom as MarginOptions]};
   margin-left: auto;
   margin-right: auto;
-  border-radius: ${({ $borderRadius }) => borderRadiusMap[$borderRadius!]};
+  border-radius: ${({ $borderRadius }) =>
+    borderRadiusMap[$borderRadius as BorderRadiusOptions]};
 
   &.${mergedConfig.classPrefix}-footer-wrapper {
     & > div {
@@ -37,24 +47,31 @@ export const Container = styled.section<WrapperStyleProps>`
   }
 
   & > div {
-    max-width: ${({ $innerWidth }) => innerWidthMap[$innerWidth!]};
-    padding-top: ${({ $paddingTop }) => paddingXMap[$paddingTop!]};
-    padding-right: ${({ $paddingRight }) => paddingXMap[$paddingRight!]};
-    padding-bottom: ${({ $paddingBottom }) => paddingXMap[$paddingBottom!]};
-    padding-left: ${({ $paddingLeft }) => paddingXMap[$paddingLeft!]};
+    max-width: ${({ $innerWidth }) =>
+      innerWidthMap[$innerWidth as InnerWidthOptions]};
+    padding-top: ${({ $paddingTop }) =>
+      paddingXMap[$paddingTop as PaddingOptions]};
+    padding-right: ${({ $paddingRight }) =>
+      paddingXMap[$paddingRight as PaddingOptions]};
+    padding-bottom: ${({ $paddingBottom }) =>
+      paddingXMap[$paddingBottom as PaddingOptions]};
+    padding-left: ${({ $paddingLeft }) =>
+      paddingXMap[$paddingLeft as PaddingOptions]};
     border-radius: ${({ $innerBorderRadius }) =>
-      borderRadiusMap[$innerBorderRadius!]};
+      borderRadiusMap[$innerBorderRadius as InnerWidthOptions]};
     box-sizing: border-box;
     margin: 0 auto;
     position: relative;
 
     @media (max-width: 768px) {
-      padding-top: ${({ $paddingTop }) => halve(paddingXMap[$paddingTop!])};
+      padding-top: ${({ $paddingTop }) =>
+        halve(paddingXMap[$paddingTop as PaddingOptions])};
       padding-right: ${({ $paddingRight }) =>
-        halve(paddingXMap[$paddingRight!])};
+        halve(paddingXMap[$paddingRight as PaddingOptions])};
       padding-bottom: ${({ $paddingBottom }) =>
-        halve(paddingXMap[$paddingBottom!])};
-      padding-left: ${({ $paddingLeft }) => halve(paddingXMap[$paddingLeft!])};
+        halve(paddingXMap[$paddingBottom as PaddingOptions])};
+      padding-left: ${({ $paddingLeft }) =>
+        halve(paddingXMap[$paddingLeft as PaddingOptions])};
     }
   }
 `;

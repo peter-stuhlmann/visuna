@@ -1,48 +1,46 @@
-import { FC } from 'react';
+'use client';
 
-import { Container } from './Wrapper.styles';
+import { FC } from 'react';
 import { WrapperProps } from './Wrapper.types';
+import { Container } from './Wrapper.styles';
 import getElementClassName from '../../../utils/getElementClassName';
 
-const Wrapper: FC<WrapperProps> = ({
-  ref,
-  id = '',
-  children,
-  width = 'full',
-  innerWidth = 'xxl',
-  marginBottom = 'none',
-  marginTop = 'none',
-  borderRadius = 'none',
-  innerBorderRadius = 'l',
-  backgroundColor = 'transparent',
-  paddingTop = 'm',
-  paddingBottom = 'm',
-  paddingLeft = 'm',
-  paddingRight = 'm',
-  className = '',
-  element = 'section',
-  style = {},
-}) => {
-  const elementClassName = getElementClassName(`wrapper`);
+const Wrapper: FC<WrapperProps> = ({ data, className }) => {
+  const {
+    id,
+    element = 'section',
+    children = null,
+    width = 'full',
+    innerWidth = 'xl',
+    marginTop = 'none',
+    marginBottom = 'none',
+    paddingTop = 'none',
+    paddingBottom = 'none',
+    paddingLeft = 'none',
+    paddingRight = 'none',
+    backgroundColor = 'transparent',
+    borderRadius = 'none',
+    innerBorderRadius = 'none',
+  } = data ?? {};
+
+  const elementClassName = getElementClassName('wrapper');
 
   return (
     <Container
-      ref={ref}
+      as={element}
       id={id}
       className={`${elementClassName} ${className}`}
-      style={style}
-      as={element}
       $width={width}
       $innerWidth={innerWidth}
-      $marginBottom={marginBottom}
       $marginTop={marginTop}
-      $borderRadius={borderRadius}
-      $innerBorderRadius={innerBorderRadius}
-      $backgroundColor={backgroundColor}
+      $marginBottom={marginBottom}
       $paddingTop={paddingTop}
       $paddingBottom={paddingBottom}
       $paddingLeft={paddingLeft}
       $paddingRight={paddingRight}
+      $backgroundColor={backgroundColor}
+      $borderRadius={borderRadius}
+      $innerBorderRadius={innerBorderRadius}
     >
       <div>{children}</div>
     </Container>

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { getTranslations, getLocale } from 'next-intl/server';
-import { Wrapper } from '@/components/content-elements/default';
+import { Heading, Wrapper } from '@/components/content-elements/default';
 
 const NotFoundPage: FC = async () => {
   const t = await getTranslations('Content');
@@ -8,11 +8,18 @@ const NotFoundPage: FC = async () => {
 
   return (
     <main>
-      <Wrapper>
-        <h1>{t('notFound')}</h1>
-        <p>{t('pageNotFound')}</p>
-        <a href={`http://localhost:3000/${locale}`}>{t('goToHome')}</a>
-      </Wrapper>
+      <Wrapper
+        data={{
+          children: (
+            <>
+              <Heading element="h1" value={t('notFound')} />
+              <p>{t('pageNotFound')}</p>
+              <a href={`/${locale}`}>{t('goToHome')}</a>
+            </>
+          ),
+          innerWidth: 'full',
+        }}
+      />
     </main>
   );
 };

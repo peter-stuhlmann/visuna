@@ -44,47 +44,53 @@ const Colors: FC = () => {
   };
 
   return (
-    <Wrapper backgroundColor={primaryColor['700']} width="l">
-      <Container
-        $columns={shadeKeys.length}
-        onKeyDown={handleContainerKeyDown}
-        ref={containerRef}
-      >
-        <HeaderCell />
-        {shadeKeys.map((shade) => (
-          <HeaderCell key={shade}>{shade}</HeaderCell>
-        ))}
+    <Wrapper
+      data={{
+        backgroundColor: getPrimaryColor()['700'],
+        innerWidth: 'xl',
+        children: (
+          <Container
+            $columns={shadeKeys.length}
+            onKeyDown={handleContainerKeyDown}
+            ref={containerRef}
+          >
+            <HeaderCell />
+            {shadeKeys.map((shade) => (
+              <HeaderCell key={shade}>{shade}</HeaderCell>
+            ))}
 
-        {colorNames.map((colorName, idx: number) => (
-          <Fragment key={colorName}>
-            <ColorName>{colorName}</ColorName>
-            {shadeKeys.map((shade, shadeIndex) => {
-              const colorValue = colors[colorName][shade];
-              const textColor = getContrastColor(
-                colorValue,
-                primaryColor['50'],
-                primaryColor['950']
-              );
-              return (
-                <ColorBlockWrapper key={shade}>
-                  <ColorBlock
-                    color={colorValue}
-                    textColor={textColor}
-                    borderColor={primaryColor['700']}
-                    tooltipMessage={t('copied')}
-                    columns={shadeKeys.length}
-                    ariaLabel={`${colorName} ${shade}`}
-                    shade={shade}
-                    tabIndex={idx === 0 && shadeIndex === 0 ? 0 : -1}
-                  />
-                  <ColorValue>{colorValue}</ColorValue>
-                </ColorBlockWrapper>
-              );
-            })}
-          </Fragment>
-        ))}
-      </Container>
-    </Wrapper>
+            {colorNames.map((colorName, idx: number) => (
+              <Fragment key={colorName}>
+                <ColorName>{colorName}</ColorName>
+                {shadeKeys.map((shade, shadeIndex) => {
+                  const colorValue = colors[colorName][shade];
+                  const textColor = getContrastColor(
+                    colorValue,
+                    primaryColor['50'],
+                    primaryColor['950']
+                  );
+                  return (
+                    <ColorBlockWrapper key={shade}>
+                      <ColorBlock
+                        color={colorValue}
+                        textColor={textColor}
+                        borderColor={primaryColor['700']}
+                        tooltipMessage={t('copied')}
+                        columns={shadeKeys.length}
+                        ariaLabel={`${colorName} ${shade}`}
+                        shade={shade}
+                        tabIndex={idx === 0 && shadeIndex === 0 ? 0 : -1}
+                      />
+                      <ColorValue>{colorValue}</ColorValue>
+                    </ColorBlockWrapper>
+                  );
+                })}
+              </Fragment>
+            ))}
+          </Container>
+        ),
+      }}
+    />
   );
 };
 

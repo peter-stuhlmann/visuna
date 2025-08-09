@@ -29,7 +29,7 @@ const Profile: FC<ProfileProps> = () => {
       menuItems={[
         {
           children: '👤 Mein Profil',
-          href: '/profile',
+          href: '/profil',
           align: 'left',
         },
         {

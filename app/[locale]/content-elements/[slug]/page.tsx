@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import Breadcrumbs from '@/components/content-elements/default/breadcrumbs/breadcrumbs';
 import { getElement } from './utils/getContentElement';
 import { generateElementMetadata } from './utils/generateElementspageMetadata';
-import { Icon, IntroText } from '@/components/content-elements/default';
+import { IntroText } from '@/components/content-elements/default';
 import Spacer from '@/components/content-elements/default/layout/spacer/component';
 
 export const generateMetadata = generateElementMetadata;
@@ -46,11 +46,12 @@ const ContentElementPage: FC<ContentElementPageProps> = async ({ params }) => {
         ]}
       />
       <IntroText
-        elementHeading={{
-          value: element.name[locale] as string,
-          element: 'h1',
-        }}
-        ctaButton={{
+        data={{
+          headingValue: element.name[locale] as string,
+          headingElement: 'h1',
+          children: (
+            <>
+              {/* ctaButton={{
           children: (
             <>
               <Icon name="MdArrowBack" />
@@ -58,16 +59,16 @@ const ContentElementPage: FC<ContentElementPageProps> = async ({ params }) => {
             </>
           ),
           href: `/${locale}/content-elements`,
+        }} */}
+              <Spacer data={{ size: 'l' }} aria-hidden="true" />
+              {element?.components?.map((component: ReactNode, idx: number) => (
+                <Fragment key={idx}>{component}</Fragment>
+              ))}
+              <Spacer data={{ size: 'l' }} aria-hidden="true" />
+            </>
+          ),
         }}
-        align="center"
-      >
-        {element.description[locale]}
-      </IntroText>
-      <Spacer size="l" aria-hidden="true" />
-      {element?.components?.map((component: ReactNode, idx: number) => (
-        <Fragment key={idx}>{component}</Fragment>
-      ))}
-      <Spacer size="l" aria-hidden="true" />
+      />
     </main>
   );
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import styled, { css } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { SnackbarProps } from './Status.types';
 
 export const SnackbarList = styled.div`
@@ -35,6 +35,8 @@ export const AlertBox = styled.div<{ $type: SnackbarProps['type'] }>`
   color: white;
   font-weight: 500;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
 
   ${({ $type }) => {
     switch ($type) {
@@ -60,6 +62,33 @@ export const AlertBox = styled.div<{ $type: SnackbarProps['type'] }>`
         `;
     }
   }}
+`;
+
+const progress = keyframes`
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+`;
+
+export const ProgressBar = styled.div<{ $duration: number }>`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+
+  & > div {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    transform-origin: left;
+    animation: ${progress} ${({ $duration }) => $duration}ms linear forwards;
+  }
 `;
 
 export const Message = styled.div`

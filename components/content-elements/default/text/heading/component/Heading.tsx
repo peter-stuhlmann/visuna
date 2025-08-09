@@ -8,8 +8,7 @@ const Heading: FC<HeadingProps> = ({
   value,
   textTransform = 'none',
   align = 'left',
-  color = getPrimaryColor()['950'],
-  fontWeight = 'bold',
+  textColor = getPrimaryColor()['950'],
   element = 'h1',
 }) => {
   return (
@@ -18,8 +17,7 @@ const Heading: FC<HeadingProps> = ({
       value={value}
       $textTransform={textTransform}
       $align={align}
-      $color={color}
-      $fontWeight={fontWeight}
+      $color={textColor}
     >
       {value}
     </StyledHeading>

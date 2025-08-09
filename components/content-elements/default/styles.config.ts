@@ -1,16 +1,15 @@
 import { LogoGridItemGapOptions } from './list/logo-grid/component/LogoGrid.types';
 import {
   BorderRadiusOptions,
-  FontWeightOptions,
   InnerWidthOptions,
   MarginOptions,
   Role,
   ScreenSizeOptions,
   Status,
-  WidthOptions,
+  Width,
 } from './types';
 
-export const widthMap: Record<WidthOptions, string> = {
+export const widthMap: Record<Width, string> = {
   s: '480px',
   m: '768px',
   l: '1024px',
@@ -78,11 +77,6 @@ export const logoGridItemGapMap: Record<LogoGridItemGapOptions, string> = {
   l: '2rem',
   xl: '4rem',
   xxl: '8rem',
-};
-
-export const fontWeightMap: Record<FontWeightOptions, string> = {
-  normal: 'normal',
-  bold: 'bold',
 };
 
 export const screenSizeMap: Record<ScreenSizeOptions, number> = {

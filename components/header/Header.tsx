@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
 import Logo from '../Logo';
-import { getWorkspaces } from '@/app/[locale]/(backend)/workspaces/getWorkspaces';
+import { getWorkspaces } from '@/app/(backend)/workspaces/getWorkspaces';
 import { getLoggedInUser } from '@/utils/getLoggedInUser';
 import HeaderBackendPartial from './HeaderBackendPartial';
 import { SimpleHeaderContainer } from '../content-elements/default/header/simple-header/component/SimpleHeader.styles';
@@ -12,19 +12,38 @@ const Header: FC = async () => {
   const workspaces = await getWorkspaces();
 
   return (
-    <Wrapper>
-      <SimpleHeaderContainer>
-        <Link href="/" className="logo" aria-label="Go to homepage">
-          <Logo />
-        </Link>
-        <div>
-          <HeaderBackendPartial
-            workspaces={workspaces || []}
-            loggedInUser={loggedInUser}
-          />
-        </div>
-      </SimpleHeaderContainer>
-    </Wrapper>
+    <div style={{ position: 'fixed', top: 0, zIndex: 1000, left: 0, right: 0 }}>
+      <Wrapper
+        data={{
+          innerWidth: 'full',
+          paddingBottom: 's',
+          paddingTop: 's',
+          paddingLeft: 'm',
+          paddingRight: 'm',
+          children: (
+            <SimpleHeaderContainer>
+              <Link href="/" className="logo" aria-label="Go to homepage">
+                <Logo />
+              </Link>
+              <div>
+                <HeaderBackendPartial
+                  workspaces={workspaces || []}
+                  loggedInUser={loggedInUser}
+                />
+              </div>
+            </SimpleHeaderContainer>
+          ),
+          backgroundColor: '#fff',
+          // style: {
+          //   borderBottom: '1px solid #e0e0e0',
+          //   position: 'fixed',
+          //   marginBottom: '84px',
+          //   top: '0',
+          //   zIndex: 1000,
+          // },
+        }}
+      />
+    </div>
   );
 };
 

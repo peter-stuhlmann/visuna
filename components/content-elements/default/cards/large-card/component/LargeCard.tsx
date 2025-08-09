@@ -2,31 +2,31 @@
 
 import { FC, useRef } from 'react';
 import { getPrimaryColor } from '../../../constants';
-import Button, { ButtonProps } from '../../../button/button';
+// import Button from '../../../button/button';
 import { LargeCardProps } from './LargeCard.types';
 import { LargeCardContainer } from './LargeCard.styles';
 import Image from '../../../images/image';
-import useIsInViewport from '../../../utils/useIsInViewport';
+// import useIsInViewport from '../../../utils/useIsInViewport';
+import Button from '../../../button/button';
 
-const LargeCard: FC<LargeCardProps> = ({
-  children = '',
-  cardBackgroundColor = getPrimaryColor()['50'],
-  textColor = getPrimaryColor()['950'],
-  highlightColor = null,
-  backgroundImage,
-  viewportTriggerOnce = false,
-  ctaButton = [],
-  overlay = 'none',
-  ...props
-}) => {
+const LargeCard: FC<LargeCardProps> = ({ data }) => {
+  const {
+    children,
+    cardBackgroundColor,
+    textColor,
+    highlightColor,
+    backgroundImage,
+    ctaButton = [],
+    overlay,
+  } = data ?? {};
+
   const elementRef = useRef<HTMLDivElement | null>(null);
-
-  const isInViewport = useIsInViewport(elementRef, 0, viewportTriggerOnce);
+  // const isInViewport = useIsInViewport(elementRef, 0, viewportTriggerOnce);
+  const isInViewport = true;
 
   return (
     <LargeCardContainer
       ref={elementRef}
-      className={`${props.className}`}
       $isInViewport={isInViewport}
       $isActive={isInViewport}
       $cardBackgroundColor={cardBackgroundColor}
@@ -34,22 +34,28 @@ const LargeCard: FC<LargeCardProps> = ({
       $highlightColor={highlightColor || getPrimaryColor()['100']}
     >
       <div>
-        {overlay && overlay === 'dark-gradient' && (
+        {overlay === 'dark-gradient' && (
           <div className="overlay" aria-hidden="true" />
         )}
 
         <div className="content">
           <div className={highlightColor ? 'highlighted-text' : 'text'}>
-            {children}
+            {children && typeof children === 'string' ? (
+              <div dangerouslySetInnerHTML={{ __html: children }} />
+            ) : (
+              <>{children}</>
+            )}
           </div>
-          {ctaButton.length > 0 && (
+
+          {Array.isArray(ctaButton) && ctaButton.length > 0 && (
             <div className="cta-buttons">
-              {ctaButton.map((button: ButtonProps, idx: number) => (
+              {ctaButton.map((button, idx) => (
                 <Button
                   key={idx}
                   variant={button.variant}
                   textColor={button.textColor}
                   primaryColor={button.primaryColor}
+                  onClick={button.onClick}
                 >
                   {button.children}
                 </Button>
@@ -57,8 +63,14 @@ const LargeCard: FC<LargeCardProps> = ({
             </div>
           )}
         </div>
-        {backgroundImage && backgroundImage.src && (
-          <Image src={backgroundImage.src} alt={backgroundImage.alt} />
+
+        {backgroundImage?.src && (
+          <Image
+            src={backgroundImage.src}
+            alt={backgroundImage.alt}
+            width={backgroundImage.width}
+            height={backgroundImage.height}
+          />
         )}
       </div>
     </LargeCardContainer>

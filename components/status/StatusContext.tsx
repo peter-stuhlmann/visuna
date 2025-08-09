@@ -12,6 +12,7 @@ type StatusContextType = {
   statuses: Status[];
   addStatus: (status: Omit<Status, 'id'>) => void;
   removeStatus: (id: string) => void;
+  duration: number;
 };
 
 const DURATION = 6000; // Dauer in Millisekunden, nach der der Status automatisch entfernt wird
@@ -47,6 +48,7 @@ export const StatusProvider: FC<{ children?: ReactNode }> = ({ children }) => {
     statuses,
     addStatus,
     removeStatus,
+    duration: DURATION,
   };
 
   return (

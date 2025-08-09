@@ -7,11 +7,12 @@ import {
   Message,
   SnackbarList,
   SnackbarWrapper,
+  ProgressBar,
 } from './Status.styles';
 import { useStatus } from './StatusContext';
 
 const StatusMessages: FC = () => {
-  const { statuses, removeStatus } = useStatus();
+  const { statuses, removeStatus, duration } = useStatus();
 
   return (
     <SnackbarList>
@@ -22,6 +23,9 @@ const StatusMessages: FC = () => {
             <CloseButton onClick={() => removeStatus(status.id)}>
               &times;
             </CloseButton>
+            <ProgressBar $duration={duration}>
+              <div />
+            </ProgressBar>
           </AlertBox>
         </SnackbarWrapper>
       ))}

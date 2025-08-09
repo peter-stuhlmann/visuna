@@ -95,7 +95,7 @@ const InviteUsersManagement: FC<InviteUsersManagementProps> = ({
         <TextInput
           label="E-Mail-Adresse"
           value={email}
-          onChange={setEmail}
+          onChange={(value) => setEmail(value)}
           type="email"
           required
         />

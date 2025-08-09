@@ -1,21 +1,19 @@
 'use client';
 
-import React, { useId, useState, FocusEvent, ChangeEvent, FC } from 'react';
+import React, { useId, useRef, ChangeEvent, FC } from 'react';
 
 import { TextInputProps } from './TextInput.types';
-import { StyledInput, StyledLabel, Wrapper } from './TextInput.styles';
-import { getPrimaryColor } from '../../../constants';
+import { StyledInput, StyledLabel, Container } from './TextInput.styles';
 
 const TextInput: FC<TextInputProps> = ({
   label,
   value,
-  defaultValue,
   name,
   onChange,
   type = 'text',
   id,
   rows = 1,
-  backgroundColor = getPrimaryColor()['50'],
+  backgroundColor = '#fff',
   status = 'default',
   required = false,
   disabled = false,
@@ -24,15 +22,7 @@ const TextInput: FC<TextInputProps> = ({
   const generatedId = useId();
   const inputId = id || generatedId;
 
-  const [focused, setFocused] = useState<boolean>(autoFocus);
-
-  const handleFocus = () => setFocused(true);
-
-  const handleBlur = (
-    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    if (e.target.value === '') setFocused(false);
-  };
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -41,47 +31,42 @@ const TextInput: FC<TextInputProps> = ({
   };
 
   return (
-    <Wrapper>
+    <Container $backgroundColor={backgroundColor}>
       <StyledInput $status={status}>
         {rows > 1 ? (
           <textarea
+            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
             id={inputId}
-            value={value}
+            value={value ?? ''}
             onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
             rows={rows}
             required={required}
             disabled={disabled}
             name={name}
-            defaultValue={defaultValue}
+            autoFocus={autoFocus}
+            placeholder=""
           />
         ) : (
           <input
+            ref={inputRef as React.RefObject<HTMLInputElement>}
             id={inputId}
             type={type}
-            value={value}
+            value={value ?? ''}
             onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
             required={required}
             disabled={disabled}
             name={name}
-            defaultValue={defaultValue}
             autoFocus={autoFocus}
+            placeholder=""
           />
         )}
+        {label && (
+          <StyledLabel htmlFor={inputId} $backgroundColor={backgroundColor}>
+            {label}
+          </StyledLabel>
+        )}
       </StyledInput>
-      {label && (
-        <StyledLabel
-          htmlFor={inputId}
-          $shrink={focused || !!value}
-          $backgroundColor={backgroundColor}
-        >
-          {label}
-        </StyledLabel>
-      )}
-    </Wrapper>
+    </Container>
   );
 };
 

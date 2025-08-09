@@ -11,5 +11,4 @@ export const IntroTextContainer = styled.div<IntroTextStyleProps>`
   width: 100%;
   gap: 2rem;
   color: ${({ $textColor }) => $textColor};
-  text-align: ${({ $align }) => $align};
 `;
