@@ -1,4 +1,4 @@
-import { Form } from '@/app/(backend)/workspaces/[id]/formularverwaltung/helpers/getForms';
+import { Form } from '@/app/(backend)/workspaces/[workspaceId]/formularverwaltung/helpers/getForms';
 import React from 'react';
 
 type TableDefinition = {

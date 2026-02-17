@@ -5,7 +5,8 @@ import styled from 'styled-components';
 export const DashboardLayoutContainer = styled.div<{ $isFixed?: boolean }>`
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   main {
     grid-area: main;
@@ -16,8 +17,5 @@ export const DashboardLayoutContainer = styled.div<{ $isFixed?: boolean }>`
 
   footer {
     grid-area: footer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 `;

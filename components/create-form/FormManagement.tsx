@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 // import FormLanguages from '@/components/dashboard/create-form/FormLanguages';
 import FormFieldManagement from './FormFieldManagement';
-import { Form } from '@/app/(backend)/workspaces/[id]/formularverwaltung/helpers/getForms';
+import { Form } from '@/app/(backend)/workspaces/[workspaceId]/formularverwaltung/helpers/getForms';
 
 type FormManagementProps = {
   form: Form;

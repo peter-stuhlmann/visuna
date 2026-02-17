@@ -1,4 +1,4 @@
-import { User } from '@/types';
+import { User } from "@/lib/users/users.types";
 
 export type InviteUsersManagementProps = {
   users: User[] | null;

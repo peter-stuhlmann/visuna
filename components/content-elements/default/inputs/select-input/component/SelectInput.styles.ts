@@ -1,5 +1,11 @@
 import styled, { css } from 'styled-components';
-import { statusColorsMap } from '../../../styles.config';
+import {
+  inputLabelLeftMap,
+  inputSizeMap,
+  selectBorderRadiusMap,
+  selectInputPaddingMap,
+  statusColorsMap,
+} from '../../../styles.config';
 
 export const Container = styled.div<{ $backgroundColor: string }>`
   position: relative;
@@ -11,13 +17,15 @@ export const Container = styled.div<{ $backgroundColor: string }>`
 export const StyledInput = styled.div<{
   $status: 'default' | 'error' | 'warning' | 'success';
   $disabled: boolean;
+  $size: 'small' | 'medium' | 'large';
 }>`
   border: 1px solid ${({ $status }) => statusColorsMap[$status]};
-  border-radius: 1rem;
+  border-radius: ${({ $size }) => selectBorderRadiusMap[$size]};
   transition: border-color 0.3s;
-  min-height: 54px;
-  padding: 0.5rem calc(1rem + 0.25rem);
+  /* min-height: 54px; */
+  padding: ${({ $size }) => selectInputPaddingMap[$size]};
   box-sizing: border-box;
+  font-size: 16px;
 
   &:focus-within {
     outline: 1px solid ${({ $status }) => statusColorsMap[$status]};
@@ -44,7 +52,8 @@ export const StyledInput = styled.div<{
     `}
 
   & > div {
-    height: calc(54px - 1rem);
+    /* height: calc(54px - 1rem); */
+    height: ${({ $size }) => inputSizeMap[$size]};
     line-height: 1.5;
     display: flex;
     align-items: center;
@@ -59,7 +68,6 @@ export const StyledDropdown = styled.ul`
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
-  right: 0;
   z-index: 10;
   background: white;
   border: 1px solid #ccc;
@@ -70,6 +78,7 @@ export const StyledDropdown = styled.ul`
   list-style: none;
   margin: 0;
   padding: 4px 0;
+  white-space: nowrap;
 `;
 
 export const StyledOption = styled.li<{ $selected: boolean }>`
@@ -82,42 +91,15 @@ export const StyledOption = styled.li<{ $selected: boolean }>`
   }
 `;
 
-// export const StyledLabel = styled.label<{ $backgroundColor: string }>`
-//   font-size: 0.85rem;
-//   font-weight: 500;
-//   color: #333;
-//   margin-top: 4px;
-//   display: block;
-// `;
-// export const StyledLabel = styled.label<{ $backgroundColor: string }>`
-//   position: absolute;
-//   left: 1rem;
-//   top: calc(50% + 5px);
-//   font-size: 1rem;
-//   color: rgba(var(--primary-color), 1);
-//   background-color: transparent;
-//   padding: 0 0.25rem;
-//   transform: translateY(-50%);
-//   transition: all 0.2s ease-out;
-//   pointer-events: none;
-//   border-radius: 1rem;
-//   user-select: none;
-
-//   ul:focus + & {
-//     top: 10px;
-//     font-size: 0.75rem;
-//     background-color: ${({ $backgroundColor }) => `${$backgroundColor}`};
-//   }
-// `;
-
 export const StyledLabel = styled.label<{
   $backgroundColor: string;
   $isFloating: boolean;
+  $size: 'small' | 'medium' | 'large';
 }>`
   position: absolute;
-  left: 1rem;
-  top: ${({ $isFloating }) => ($isFloating ? '10px' : 'calc(50% + 5px)')};
-  font-size: ${({ $isFloating }) => ($isFloating ? '0.75rem' : '1rem')};
+  left: ${({ $size }) => inputLabelLeftMap[$size]};
+  top: ${({ $isFloating }) => ($isFloating ? '9px' : 'calc(50% + 5px)')};
+  font-size: ${({ $isFloating }) => ($isFloating ? '12px' : '16px')};
   color: rgba(var(--primary-color), 1);
   background-color: ${({ $backgroundColor }) => $backgroundColor};
   padding: 0 0.25rem;
@@ -127,4 +109,5 @@ export const StyledLabel = styled.label<{
   border-radius: 1rem;
   user-select: none;
   z-index: 1;
+  white-space: nowrap;
 `;

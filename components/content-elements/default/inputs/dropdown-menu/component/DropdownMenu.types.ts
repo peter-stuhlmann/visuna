@@ -1,4 +1,4 @@
-import { ButtonProps } from '../../../button/button';
+import { ButtonProps } from '../../../core/button';
 import { BorderRadiusOptions } from '../../../types';
 
 export type DropdownMenuProps = {

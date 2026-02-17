@@ -1,5 +1,6 @@
-import { LogoGridItemGapOptions } from './list/logo-grid/component/LogoGrid.types';
+import { LogoGridItemGapOptions } from './logo-grid/component/LogoGrid.types';
 import {
+  AnimationDuration,
   BorderRadiusOptions,
   InnerWidthOptions,
   MarginOptions,
@@ -8,6 +9,12 @@ import {
   Status,
   Width,
 } from './types';
+
+export const animationDurationMap: Record<AnimationDuration, number> = {
+  fast: 1200,
+  normal: 2500,
+  slow: 4000,
+};
 
 export const widthMap: Record<Width, string> = {
   s: '480px',
@@ -92,8 +99,10 @@ export const screenSizeMap: Record<ScreenSizeOptions, number> = {
 // BACKEND
 
 export const roleColorMap: Record<Role, string> = {
+  superadmin: '#ff6b6b',
   admin: '#00ffd9',
-  redakteur: '#ffeb00',
+  editor: '#ffeb00',
+  'read-only': '#a0a0a0',
 };
 
 export const statusColorsMap: Record<Status, string> = {
@@ -101,4 +110,34 @@ export const statusColorsMap: Record<Status, string> = {
   success: 'green',
   error: '#ff0000',
   warning: '#ff9900',
+};
+
+export const selectInputPaddingMap: Record<
+  'small' | 'medium' | 'large',
+  string
+> = {
+  small: '0 7px',
+  medium: '0 0.9rem',
+  large: '0 1.25rem',
+};
+
+export const inputSizeMap: Record<'small' | 'medium' | 'large', string> = {
+  small: '26px',
+  medium: '35px',
+  large: '54px',
+};
+
+export const inputLabelLeftMap: Record<'small' | 'medium' | 'large', string> = {
+  small: '5px',
+  medium: '0.8rem',
+  large: '1rem',
+};
+
+export const selectBorderRadiusMap: Record<
+  'small' | 'medium' | 'large',
+  string
+> = {
+  small: '4px',
+  medium: '0.5rem',
+  large: '1rem',
 };

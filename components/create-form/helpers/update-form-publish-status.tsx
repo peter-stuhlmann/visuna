@@ -1,24 +1,20 @@
-const handleFormPublishingStatus = async (slug: string, newStatus: boolean) => {
-  try {
-    const response = await fetch('/api/update-form-publish-status', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        slug: slug,
-        published: newStatus,
-      }),
-    });
+import { PageVisibility } from "@/lib/workspaces/pages/pages.types";
 
-    if (!response.ok) {
-      throw new Error('Fehler beim Ändern des Veröffentlichungsstatus.');
-    }
+export default async function handleFormPublishStatus(
+  slug: string,
+  publishStatus: PageVisibility
+) {
+  const res = await fetch('/api/forms/update-publish-status', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      slug,
+      publishStatus,
+    }),
+  });
 
-    // const result = await response.json();
-  } catch (err) {
-    console.error('Fehler beim Ändern des Veröffentlichungsstatus.:', err);
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.message || 'Status konnte nicht gespeichert werden');
   }
-};
-
-export default handleFormPublishingStatus;
+}

@@ -15,7 +15,7 @@ const ListItem: FC<ListItemProps> = ({ description, link, linkText, name }) => {
     <Container>
       <h3>{name}</h3>
       <div>{description}</div>
-      <Button variant="outlined" href={link} icon="MdArrowForward">
+      <Button variant="outlined" href={link} icon={{ name: 'MdArrowForward' }}>
         {linkText}
       </Button>
     </Container>

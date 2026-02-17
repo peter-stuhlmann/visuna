@@ -58,7 +58,6 @@ export const ColorPreview = styled.input<{ $invalid?: boolean }>`
   padding: 0;
   border: none;
   cursor: pointer;
-  border-radius: 14px;
   background-color: ${({ $invalid }) => ($invalid ? '#fff' : 'transparent')};
 `;
 
@@ -68,7 +67,6 @@ export const InvalidOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 4px;
   background-image: repeating-linear-gradient(
     45deg,
     #ccc,

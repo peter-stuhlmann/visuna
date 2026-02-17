@@ -5,6 +5,8 @@ import SetNewPasswordForm from '@/components/forms/set-new-password';
 import connectToDatabase from '@/utils/connectToDatabase';
 import { Heading } from '@/components/content-elements/default';
 import Link from 'next/link';
+import Spacer from '@/components/content-elements/default/spacer';
+import { ErrorMessage } from '@/components/Global.styles';
 
 type ResetPasswordPageProps = {
   searchParams?: Promise<{ code?: string }>;
@@ -26,11 +28,17 @@ const ResetPasswordPage: FC<ResetPasswordPageProps> = async ({
       {code && codeStatus.status === 200 ? (
         <>
           <Heading element="h1" value="Vergib ein neues Passwort" />
+
+          <Spacer data={{ size: 's' }} />
+
           <SetNewPasswordForm code={code} />
         </>
       ) : (
-        <div>{message}</div>
+        <ErrorMessage>{message}</ErrorMessage>
       )}
+
+      <Spacer data={{ size: 's' }} />
+
       <Link href="/login">Zur Login-Seite</Link>
     </>
   );

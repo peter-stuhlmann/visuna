@@ -10,17 +10,10 @@ interface BlockItemProps {
   href?: string;
   children: ReactNode;
   icon?: ReactNode;
-  noArrow?: boolean;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void; // 👈 hinzufügen
 }
 
-const BlockItem: FC<BlockItemProps> = ({
-  href,
-  children,
-  icon,
-  noArrow = false,
-  onClick,
-}) => {
+const BlockItem: FC<BlockItemProps> = ({ href, children, icon, onClick }) => {
   const pathname = usePathname();
   const currentPath = pathname.split('?')[0];
   const isActive = currentPath.startsWith(href as string);
@@ -36,9 +29,7 @@ const BlockItem: FC<BlockItemProps> = ({
   );
 
   return (
-    <BlockItemContainer $isActive={isActive} $noArrow={noArrow}>
-      {content}
-    </BlockItemContainer>
+    <BlockItemContainer $isActive={isActive}>{content}</BlockItemContainer>
   );
 };
 

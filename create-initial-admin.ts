@@ -1,4 +1,6 @@
-const { MongoClient, ObjectId } = require('mongodb');
+import { createDbDocId } from "./utils/createDbDocId";
+
+const { MongoClient } = require('mongodb');
 const dotenv = require('dotenv');
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -46,22 +48,7 @@ async function main() {
     return;
   }
 
-  console.log('🛠 Neuer Workspace wird erstellt...');
-  const workspaceId = new ObjectId();
-  const workspaceName = 'Erstes Team';
-
-  const newWorkspace = {
-    _id: workspaceId,
-    name: workspaceName,
-    thumbnail: '',
-    access: [],
-  };
-
-  await workspacesCollection.insertOne(newWorkspace);
-  console.log(`✅ Workspace '${workspaceName}' erstellt (ID: ${workspaceId})`);
-
-  console.log('👤 Admin-Benutzer wird angelegt...');
-  const newUserId = new ObjectId();
+  const newUserId = createDbDocId('user');
 
   const newUser = {
     _id: newUserId,
@@ -70,28 +57,25 @@ async function main() {
     password: hashedPassword,
     passwordUpdatedAt: new Date(),
     createdAt: new Date(),
-    currentWorkspaceId: workspaceId.toHexString(),
-    workspaces: [workspaceId.toHexString()],
+    // currentWorkspaceId: workspaceId.toHexString(),
+    // workspaces: [workspaceId.toHexString()],
   };
 
   await usersCollection.insertOne(newUser);
-  console.log(`✅ Benutzer ${email} wurde vollständig erstellt.`);
 
-  console.log('🔗 Verknüpfe Benutzer mit Workspace als ADMIN...');
-  await workspacesCollection.updateOne(
-    { _id: workspaceId },
-    {
-      $push: {
-        access: {
-          userId: newUserId.toHexString(),
-          role: 'ADMIN',
-        },
-      },
-    }
-  );
+  // await workspacesCollection.updateOne(
+  //   { _id: workspaceId },
+  //   {
+  //     $push: {
+  //       access: {
+  //         userId: newUserId.toHexString(),
+  //         role: 'ADMIN',
+  //       },
+  //     },
+  //   }
+  // );
 
-  console.log(`🎉 Initialer Admin wurde erfolgreich angelegt und verknüpft.`);
-  await client.close();
+  // await client.close();
 }
 
 main().catch((err) => {

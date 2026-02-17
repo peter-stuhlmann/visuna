@@ -7,7 +7,7 @@ import {
   DropdownMenuOptions,
   DropdownMenuWrapper,
 } from './DropdownMenu.styles';
-import Button from '../../../button/button';
+import Button from '../../../core/button';
 
 const DropdownMenu: FC<DropdownMenuProps> = ({
   button,

@@ -1,24 +1,32 @@
 'use client';
 
-import { FC, useState } from 'react';
-import formatTimestamp from '@/utils/formatTimestamp';
+import { FC, useMemo, useState } from 'react';
 import ConfirmDeleteModal from './confirm-delete-modal';
-import { MdDelete, MdUndo } from 'react-icons/md';
+import { MdPersonRemove } from 'react-icons/md';
 import { useStatus } from '../status/StatusContext';
-import { User, Workspace } from '@/types';
 import {
   ActionButton,
+  ActionsCell,
+  EmptyState,
+  ListWrapper,
   LoadingSpinner,
-  StyledTable,
-  TableWrapper,
+  RoleCell,
+  StatusCell,
+  UserCard,
+  UserEmail,
+  UserInfoCell,
+  UserName,
 } from './InvitedUserslist.styles';
-import { ExtendedUser } from './InviteUsersManagement.types';
+import { WorkspaceListItem } from '@/lib/workspaces/workspaces.types';
+import { User } from '@/lib/users/users.types';
+import { getRoleLabel } from '@/lib/roles/roles';
 
 type InvitedUserslistProps = {
   users: User[] | null;
   setUsers: (users: User[]) => void;
   loggedInUser: User;
-  workspace: Workspace;
+  workspace: WorkspaceListItem;
+  canManage: boolean;
 };
 
 const InvitedUserslist: FC<InvitedUserslistProps> = ({
@@ -26,159 +34,134 @@ const InvitedUserslist: FC<InvitedUserslistProps> = ({
   users,
   setUsers,
   workspace,
+  canManage,
 }) => {
-  const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+
+  const [isRevokeModalOpen, setIsRevokeModalOpen] = useState(false);
+  const [userToRevoke, setUserToRevoke] = useState<string | null>(null);
 
   const { addStatus } = useStatus();
 
-  const deleteUser = async (email: string) => {
-    setLoadingUserId(email);
+  /* ---------- Workspace Scope ---------- */
+  const workspaceUserIds = useMemo(
+    () => new Set((workspace.access || []).map((a) => a.userId)),
+    [workspace]
+  );
+
+  const scopedUsers = useMemo(
+    () => (users || []).filter((u) => workspaceUserIds.has(u._id)),
+    [users, workspaceUserIds]
+  );
+
+  /* ---------- API ---------- */
+
+  const revokeAccess = async (userId: string) => {
+    const prev = [...(users || [])];
+    // Optimistic: remove user immediately
+    setUsers(prev.filter((u) => u._id !== userId));
     try {
-      const response = await fetch(`/api/delete-user`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setUsers(data.updatedUsers);
-        addStatus({ type: 'success', message: data.message });
-      } else {
+      const response = await fetch(
+        `/api/workspaces/${workspace._id}/users/${userId}`,
+        { method: 'DELETE' }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        setUsers(prev);
         addStatus({ type: 'error', message: data.message });
       }
     } catch (err) {
+      setUsers(prev);
       addStatus({
         type: 'error',
         message: err instanceof Error ? err.message : 'Unbekannter Fehler',
       });
-    } finally {
-      setLoadingUserId(null);
     }
   };
 
-  const revokeInvitation = async (id: string) => {
-    setLoadingUserId(id);
-    try {
-      const response = await fetch(`/api/revoke-invitation`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setUsers(data.updatedUsers);
-        addStatus({ type: 'success', message: data.message });
-      } else {
-        addStatus({ type: 'error', message: data.message });
-      }
-    } catch (err) {
-      addStatus({
-        type: 'error',
-        message: err instanceof Error ? err.message : 'Unbekannter Fehler',
-      });
-    } finally {
-      setLoadingUserId(null);
-    }
+  /* ---------- Modal ---------- */
+
+  const openRevokeModal = (userId: string) => {
+    setUserToRevoke(userId);
+    setIsRevokeModalOpen(true);
   };
 
-  const handleOpenDeleteModal = (email: string) => {
-    setUserToDelete(email);
-    setIsDeleteModalOpen(true);
+  const closeRevokeModal = () => {
+    setUserToRevoke(null);
+    setIsRevokeModalOpen(false);
   };
 
-  const handleCloseDeleteModal = () => {
-    setUserToDelete(null);
-    setIsDeleteModalOpen(false);
+  const confirmRevoke = () => {
+    if (userToRevoke) revokeAccess(userToRevoke);
+    closeRevokeModal();
   };
 
-  const handleConfirmDelete = () => {
-    if (userToDelete) deleteUser(userToDelete);
-    handleCloseDeleteModal();
-  };
+  /* ---------- Render ---------- */
 
   return (
     <>
-      <TableWrapper>
-        <StyledTable>
-          <thead>
-            <tr>
-              <th>E-Mail</th>
-              <th>Eingeladen am</th>
-              <th>Rolle</th>
-              <th>Status</th>
-              <th>Aktion</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>⭐ {loggedInUser.email}</td>
-              <td></td>
-              <td>
-                {workspace?.access
-                  ?.find((y) => y.userId === loggedInUser._id)
-                  ?.role.toUpperCase() ?? '?'}
-              </td>
-              <td>Registriert</td>
-              <td></td>
-            </tr>
-            {users && users.length > 1 ? (
-              users
-                .filter((us) => us._id !== loggedInUser._id)
-                .map((user) => (
-                  <tr key={user._id.toString()}>
-                    <td>{user.email}</td>
-                    <td>{formatTimestamp(user.createdAt as string)}</td>
-                    <td>
-                      {workspace?.access
-                        ?.find((y) => y.userId === user._id)
-                        ?.role.toUpperCase() ??
-                        (user as ExtendedUser).tempRole?.toUpperCase() ??
-                        '?'}
-                    </td>
-                    <td>{user.verified ? 'Registriert' : 'Ausstehend'}</td>
-                    <td>
-                      {loadingUserId === user._id ||
-                      loadingUserId === user.email ? (
-                        <LoadingSpinner />
-                      ) : user.verified ? (
-                        <ActionButton
-                          aria-label="delete"
-                          $color="red"
-                          onClick={() =>
-                            handleOpenDeleteModal(user.email as string)
-                          }
-                        >
-                          <MdDelete size={20} />
-                        </ActionButton>
-                      ) : (
-                        <ActionButton
-                          aria-label="revoke"
-                          $color="orange"
-                          onClick={() => revokeInvitation(user._id as string)}
-                        >
-                          <MdUndo size={20} />
-                        </ActionButton>
-                      )}
-                    </td>
-                  </tr>
-                ))
-            ) : (
-              <tr>
-                <td colSpan={5} style={{ textAlign: 'center' }}>
-                  Keine Mitarbeiter eingeladen
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </StyledTable>
-      </TableWrapper>
+      <ListWrapper>
+        {/* Logged in user */}
+        <UserCard $highlight>
+          <UserInfoCell>
+            {loggedInUser.name && <UserName>{loggedInUser.name}</UserName>}
+            <UserEmail>⭐ {loggedInUser.email}</UserEmail>
+          </UserInfoCell>
+          <RoleCell>
+            {(() => {
+              const myRole = workspace.access
+                ?.find((a) => String(a.userId) === loggedInUser._id)
+                ?.role;
+              return getRoleLabel(myRole || '', 'de').toUpperCase();
+            })()}
+          </RoleCell>
+          <StatusCell>Aktiv</StatusCell>
+          <ActionsCell />
+        </UserCard>
+
+        {/* Workspace members */}
+        {scopedUsers
+          .filter((u) => u._id !== loggedInUser._id)
+          .map((user) => {
+            const userId = user._id;
+
+            const role =
+              workspace.access?.find((a) => String(a.userId) === userId)
+                ?.role ?? '?';
+
+            return (
+              <UserCard key={userId}>
+                <UserInfoCell>
+                  {user.name && <UserName>{user.name}</UserName>}
+                  <UserEmail>{user.email}</UserEmail>
+                </UserInfoCell>
+                <RoleCell>{getRoleLabel(role, 'de').toUpperCase()}</RoleCell>
+                <StatusCell>Aktiv</StatusCell>
+                <ActionsCell>
+                  {canManage && (
+                    <ActionButton
+                      aria-label="Nutzer entfernen"
+                      $bg="#fee2e2"
+                      $color="#b91c1c"
+                      onClick={() => openRevokeModal(userId)}
+                      title="Nutzer entfernen"
+                    >
+                      <MdPersonRemove size={20} />
+                    </ActionButton>
+                  )}
+                </ActionsCell>
+              </UserCard>
+            );
+          })}
+
+        {scopedUsers.length <= 1 && (
+          <EmptyState>Keine weiteren Mitglieder</EmptyState>
+        )}
+      </ListWrapper>
 
       <ConfirmDeleteModal
-        isOpen={isDeleteModalOpen}
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCloseDeleteModal}
+        isOpen={isRevokeModalOpen}
+        onConfirm={confirmRevoke}
+        onCancel={closeRevokeModal}
       />
     </>
   );

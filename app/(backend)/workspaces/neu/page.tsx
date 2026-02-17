@@ -13,6 +13,14 @@ const AddNewWorkspacePage: FC = async () => {
   return (
     <Wrapper
       data={{
+        layout: {
+          outerWidth: 'full',
+          innerWidth: 'xl',
+          innerPaddingLeft: 'm',
+          innerPaddingRight: 'm',
+          innerPaddingTop: 'm',
+          innerPaddingBottom: 'm',
+        },
         children: (
           <>
             <Heading value="Lege einen neuen Workspace an" element="h1" />

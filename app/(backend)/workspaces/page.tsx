@@ -3,7 +3,6 @@ import { FC } from 'react';
 import AddNew from '@/assets/images/add-new.png';
 import { getWorkspaces } from './getWorkspaces';
 import WorkspaceCard from '@/components/workspaces/WorkspaceCard';
-import { Workspace } from '@/types';
 import { redirect } from 'next/navigation';
 import { getLoggedInUser } from '@/utils/getLoggedInUser';
 import {
@@ -21,56 +20,61 @@ import {
   NameLabel,
 } from '@/components/workspaces/WorkspaceCard.styles';
 import Link from 'next/link';
+import Spacer from '@/components/content-elements/default/spacer';
 
 const WorkspacesPage: FC = async () => {
   const loggedInUser = await getLoggedInUser();
   if (!loggedInUser) {
     redirect('/login');
   }
+
   const workspaces = await getWorkspaces();
 
-  const plainWorkspaces = workspaces?.map((workspace: Workspace) => ({
-    ...workspace,
-    _id: workspace._id.toString(),
-    access: workspace.access?.map(
-      (entry: { userId: string; role: string }) => ({
-        userId: String(entry.userId),
-        role: entry.role,
-      })
-    ),
-  }));
+  // ✅ Wichtig: erst NACH Login laden und dann hier entscheiden
+  if (!workspaces || workspaces.length === 0) {
+    redirect('/workspaces/neu');
+  }
 
   return (
     <>
       <Breadcrumbs
-        links={[
-          {
-            label: 'Workspaces',
-            isActive: true,
-          },
-        ]}
         data={{
-          innerWidth: 'xl',
-          marginTop: 'xl',
-          paddingLeft: 'm',
-          paddingRight: 'm',
-          paddingTop: 'm',
-          paddingBottom: 'm',
+          layout: {
+            outerWidth: 'full',
+            innerWidth: 'xl',
+            innerPaddingTop: 'm',
+            innerPaddingBottom: 'm',
+            innerPaddingLeft: 'm',
+            innerPaddingRight: 'm',
+          },
+          links: [
+            {
+              label: { de: 'Workspaces', en: 'Workspaces' },
+              highlighted: true,
+            },
+          ],
         }}
       />
+
       <Wrapper
         data={{
-          paddingLeft: 'm',
-          paddingRight: 'm',
-          paddingTop: 'm',
-          paddingBottom: 'm',
+          layout: {
+            outerWidth: 'full',
+            innerWidth: 'xl',
+            innerPaddingLeft: 'm',
+            innerPaddingRight: 'm',
+            innerPaddingTop: 'm',
+            innerPaddingBottom: 'm',
+          },
           children: (
             <>
               <Heading value="Workspaces" element="h1" />
+
+              <Spacer data={{ size: 's' }} />
               <Grid>
-                {plainWorkspaces?.map((workspace: Workspace) => (
+                {workspaces.map((workspace) => (
                   <WorkspaceCard
-                    key={workspace._id.toString()}
+                    key={workspace._id}
                     workspace={workspace}
                     role={
                       workspace.access
@@ -79,8 +83,9 @@ const WorkspacesPage: FC = async () => {
                     }
                   />
                 ))}
+
                 <Link href={`/workspaces/neu`}>
-                  <CardWrapper selected={false}>
+                  <CardWrapper $selected={false}>
                     <div>
                       <Card $backgroundImage={AddNew.src}>
                         <CardOverlay>

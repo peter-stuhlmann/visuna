@@ -1,19 +1,21 @@
 'use client';
 
-import { Workspace } from '@/types';
+import { WorkspaceListItem } from '@/lib/workspaces/workspaces.types';
 import {
   createContext,
   useContext,
   useState,
   FC,
   ReactNode,
-  useEffect,
+  useCallback,
 } from 'react';
 
 type SelectedWorkspaceType = {
-  selectedWorkspace: Workspace | null;
-  setSelectedWorkspace: (selectedWorkspace: Workspace | null) => void;
+  selectedWorkspace: WorkspaceListItem | null;
+  setSelectedWorkspace: (workspace: WorkspaceListItem | null) => Promise<void>;
   refreshWorkspace: () => Promise<void>;
+  /** Current user's role in the selected workspace */
+  userRole: string;
 };
 
 const SelectedWorkspaceContext = createContext<
@@ -32,64 +34,56 @@ export const useSelectedWorkspace = (): SelectedWorkspaceType => {
 
 type SelectedWorkspaceProviderProps = {
   children: ReactNode;
-  currentWorkspace: Workspace | null;
-  fallbackWorkspaces?: Workspace[];
+  initialWorkspace: WorkspaceListItem | null;
+  initialUserRole?: string;
 };
 
 export const SelectedWorkspaceProvider: FC<SelectedWorkspaceProviderProps> = ({
   children,
-  currentWorkspace,
-  fallbackWorkspaces = [],
+  initialWorkspace,
+  initialUserRole = 'none',
 }) => {
   const [selectedWorkspace, setSelectedWorkspaceState] =
-    useState<Workspace | null>(currentWorkspace || null);
+    useState<WorkspaceListItem | null>(initialWorkspace);
+  const [userRole, setUserRole] = useState<string>(initialUserRole);
 
-  useEffect(() => {
-    if (!selectedWorkspace && fallbackWorkspaces.length > 0) {
-      setSelectedWorkspace(fallbackWorkspaces[0]);
-    }
-  }, [selectedWorkspace, fallbackWorkspaces]);
+  // Persistiert Auswahl im User
+  const setSelectedWorkspace = useCallback(
+    async (workspace: WorkspaceListItem | null) => {
+      setSelectedWorkspaceState(workspace);
 
-  const setSelectedWorkspace = async (workspace: Workspace | null) => {
-    setSelectedWorkspaceState(workspace);
+      if (!workspace?._id) return;
 
-    try {
-      const response = await fetch('/api/select-workspace', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ workspace }),
+      await fetch('/api/users/current-workspace', {
+        method: 'PATCH',
+        keepalive: true, // Background request survives navigation
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ workspaceId: workspace._id }),
       });
+    },
+    []
+  );
 
-      if (!response.ok) {
-        console.error(
-          'Fehler beim Senden des Workspaces:',
-          response.statusText
-        );
-      }
-    } catch (error) {
-      console.error(
-        'Fehler beim Aktualisieren des ausgewählten Workspaces:',
-        error
-      );
-    }
-  };
-
-  const refreshWorkspace = async () => {
+  // Holt Workspace neu vom Server (weiterhin nur ListItem!)
+  const refreshWorkspace = useCallback(async () => {
     if (!selectedWorkspace?._id) return;
-    const res = await fetch(`/api/workspace/${selectedWorkspace._id}`);
-    if (res.ok) {
-      const ws: Workspace = await res.json();
-      setSelectedWorkspaceState(ws);
-    } else {
-      console.error('Failed to re-fetch workspace', res.status);
-    }
-  };
+
+    const res = await fetch(`/api/workspaces/${selectedWorkspace._id}`);
+
+    if (!res.ok) return;
+
+    const ws: WorkspaceListItem = await res.json();
+    setSelectedWorkspaceState(ws);
+  }, [selectedWorkspace]);
 
   return (
     <SelectedWorkspaceContext.Provider
-      value={{ selectedWorkspace, setSelectedWorkspace, refreshWorkspace }}
+      value={{
+        selectedWorkspace,
+        setSelectedWorkspace,
+        refreshWorkspace,
+        userRole,
+      }}
     >
       {children}
     </SelectedWorkspaceContext.Provider>

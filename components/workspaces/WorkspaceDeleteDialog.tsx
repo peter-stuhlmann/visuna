@@ -3,11 +3,11 @@
 import { FC, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-import { Workspace } from '@/types';
 import { Button, Heading } from '../content-elements/default';
-import TextInput from '../content-elements/default/inputs/text';
+import TextInput from '../content-elements/default/inputs/text-input';
 import { getPrimaryColor } from '../content-elements/default/constants';
 import { useStatus } from '../status/StatusContext';
+import { WorkspaceListItem } from '@/lib/workspaces/workspaces.types';
 
 const DELETE_CONFIRM_2 = 'Workspace löschen';
 
@@ -41,7 +41,7 @@ const ButtonGroup = styled.div`
 `;
 
 const WorkspaceDeleteDialog: FC<{
-  workspace: Workspace;
+  workspace: WorkspaceListItem;
   setIsDeleteDialogOpen: (open: boolean) => void;
   backgroundColor?: string;
 }> = ({
@@ -62,10 +62,12 @@ const WorkspaceDeleteDialog: FC<{
       return;
 
     try {
-      const res = await fetch(`/api/delete-workspace`, {
-        method: 'POST',
-        body: JSON.stringify({ id: workspace._id }),
-      });
+      const res = await fetch(
+        `/api/workspaces/${workspace._id}`,
+        {
+          method: 'DELETE',
+        }
+      );
       if (res.ok) {
         addStatus({
           type: 'success',

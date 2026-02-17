@@ -26,7 +26,7 @@ const FormBlock: FC<FormBlockProps> = ({ value, onChange }) => {
   useEffect(() => {
     const fetchForms = async () => {
       try {
-        const res = await fetch('/api/get-forms');
+        const res = await fetch('/api/forms/get-forms');
         if (!res.ok) throw new Error('Fehler beim Abrufen der Formulardaten');
         const data = await res.json();
         setForms(data || []);

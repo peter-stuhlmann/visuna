@@ -3,8 +3,8 @@
 import { FC, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useSelectedWorkspace } from '../workspaces/WorkspaceContext';
-import { User } from '@/types';
 import { DropdownMenu } from '../content-elements/default';
+import { User } from '@/lib/users/users.types';
 
 type ProfileProps = {
   loggedInUser: User;
@@ -23,7 +23,7 @@ const Profile: FC<ProfileProps> = () => {
     <DropdownMenu
       button={{
         children: 'Profil',
-        icon: 'MdOutlinePersonOutline',
+        icon: { name: 'MdOutlinePersonOutline' },
         showOnlyIconOnMobile: true,
       }}
       menuItems={[

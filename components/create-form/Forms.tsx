@@ -4,10 +4,11 @@ import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { getTableData } from './helpers/getTableData';
-import { Form } from '@/app/(backend)/workspaces/[id]/formularverwaltung/helpers/getForms';
+import { Form } from '@/app/(backend)/workspaces/[workspaceId]/formularverwaltung/helpers/getForms';
 import renderCellValue from './helpers/renderCellValue';
 import { Button, TextInput } from '../content-elements/default';
 import { useSelectedWorkspace } from '../workspaces/WorkspaceContext';
+import { PageVisibility } from '@/lib/workspaces/pages/pages.types';
 
 const Container = styled.div`
   margin-top: 1rem;
@@ -36,10 +37,7 @@ const Tr = styled.tr``;
 
 const DialogOverlay = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
@@ -53,6 +51,10 @@ const Dialog = styled.div`
   width: 400px;
 `;
 
+export type FormPublishStatusMap = {
+  [slug: string]: PageVisibility;
+};
+
 const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
   const [forms, setForms] = useState<Form[] | null>(formsList);
   const [open, setOpen] = useState(false);
@@ -62,26 +64,26 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [nameError, setNameError] = useState<string | null>(null);
   const [slugError, setSlugError] = useState<string | null>(null);
-  // const [rowsPerPage, setRowsPerPage] = useState(2);
-  // const [page, setPage] = useState(0);
+
   const rowsPerPage = 10;
   const page = 0;
 
   const [sortColumn, setSortColumn] = useState<string | null>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
-  const [publishedStatus, setPublishedStatus] = useState<{
-    [key: string]: boolean;
-  }>(
-    forms?.reduce((acc, form) => {
-      acc[form.slug] = form.published ?? false;
+  /* -------------------- PUBLISH STATUS MAP -------------------- */
+
+  const [formStatus, setFormStatus] = useState<FormPublishStatusMap>(
+    formsList?.reduce((acc, f) => {
+      acc[f.slug] = (f.publishStatus as PageVisibility) ?? 'offline';
       return acc;
-    }, {} as { [key: string]: boolean }) || {}
+    }, {} as FormPublishStatusMap) || {}
   );
 
   const router = useRouter();
-
   const { selectedWorkspace } = useSelectedWorkspace();
+
+  /* -------------------- SLUG VALIDATION -------------------- */
 
   useEffect(() => {
     if (slug.trim()) {
@@ -93,6 +95,8 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
       setSlugError(null);
     }
   }, [slug, formsList]);
+
+  /* -------------------- DIALOG -------------------- */
 
   const handleNewForm = () => {
     setOpen(true);
@@ -107,6 +111,8 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
     setNameError(null);
     setSlugError(null);
   };
+
+  /* -------------------- CREATE -------------------- */
 
   const handleSave = async () => {
     setNameError(null);
@@ -125,17 +131,25 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
 
     setIsLoading(true);
     try {
-      const res = await fetch('/api/create-form', {
+      const res = await fetch('/api/forms/create-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: formName, slug }),
       });
+
       if (!res.ok) throw new Error();
       const data = await res.json();
+
       setForms((prev) => (prev ? [...prev, data.newForm] : [data.newForm]));
+      setFormStatus((prev) => ({
+        ...prev,
+        [data.newForm.slug]: data.newForm.publishStatus ?? 'offline',
+      }));
+
       router.push(
         `/workspaces/${selectedWorkspace?._id}/formularverwaltung/${data.newForm.slug}`
       );
+
       handleClose();
     } catch (err) {
       console.error(err);
@@ -144,25 +158,29 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
     }
   };
 
+  /* -------------------- DELETE -------------------- */
+
   const handleDelete = async (id: string) => {
-    if (!confirm(`Möchtest Du das Formular ${id} wirklich löschen?`)) return;
+    if (!confirm(`Möchtest Du dieses Formular wirklich löschen?`)) return;
+
     try {
-      const res = await fetch('/api/delete-form', {
+      const res = await fetch('/api/forms/delete-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
       });
       if (!res.ok) throw new Error();
+
       setForms((prev) => prev?.filter((f) => f._id !== id) || []);
     } catch (err) {
       console.error(err);
     }
   };
 
+  /* -------------------- SORT -------------------- */
+
   const handleSort = (field?: string | null) => {
-    // optional: normalize undefined → null
     const normalized = field ?? null;
-    // …
     const isAsc = sortColumn === normalized && sortDirection === 'asc';
     setSortDirection(isAsc ? 'desc' : 'asc');
     setSortColumn(normalized);
@@ -171,52 +189,36 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
   const sortedForms = forms?.slice().sort((a, b) => {
     if (!sortColumn) return 0;
 
-    // 1) Rohwerte holen
     const rawA = a[sortColumn as keyof Form];
     const rawB = b[sortColumn as keyof Form];
 
-    // 2) Komponente-Werte für Vergleich
     let compA: string | number;
     let compB: string | number;
 
-    // 2a) Datum
     if (sortColumn === 'createdAt') {
       compA = new Date((rawA as string) ?? '').getTime() || 0;
       compB = new Date((rawB as string) ?? '').getTime() || 0;
-    }
-    // 2b) Boolean
-    else if (typeof rawA === 'boolean' || typeof rawB === 'boolean') {
-      compA = rawA === true ? 1 : 0;
-      compB = rawB === true ? 1 : 0;
-    }
-    // 2c) Array
-    else if (Array.isArray(rawA) || Array.isArray(rawB)) {
-      compA = Array.isArray(rawA)
-        ? rawA.map(String).join(', ').toLowerCase()
-        : '';
-      compB = Array.isArray(rawB)
-        ? rawB.map(String).join(', ').toLowerCase()
-        : '';
-    }
-    // 2d) sonst Strings (oder undefined → '')
-    else {
+    } else {
       compA = String(rawA ?? '').toLowerCase();
       compB = String(rawB ?? '').toLowerCase();
     }
 
-    // 3) Endgültiger Vergleich
     if (compA < compB) return sortDirection === 'asc' ? -1 : 1;
     if (compA > compB) return sortDirection === 'asc' ? 1 : -1;
     return 0;
   });
 
+  /* -------------------- TABLE CONFIG -------------------- */
+
   const tableData = getTableData(
     forms,
     handleDelete,
-    publishedStatus,
-    setPublishedStatus,
+    formStatus,
+    setFormStatus,
     selectedWorkspace?._id
   );
+
+  /* -------------------- RENDER -------------------- */
 
   return (
     <Container>
@@ -234,6 +236,7 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
             ))}
           </Tr>
         </thead>
+
         <tbody>
           {sortedForms?.length ? (
             sortedForms
@@ -255,38 +258,17 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
         </tbody>
       </StyledTable>
 
-      {/* {sortedForms && sortedForms.length > 10 && (
-        <TablePagination
-          component="div"
-          labelRowsPerPage="Einträge pro Seite:"
-          labelDisplayedRows={({ from, to, count }) =>
-            `${from}–${to} von ${count}`
-          }
-          count={sortedForms?.length || 0}
-          page={page}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleRowsPerPageChange}
-          rowsPerPageOptions={[
-            10,
-            20,
-            50,
-            { label: 'Alle', value: sortedForms.length },
-          ]}
-        />
-      )} */}
-
       <Button onClick={handleNewForm}>Neues Formular anlegen</Button>
 
       {open && (
         <DialogOverlay>
           <Dialog>
             <h3>Neues Formular anlegen</h3>
+
             <TextInput
               label="Formularname"
               value={formName}
               onChange={(value) => setFormName(value)}
-              // error={!!nameError}
             />
             {nameError && <small style={{ color: 'red' }}>{nameError}</small>}
 
@@ -294,7 +276,6 @@ const Forms: FC<{ formsList: Form[] | null }> = ({ formsList }) => {
               label="Slug"
               value={slug}
               onChange={(value) => setSlug(value)}
-              // error={!!slugError || isSlugTaken}
             />
             {slugError && <small style={{ color: 'red' }}>{slugError}</small>}
 

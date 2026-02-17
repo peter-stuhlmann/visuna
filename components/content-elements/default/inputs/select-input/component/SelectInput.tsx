@@ -29,6 +29,7 @@ const SelectInput: FC<SelectInputProps> = ({
   status = 'default',
   disabled = false,
   options,
+  size = 'medium',
 }) => {
   const generatedId = useId();
   const selectId = id || generatedId;
@@ -41,13 +42,17 @@ const SelectInput: FC<SelectInputProps> = ({
   const selectedOption = options.find(
     (opt) => String(opt.value) === String(value)
   );
+
   const buttonRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<(HTMLLIElement | null)[]>([]);
 
   const toggleDropdown = () => {
     if (!disabled) {
       setOpen((prev) => !prev);
-      setFocusIndex(options.findIndex((opt) => opt.value === value) || 0);
+      const currentIndex = options.findIndex(
+        (opt) => String(opt.value) === String(value)
+      );
+      setFocusIndex(currentIndex >= 0 ? currentIndex : 0);
     }
   };
 
@@ -123,11 +128,15 @@ const SelectInput: FC<SelectInputProps> = ({
         tabIndex={0}
         $status={status}
         $disabled={disabled}
+        $size={size}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
         aria-disabled={disabled}
       >
-        <StyledDisplay>{selectedOption?.label}</StyledDisplay>
+        <StyledDisplay>
+          {/* ⬅️ hier: triggerLabel bevorzugen, sonst label */}
+          {selectedOption?.triggerLabel ?? selectedOption?.label}
+        </StyledDisplay>
 
         {label && (
           <StyledLabel
@@ -135,6 +144,7 @@ const SelectInput: FC<SelectInputProps> = ({
             htmlFor={selectId}
             $backgroundColor={backgroundColor}
             $isFloating={open || !!selectedOption}
+            $size={size}
           >
             {label}
           </StyledLabel>
@@ -147,21 +157,23 @@ const SelectInput: FC<SelectInputProps> = ({
             aria-labelledby={labelId}
             tabIndex={-1}
           >
-            {options.map(({ label, value: optionValue }, index) => (
-              <StyledOption
-                key={optionValue as string}
-                ref={(el) => {
-                  optionsRef.current[index] = el;
-                }}
-                role="option"
-                aria-selected={optionValue === selectedOption?.value}
-                tabIndex={-1}
-                onClick={() => handleSelect(optionValue as string)}
-                $selected={optionValue === selectedOption?.value}
-              >
-                {label}
-              </StyledOption>
-            ))}
+            {options.map(
+              ({ label: optionLabel, value: optionValue }, index) => (
+                <StyledOption
+                  key={optionValue as string}
+                  ref={(el) => {
+                    optionsRef.current[index] = el;
+                  }}
+                  role="option"
+                  aria-selected={optionValue === selectedOption?.value}
+                  tabIndex={-1}
+                  onClick={() => handleSelect(optionValue as string)}
+                  $selected={optionValue === selectedOption?.value}
+                >
+                  {optionLabel}
+                </StyledOption>
+              )
+            )}
           </StyledDropdown>
         )}
       </StyledInput>

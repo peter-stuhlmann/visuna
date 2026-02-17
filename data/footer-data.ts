@@ -1,5 +1,5 @@
 import { getPrimaryColor } from '@/components/content-elements/default/constants';
-import { FooterData } from '@/components/content-elements/default/footer/footer/component/Footer.types';
+import { FooterData } from '@/components/content-elements/default/footer/component/Footer.types';
 
 const footerData: FooterData = {
   backgroundColor: getPrimaryColor()['700'],

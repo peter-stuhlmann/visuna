@@ -1,11 +1,10 @@
 'use client';
 
 import { FC } from 'react';
-import { Workspace } from '@/types';
 import { useSelectedWorkspace } from '../workspaces/WorkspaceContext';
 import { usePathname } from 'next/navigation';
 import { DropdownMenu } from '../content-elements/default';
-import { useStatus } from '../status/StatusContext';
+import { Workspace } from '@/lib/workspaces/workspaces.types';
 
 type WorkspaceSelectProps = {
   workspaces: Workspace[];
@@ -13,7 +12,6 @@ type WorkspaceSelectProps = {
 
 const WorkspaceSelect: FC<WorkspaceSelectProps> = ({ workspaces }) => {
   const { selectedWorkspace, setSelectedWorkspace } = useSelectedWorkspace();
-  const { addStatus } = useStatus();
   const pathname = usePathname();
 
   const handleChange = (id: string) => {
@@ -21,10 +19,9 @@ const WorkspaceSelect: FC<WorkspaceSelectProps> = ({ workspaces }) => {
 
     const newWorkspace = workspaces.find((w) => w._id === id);
     if (newWorkspace) {
-      setSelectedWorkspace(newWorkspace);
-      addStatus({
-        type: 'success',
-        message: `Du hast zum Workspace "${newWorkspace.name}" gewechselt.`,
+      setSelectedWorkspace({
+        ...newWorkspace,
+        thumbnail: newWorkspace.thumbnail || '',
       });
     }
   };
@@ -33,7 +30,7 @@ const WorkspaceSelect: FC<WorkspaceSelectProps> = ({ workspaces }) => {
     <DropdownMenu
       button={{
         children: selectedWorkspace.name,
-        icon: 'MdWorkspacesOutline',
+        icon: { name: 'MdWorkspacesOutline' },
         showOnlyIconOnMobile: true,
       }}
       menuItems={workspaces.map((workspace) => ({

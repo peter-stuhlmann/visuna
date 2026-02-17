@@ -2,14 +2,25 @@ import AuthScreenLayout from '@/components/auth-screen-layout';
 import { Wrapper } from '@/components/content-elements/default';
 import { ReactNode } from 'react';
 
-export default async function AuthScreensLayout({
+export default function AuthScreensLayout({
   children,
-}: Readonly<{
+}: {
   children: ReactNode;
-}>) {
+}) {
   return (
     <AuthScreenLayout>
-      <Wrapper data={{ innerWidth: 'm', children: children }} />
+      <Wrapper
+        data={{
+          layout: {
+            innerWidth: 'm',
+            innerPaddingTop: 'm',
+            innerPaddingRight: 'm',
+            innerPaddingBottom: 'm',
+            innerPaddingLeft: 'm',
+          },
+          children,
+        }}
+      />
     </AuthScreenLayout>
   );
 }

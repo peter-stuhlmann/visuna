@@ -46,8 +46,16 @@ const Colors: FC = () => {
   return (
     <Wrapper
       data={{
-        backgroundColor: getPrimaryColor()['700'],
-        innerWidth: 'xl',
+        layout: {
+          innerPaddingLeft: 'm',
+          innerPaddingRight: 'm',
+          innerPaddingTop: 'm',
+          innerPaddingBottom: 'm',
+          outerPaddingLeft: 'm',
+          outerPaddingRight: 'm',
+          outerPaddingTop: 'm',
+          outerPaddingBottom: 'm',
+        },
         children: (
           <Container
             $columns={shadeKeys.length}

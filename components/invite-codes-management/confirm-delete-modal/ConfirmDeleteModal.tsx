@@ -18,17 +18,28 @@ const ConfirmDeleteModal: FC<ConfirmDeleteModalProps> = ({
   return (
     <ModalOverlay>
       <ModalContent>
-        <Heading element="h2" value="Bist Du sicher?" />
+        <Heading element="h2" value="Benutzer:in entfernen?" align="center" />
+
         <p>
-          Möchtest Du diese:n Benutzer:in wirklich löschen? Du kannst diesen
-          Vorgang nicht rückgängig machen.
+          Du entfernst diese Person aus dem Workspace.
+          <br />
+          Sie verliert den Zugriff auf diesen Workspace.
+          <br />
+          Sie kann jederzeit über die E-Mail-Adresse wieder hinzugefügt werden.
         </p>
+
         <ModalActions>
           <Button type="button" variant="contained" onClick={onCancel}>
             Abbrechen
           </Button>
-          <Button type="button" variant="contained" onClick={onConfirm}>
-            Benutzer:in löschen
+
+          <Button
+            type="button"
+            variant="contained"
+            onClick={onConfirm}
+            style={{ background: '#b91c1c' }}
+          >
+            Zugriff entziehen
           </Button>
         </ModalActions>
       </ModalContent>

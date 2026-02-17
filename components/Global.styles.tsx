@@ -1,6 +1,6 @@
 'use client';
 
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
@@ -17,7 +17,9 @@ export const GlobalStyles = createGlobalStyle`
   
   html {
     font-size: var(--font-size);
-    overflow-x: hidden;
+    font-size: var(--font-size);
+    overflow: hidden;
+    height: 100%;
     scroll-behavior: smooth;
   }
 
@@ -28,6 +30,8 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--text-color) !important;
     background-color: rgb(255, 255, 255);
     min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -41,6 +45,7 @@ export const GlobalStyles = createGlobalStyle`
         display: flex;
         flex-direction: column;
         width: 100%;
+        // min-height: 100vh;
       }
     }
 
@@ -70,4 +75,32 @@ export const GlobalStyles = createGlobalStyle`
     flex-direction: row;
     gap: 1rem;
   }
+
+
+
+  ::view-transition-new(root),
+  ::view-transition-old(root) {
+    animation: none !important;
+  }
+
+  ::view-transition-group(root) {
+    z-index: auto !important;
+  }
+
+  ::view-transition-image-pair(auth-content) {
+    isolation: isolate;
+    will-change: transform, opacity;
+  }
+
+  ::view-transition-new(auth-content) {
+    z-index: 2;
+  }
+
+  ::view-transition-old(auth-content) {
+    z-index: 1;
+  }
+`;
+
+export const ErrorMessage = styled.div`
+  color: red;
 `;

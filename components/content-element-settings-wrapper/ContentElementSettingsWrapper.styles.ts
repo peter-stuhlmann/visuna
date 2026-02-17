@@ -8,4 +8,5 @@ export const ContentElementSettingsWrapperContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin-top: 5rem;
+  container-type: inline-size;
 `;

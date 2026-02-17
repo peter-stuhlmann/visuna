@@ -30,4 +30,29 @@ export const GlobalDashboardStyles = createGlobalStyle`
     flex: 0 0 50px;
     border-radius: 1rem;
   }
+
+  .todo {
+    color: green;
+    position: relative;
+    background: rgba(0, 128, 0, 0.1);
+    padding: 1rem;
+    border-radius: 1rem;
+
+    &::before{
+      content: '';
+      width: 1rem;
+      height: 1rem;
+      background-color: green;
+      border-radius: 50%;
+      position: absolute;
+      left: -8px;
+      top: 20px;
+      color: green;
+
+    }
+
+    ul {
+      color: #000;
+    }
+  }
 `;

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, TextInput } from '@/components/content-elements/default';
+import Spacer from '@/components/content-elements/default/spacer';
 import { FC, FormEvent, useState } from 'react';
 
 type ResetPasswordFormProps = {
@@ -13,17 +14,16 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({
   setStatusMessage,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const formData = new FormData(e.currentTarget);
     const response = await fetch('/api/auth/reset-password', {
       method: 'POST',
-      body: JSON.stringify({
-        email: formData.get('email'),
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
     });
 
     const responseData = await response.json();
@@ -43,11 +43,23 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '1rem',
+        gap: '0.5rem',
         alignItems: 'flex-start',
       }}
     >
-      <TextInput id="email" label="E-Mail" type="email" required />
+      <TextInput
+        id="email"
+        label="E-Mail"
+        name="email"
+        type="email"
+        required
+        value={email}
+        onChange={(value) => setEmail(value)}
+        autoComplete="off"
+      />
+
+      <Spacer data={{ size: 's' }} />
+
       <Button type="submit" variant="contained" disabled={isLoading}>
         {isLoading ? 'Loading...' : 'Passwort zurücksetzen'}
       </Button>

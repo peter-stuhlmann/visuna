@@ -5,9 +5,8 @@ import styled from 'styled-components';
 
 export const BlockItemContainer = styled.div<{
   $isActive: boolean;
-  $noArrow: boolean;
 }>`
-  flex: 0 0 calc(100% / 5);
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,8 +14,6 @@ export const BlockItemContainer = styled.div<{
   transition: 0.2s ease;
   position: relative;
   border-radius: 1rem;
-  /* background-color: ${({ $isActive }) =>
-    $isActive ? getPrimaryColor()['950'] : 'transparent'}; */
 
   &:hover {
     /* transform: scale(1.4) translateY(-5px); */
@@ -26,7 +23,11 @@ export const BlockItemContainer = styled.div<{
       & > span.block-item-label {
       }
       & > svg {
-        transform: scale(4) translateY(-8px);
+        transform: scale(2) translateY(-8px);
+
+        @media (min-width: 1025px) {
+          transform: scale(4) translateY(-8px);
+        }
       }
     }
   }
@@ -41,17 +42,26 @@ export const BlockItemContainer = styled.div<{
     text-decoration: none;
     color: inherit;
     width: 100%;
+
     align-items: center;
     gap: 10px;
     text-align: center;
     transition: 0.2s ease;
     color: ${getPrimaryColor()['900']};
 
+    @media (max-width: 1024px) {
+      padding: 0.5rem;
+    }
+
     span.block-item-label {
       width: 100%;
       /* overflow: hidden; */
       white-space: nowrap;
       transition: 0.2s ease;
+
+      @media (max-width: 1024px) {
+        display: none;
+      }
     }
 
     svg {

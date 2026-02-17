@@ -1,7 +1,15 @@
-import { FC } from 'react';
+import { getLoggedInUser } from '@/utils/getLoggedInUser';
+import { Heading } from '@/components/content-elements/default';
 
-const DashboardPage: FC = () => {
-  return <div>Dashboard</div>;
-};
+export default async function DashboardPage() {
+  const user = await getLoggedInUser();
 
-export default DashboardPage;
+  return (
+    <div>
+      <Heading
+        element="h1"
+        value={`Hallo, ${user?.name || user?.email || 'Nutzer'}!`}
+      />
+    </div>
+  );
+}

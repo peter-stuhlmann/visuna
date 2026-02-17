@@ -5,13 +5,13 @@ import { roleColorMap } from '../content-elements/default/styles.config';
 import { Role } from '../content-elements/default/types';
 import { Button } from '../content-elements/default';
 
-export const CardWrapper = styled.div<{ selected: boolean }>`
+export const CardWrapper = styled.div<{ $selected: boolean }>`
   position: relative;
   flex: 0 0 calc(25% - (3 * 20px / 4));
   overflow: hidden;
   border-radius: 1rem;
-  box-shadow: ${({ selected }) =>
-    selected ? '7px 7px 7px rgba(0, 0, 0, 0.5)' : 'none'};
+  box-shadow: ${({ $selected }) =>
+    $selected ? '7px 7px 7px rgba(0, 0, 0, 0.5)' : 'none'};
 `;
 
 export const Card = styled.div<{ $backgroundImage: string }>`
@@ -36,22 +36,37 @@ export const CardOverlay = styled.div`
 export const RoleLabel = styled.span<{ $role: Role }>`
   background-color: ${({ $role }) => roleColorMap[$role!]};
   color: #000;
-  padding: 2px 5px;
+  padding: 0 10px;
+  height: 24px;
+  line-height: 24px;
   border-radius: 1000px;
   position: absolute;
   z-index: 1;
   top: 10px;
   right: 10px;
-  font-size: 14px;
+  font-size: 12px;
+  user-select: none;
 `;
 
 export const NameLabel = styled.div`
+  position: absolute;
+  z-index: 1;
+  bottom: 30px;
+  left: 10px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 20px;
+`;
+
+export const DomainLabel = styled.div`
   position: absolute;
   z-index: 1;
   bottom: 10px;
   left: 10px;
   padding: 2px 5px;
   border-radius: 4px;
+  font-size: 14px;
+  color: #ddd;
 `;
 
 export const MenuButton = styled(Button)`

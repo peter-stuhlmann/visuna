@@ -1,5 +1,6 @@
 'use client';
 
+import { PageElement } from '@/lib/workspaces/pages/page-elements/page-elements.types';
 import {
   createContext,
   useContext,
@@ -8,7 +9,6 @@ import {
   FC,
   useMemo,
 } from 'react';
-import { PageElement } from '@/components/content-elements/default/types';
 
 type PageElementContextType = {
   pageElement: PageElement | null;
@@ -31,7 +31,6 @@ export const PageElementProvider: FC<PageElementProviderProps> = ({
   // if (!initialElement) {
   //   throw new Error('PageElementProvider requires an initialElement prop');
   // }
-  console.log('PageElementProvider initialElement:', initialElement);
 
   const [pageElement, setPageElement] = useState<PageElement | null>(
     initialElement

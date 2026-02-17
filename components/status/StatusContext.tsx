@@ -22,7 +22,14 @@ const StatusContext = createContext<StatusContextType | undefined>(undefined);
 export const useStatus = (): StatusContextType => {
   const context = useContext(StatusContext);
   if (!context) {
-    throw new Error('useStatus must be used within a StatusProvider');
+    // SSR fallback – no StatusProvider available during server rendering.
+    // Return no-ops so components don't crash; toasts are client-only anyway.
+    return {
+      statuses: [],
+      addStatus: () => {},
+      removeStatus: () => {},
+      duration: DURATION,
+    };
   }
   return context;
 };

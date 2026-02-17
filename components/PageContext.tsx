@@ -1,5 +1,6 @@
 'use client';
 
+import type { Page } from '@/lib/workspaces/pages/pages.types';
 import {
   createContext,
   useContext,
@@ -7,15 +8,15 @@ import {
   ReactNode,
   FC,
   useMemo,
+  useEffect,
 } from 'react';
-import { Page } from './pages/Pages.types';
 
 type PageContextType = {
   page: Page | null;
   setPage: (page: Page) => void;
 };
 
-const PageContext = createContext<PageContextType | undefined>(undefined);
+export const PageContext = createContext<PageContextType | undefined>(undefined);
 
 type PageProviderProps = {
   children: ReactNode;
@@ -27,6 +28,10 @@ export const PageProvider: FC<PageProviderProps> = ({
   initialPage = null,
 }) => {
   const [page, setPage] = useState<Page | null>(initialPage);
+
+  useEffect(() => {
+    setPage(initialPage);
+  }, [initialPage]);
 
   const value = useMemo(() => ({ page, setPage }), [page]);
 

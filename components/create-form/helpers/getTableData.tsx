@@ -1,47 +1,61 @@
 import { Fragment } from 'react';
-import Switch from '@/components/Switch';
-import { Form } from '@/app/(backend)/workspaces/[id]/formularverwaltung/helpers/getForms';
+import { Form } from '@/app/(backend)/workspaces/[workspaceId]/formularverwaltung/helpers/getForms';
 import handleFormPublishStatus from './update-form-publish-status';
 
 import { MdEdit, MdDelete, MdPreview } from 'react-icons/md';
 import { Button } from '@/components/content-elements/default';
-import { PublishedStatus } from '@/components/pages/pages-list/PagesList';
+import PageVisibilityStatus from '@/components/page-visibility-status/PageVisibilityStatus';
+import { PageVisibility } from '@/lib/workspaces/pages/pages.types';
 
-type SetPublishedStatus = (
-  status: PublishedStatus | ((prev: PublishedStatus) => PublishedStatus)
+/* -------------------- TYPES -------------------- */
+
+export type FormPublishStatusMap = {
+  [slug: string]: PageVisibility;
+};
+
+type SetFormStatus = (
+  status:
+    | FormPublishStatusMap
+    | ((prev: FormPublishStatusMap) => FormPublishStatusMap)
 ) => void;
+
+/* -------------------- TABLE CONFIG -------------------- */
 
 export const getTableData = (
   forms: Form[] | null,
   handleDelete: (id: string) => void,
-  publishedStatus: PublishedStatus,
-  setPublishedStatus: SetPublishedStatus,
+  formStatus: FormPublishStatusMap,
+  setFormStatus: SetFormStatus,
   selectedWorkspaceId: string | undefined
 ) => {
-  const handleSwitchChange = (key: string) => {
-    const newStatus = !publishedStatus[key];
+  const handleStatusChange = async (slug: string, next: PageVisibility) => {
+    const prev = formStatus[slug] ?? 'offline';
 
-    handleFormPublishStatus(key, newStatus);
-    setPublishedStatus((prev) => ({
-      ...prev,
-      [key]: newStatus,
-    }));
+    // Optimistic UI
+    setFormStatus((p) => ({ ...p, [slug]: next }));
+
+    try {
+      await handleFormPublishStatus(slug, next);
+    } catch {
+      // Rollback on error
+      setFormStatus((p) => ({ ...p, [slug]: prev }));
+    }
   };
 
   return [
-    // Spalte: Formularname
+    /* -------------------- NAME -------------------- */
     {
       thead: 'Name',
       field: 'name',
     },
 
-    // Spalte: Key
+    /* -------------------- SLUG -------------------- */
     {
       thead: 'Slug',
       field: 'slug',
     },
 
-    // Spalte: Angelegt (Datum)
+    /* -------------------- CREATED -------------------- */
     {
       thead: 'Angelegt',
       field: 'createdAt',
@@ -51,54 +65,50 @@ export const getTableData = (
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
-        }).format(date); // DD.MM.YYYY
+        }).format(date);
       },
       width: 120,
     },
 
-    // Spalte: Veröffentlicht mit Switch
+    /* -------------------- PUBLISH STATUS -------------------- */
     {
-      thead: 'Veröffentlicht',
+      thead: 'Status',
       field: undefined,
-      tbody: (form: Form) => (
-        <div key={`published-${form.slug}`} className="flex-row">
-          {/* Nein */}
-          <div aria-hidden="true">Nein</div>
-          {/* Umschalter */}
-          <Switch
-            checked={!!publishedStatus[form.slug]}
-            onChange={() => handleSwitchChange(form.slug)}
-          />
-          {/* Ja */}
-          <div aria-hidden="true">Ja</div>
-        </div>
-      ),
-      width: 150,
+      tbody: (form: Form) => {
+        const status: PageVisibility =
+          formStatus[form.slug] ??
+          (form.publishStatus as PageVisibility) ??
+          'offline';
+
+        return (
+          <div key={`published-${form.slug}`} className="flex-row">
+            <PageVisibilityStatus
+              value={status}
+              onChange={(v) => handleStatusChange(form.slug, v)}
+            />
+          </div>
+        );
+      },
+      width: 160,
     },
 
-    // Spalte: Aktionen
+    /* -------------------- ACTIONS -------------------- */
     {
       thead: 'Aktionen',
       field: undefined,
       tbody: (form: Form) => (
         <Fragment key={`actions-${form.slug}`}>
-          {/* Bearbeiten-Button */}
-          {/* <Tooltip title="Bearbeiten" arrow> */}
           <Button
             href={`/workspaces/${selectedWorkspaceId}/formularverwaltung/${form.slug}`}
             aria-label="Bearbeiten"
           >
             <MdEdit aria-hidden="true" />
           </Button>
-          {/* </Tooltip> */}
-          {/* Löschen-Button */}
-          {/* <Tooltip title="Löschen" arrow> */}
+
           <Button onClick={() => handleDelete(form._id)} aria-label="Löschen">
             <MdDelete aria-hidden="true" />
           </Button>
-          {/* </Tooltip> */}
-          {/* Live-Vorschau-Button */}
-          {/* <Tooltip title="Live-Vorschau" arrow> */}
+
           <Button
             href={`/form/${form.slug}`}
             target="_blank"
@@ -106,7 +116,6 @@ export const getTableData = (
           >
             <MdPreview aria-hidden="true" />
           </Button>
-          {/* </Tooltip> */}
         </Fragment>
       ),
       width: 175,

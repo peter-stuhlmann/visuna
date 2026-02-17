@@ -3,27 +3,50 @@
 import { FC, useState, useEffect, FormEvent } from 'react';
 import { InviteUsersManagementProps } from './InviteUsersManagement.types';
 import InvitedUserslist from './InvitedUserslist';
+import InvitationsList from './InvitationsList';
 import { useSelectedWorkspace } from '../workspaces/WorkspaceContext';
 import { Button, Heading } from '../content-elements/default';
-import TextInput from '../content-elements/default/inputs/text';
-import SelectionControlsInput from '../content-elements/default/inputs/selection-controls';
+import TextInput from '../content-elements/default/inputs/text-input';
 import { useStatus } from '../status/StatusContext';
-import { User } from '@/types';
+import RoleSelector from './RoleSelector';
+import { User } from '@/lib/users/users.types';
+import { getRoleLabel } from '@/lib/roles/roles';
+import type { InvitationDB } from '@/lib/invitations/invitations.types';
+import InvitationSkeleton from './InvitationSkeleton';
 
-const InviteUsersManagement: FC<InviteUsersManagementProps> = ({
+const InviteUsersManagement: FC<InviteUsersManagementProps & { userRole?: string }> = ({
   users: initialUsers,
   loggedInUser,
+  userRole,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
-  const [roleOption, setRoleOption] = useState<string>('redakteur');
+  const [roleOption, setRoleOption] = useState<string>('editor');
   const [users, setUsers] = useState<User[]>(initialUsers ?? []);
+  const [invitations, setInvitations] = useState<InvitationDB[]>([]);
+  const [loadingInvitations, setLoadingInvitations] = useState(true);
   const [shouldRefresh, setShouldRefresh] = useState(false);
 
   const { addStatus } = useStatus();
   const { selectedWorkspace, refreshWorkspace } = useSelectedWorkspace();
 
-  // ⛑️ Hydration-freundlicher Refresh über useEffect
+  const canManage = userRole === 'superadmin' || userRole === 'admin';
+
+  // Fetch invitations on mount
+  useEffect(() => {
+    if (selectedWorkspace?._id) {
+      setLoadingInvitations(true);
+      fetch(`/api/invitations?workspaceId=${selectedWorkspace._id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.invitations) setInvitations(data.invitations);
+        })
+        .catch(console.error)
+        .finally(() => setLoadingInvitations(false));
+    }
+  }, [selectedWorkspace?._id]);
+
+  // Hydration-safe refresh
   useEffect(() => {
     if (shouldRefresh) {
       refreshWorkspace();
@@ -31,37 +54,42 @@ const InviteUsersManagement: FC<InviteUsersManagementProps> = ({
     }
   }, [shouldRefresh, refreshWorkspace]);
 
+  // Sync users from prop
+  useEffect(() => {
+    if (initialUsers) {
+      setUsers(initialUsers);
+    }
+  }, [initialUsers]);
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/invite-user', {
+      const response = await fetch('/api/invitations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
           role: roleOption,
-          workspace: selectedWorkspace?._id,
+          workspaceId: selectedWorkspace?._id,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        const usersWithTempRole = data.updatedUsers.map((u: User) =>
-          u.email === email ? { ...u, tempRole: roleOption } : u
-        );
+        if (data.updatedUsers) setUsers(data.updatedUsers);
+        if (data.invitations) setInvitations(data.invitations);
 
-        setUsers(usersWithTempRole);
         addStatus({
           type: 'success',
           message: data.message,
         });
 
-        setShouldRefresh(true); // ✅ Statt direktem refresh
+        setShouldRefresh(true);
         setEmail('');
-        setRoleOption('redakteur');
+        setRoleOption('editor');
       } else {
         addStatus({
           type: 'error',
@@ -83,48 +111,95 @@ const InviteUsersManagement: FC<InviteUsersManagementProps> = ({
 
   return (
     <>
+      {/* 1. Active users list (always visible) */}
+      <Heading element="h2" value="Aktive Benutzer:innen" />
       <InvitedUserslist
         users={users}
         setUsers={setUsers}
         loggedInUser={loggedInUser}
         workspace={selectedWorkspace!}
+        canManage={canManage}
       />
 
-      <Heading element="h2" value="Neue:n Benutzer:in anlegen" />
-      <form onSubmit={handleSubmit} noValidate>
-        <TextInput
-          label="E-Mail-Adresse"
-          value={email}
-          onChange={(value) => setEmail(value)}
-          type="email"
-          required
-        />
+      {/* 2. Pending invitations (admins only) */}
+      {canManage && (
+        <>
+          <Heading element="h2" value="Ausstehende Einladungen" />
+          {loadingInvitations ? (
+            <InvitationSkeleton count={2} />
+          ) : (
+            <InvitationsList
+              invitations={invitations}
+              onUpdate={setInvitations}
+              type="pending"
+            />
+          )}
+        </>
+      )}
 
-        <div style={{ display: 'flex', gap: '2rem', margin: '1rem 0' }}>
-          <SelectionControlsInput
-            label="Admin"
-            checked={roleOption === 'admin'}
-            onChange={(checked) => checked && setRoleOption('admin')}
-            type="radio"
-            name="role"
-          />
-          <SelectionControlsInput
-            label="Redakteur:in"
-            checked={roleOption === 'redakteur'}
-            onChange={(checked) => checked && setRoleOption('redakteur')}
-            type="radio"
-            name="role"
-          />
-        </div>
+      {/* 3. Declined invitations (admins only) */}
+      {canManage && (
+        <>
+          <Heading element="h2" value="Abgelehnte Einladungen" />
+          {loadingInvitations ? (
+            <InvitationSkeleton count={1} />
+          ) : (
+            <InvitationsList
+              invitations={invitations}
+              onUpdate={setInvitations}
+              type="declined"
+            />
+          )}
+        </>
+      )}
 
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={isLoading || !email}
-        >
-          {isLoading ? 'Benutzer:in wird angelegt...' : 'Benutzer:in anlegen'}
-        </Button>
-      </form>
+      {/* 4. Revoked invitations (admins only) */}
+      {canManage && (
+        <>
+          <Heading element="h2" value="Zurückgezogene Einladungen" />
+          {loadingInvitations ? (
+            <InvitationSkeleton count={1} />
+          ) : (
+            <InvitationsList
+              invitations={invitations}
+              onUpdate={setInvitations}
+              type="revoked"
+            />
+          )}
+        </>
+      )}
+
+      {/* 5. Invite form (admins only) */}
+      {canManage && (
+        <>
+          <Heading element="h2" value="Neue:n Benutzer:in einladen" />
+          <form onSubmit={handleSubmit} noValidate>
+            <TextInput
+              id="invite-email-input"
+              label="E-Mail-Adresse"
+              value={email}
+              onChange={(value) => setEmail(value)}
+              type="email"
+              required
+            />
+
+            <RoleSelector
+              roleOption={roleOption}
+              setRoleOption={setRoleOption}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={isLoading || !email}
+            >
+              {isLoading
+                ? `${getRoleLabel(roleOption)} wird eingeladen...`
+                : `${getRoleLabel(roleOption)} einladen`}
+            </Button>
+          </form>
+        </>
+      )}
     </>
   );
 };

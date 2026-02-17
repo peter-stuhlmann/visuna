@@ -8,18 +8,19 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'webdev-portfolio-api.vercel.app',
-        port: '',
-        search: '',
+        hostname: 'upload.wikimedia.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'image-placeholder.vercel.app',
       },
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-        port: '',
-        search: '',
       },
     ],
   },

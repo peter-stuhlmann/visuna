@@ -11,10 +11,6 @@ export const routes = {
     en: '/content-elements/subfooter',
     de: '/content-elemente/subfooter',
   },
-  legalnotice: {
-    en: '/legalnotice',
-    de: '/impressum',
-  },
   privacypolicy: {
     en: '/privacypolicy',
     de: '/datenschutz',

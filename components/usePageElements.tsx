@@ -1,3 +1,4 @@
+// components/usePageElements.ts
 'use client';
 
 import {
@@ -10,7 +11,12 @@ import {
   type ReactNode,
   type FC,
 } from 'react';
-import type { PageElement } from '@/components/content-elements/default/types';
+import {
+  resolveElementDefaults,
+  deepFillMissing,
+} from '@/utils/elementDefaults';
+import { nanoid } from 'nanoid';
+import { PageElement } from '@/lib/workspaces/pages/page-elements/page-elements.types';
 
 type PageElementsContextType = {
   /** Liste aller Elemente */
@@ -42,8 +48,8 @@ type PageElementsContextType = {
   reorderByIds: (orderedIds: string[]) => void;
 
   /** ID des aktuell editierten Elements (Modal etc.) */
-  editingElementId: string | null;
-  setEditingElementId: (id: string | null) => void;
+  editingPageElementId: string | null;
+  setEditingPageElementId: (id: string | null) => void;
 
   /** Das aktuell editierte Element (abgeleitet) */
   editingElement: PageElement | undefined;
@@ -54,6 +60,21 @@ type PageElementsContextType = {
       | Partial<PageElement['data']>
       | ((prev: PageElement['data']) => PageElement['data'])
   ) => void;
+
+  /** Element erstellen (Defaults werden beim Anlegen eingemischt) */
+  createPageElement: (
+    elementKey: string,
+    options?: {
+      name?: string;
+      visible?: boolean;
+      order?: number;
+      initialData?: Partial<PageElement['data']>;
+      id?: string; // optional, falls du eine feste ID setzen willst
+    }
+  ) => Promise<PageElement>;
+
+  /** Revision-Zähler: erhöht sich bei jeder Mutation */
+  revision: number;
 };
 
 const PageElementsContext = createContext<PageElementsContextType | undefined>(
@@ -76,7 +97,18 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
   const [pageElements, setPageElementsState] =
     useState<PageElement[]>(initialElements);
 
-  const [editingElementId, setEditingElementId] = useState<string | null>(null);
+  // Sync state with initialElements when they change (e.g. navigation)
+  useEffect(() => {
+      setPageElementsState(initialElements);
+  }, [initialElements]);
+
+  const [editingPageElementId, setEditingPageElementId] = useState<
+    string | null
+  >(null);
+
+  /** Revision-Zähler: triggert Re-Render/Remount in der Preview */
+  const [revision, setRevision] = useState(0);
+  const bump = useCallback(() => setRevision((r) => r + 1), []);
 
   // Optional: Persistenz laden
   useEffect(() => {
@@ -85,7 +117,10 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
       const raw = window.localStorage.getItem(persistKey);
       if (raw) {
         const parsed = JSON.parse(raw) as PageElement[];
-        if (Array.isArray(parsed)) setPageElementsState(parsed);
+        if (Array.isArray(parsed)) {
+          setPageElementsState(parsed);
+          // KEIN bump() hier – initialer Load soll nicht remounten müssen
+        }
       }
     } catch {
       // ignore
@@ -103,19 +138,27 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
     }
   }, [persistKey, pageElements]);
 
-  const setPageElements = useCallback((elements: PageElement[]) => {
-    setPageElementsState(elements);
-  }, []);
+  const setPageElements = useCallback(
+    (elements: PageElement[]) => {
+      setPageElementsState(elements);
+      bump();
+    },
+    [bump]
+  );
 
-  const upsertPageElement = useCallback((element: PageElement) => {
-    setPageElementsState((prev) => {
-      const idx = prev.findIndex((e) => e._id === element._id);
-      if (idx === -1) return [...prev, element];
-      const clone = [...prev];
-      clone[idx] = element;
-      return clone;
-    });
-  }, []);
+  const upsertPageElement = useCallback(
+    (element: PageElement) => {
+      setPageElementsState((prev) => {
+        const idx = prev.findIndex((e) => e._id === element._id);
+        if (idx === -1) return [...prev, element];
+        const clone = [...prev];
+        clone[idx] = element;
+        return clone;
+      });
+      bump();
+    },
+    [bump]
+  );
 
   const updatePageElement = useCallback(
     (
@@ -144,41 +187,54 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
         clone[idx] = merged;
         return clone;
       });
+      bump();
     },
-    []
+    [bump]
   );
 
-  const removePageElement = useCallback((id: string) => {
-    setPageElementsState((prev) => prev.filter((e) => e._id !== id));
-  }, []);
+  const removePageElement = useCallback(
+    (id: string) => {
+      setPageElementsState((prev) => prev.filter((e) => e._id !== id));
+      bump();
+    },
+    [bump]
+  );
 
   const getPageElement = useCallback(
     (id: string) => pageElements.find((e) => e._id === id),
     [pageElements]
   );
 
-  const clear = useCallback(() => setPageElementsState([]), []);
+  const clear = useCallback(() => {
+    setPageElementsState([]);
+    bump();
+  }, [bump]);
 
-  const reorderByIds = useCallback((orderedIds: string[]) => {
-    setPageElementsState((prev) => {
-      const map = new Map(prev.map((e) => [e._id, e]));
-      const reordered: PageElement[] = [];
-      for (const id of orderedIds) {
-        const item = map.get(id);
-        if (item) reordered.push(item);
-      }
-      // Hänge evtl. übrig gebliebene Elemente hinten an (falls IDs unvollständig)
-      for (const e of prev) {
-        if (!orderedIds.includes(e._id)) reordered.push(e);
-      }
-      // Konsistente order-Felder
-      return reordered.map((e, idx) => ({ ...e, order: idx + 1 }));
-    });
-  }, []);
+  const reorderByIds = useCallback(
+    (orderedIds: string[]) => {
+      setPageElementsState((prev) => {
+        const map = new Map(prev.map((e) => [e._id, e]));
+        const reordered: PageElement[] = [];
+        for (const id of orderedIds) {
+          const item = map.get(id);
+          if (item) reordered.push(item);
+        }
+        // Hänge evtl. übrig gebliebene Elemente hinten an (falls IDs unvollständig)
+        for (const e of prev) {
+          if (!orderedIds.includes(e._id)) reordered.push(e);
+        }
+        // Konsistente order-Felder
+        return reordered.map((e, idx) => ({ ...e, order: idx + 1 }));
+      });
+      bump();
+    },
+    [bump]
+  );
 
   const editingElement = useMemo(
-    () => (editingElementId ? getPageElement(editingElementId) : undefined),
-    [editingElementId, getPageElement]
+    () =>
+      editingPageElementId ? getPageElement(editingPageElementId) : undefined,
+    [editingPageElementId, getPageElement]
   );
 
   const updateEditingElementData = useCallback(
@@ -187,9 +243,9 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
         | Partial<PageElement['data']>
         | ((prev: PageElement['data']) => PageElement['data'])
     ) => {
-      if (!editingElementId) return;
+      if (!editingPageElementId) return;
       setPageElementsState((prev) => {
-        const idx = prev.findIndex((e) => e._id === editingElementId);
+        const idx = prev.findIndex((e) => e._id === editingPageElementId);
         if (idx === -1) return prev;
         const current = prev[idx];
         const nextData =
@@ -201,9 +257,55 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
         clone[idx] = { ...current, data: nextData };
         return clone;
       });
+      bump();
     },
-    [editingElementId]
+    [editingPageElementId, bump]
   );
+
+  /** ---------------- Element erstellen (mit Defaults) ---------------- */
+  const createPageElement: PageElementsContextType['createPageElement'] =
+    useCallback(
+      async (elementKey, options) => {
+        const {
+          name = '',
+          visible = true,
+          order,
+          initialData = {},
+          id,
+        } = options ?? {};
+
+        // 1) optionale Defaults laden
+        const defaults = await resolveElementDefaults(elementKey).catch(
+          () => ({})
+        );
+
+        // 2) initialData über Defaults mergen (Defaults füllen nur Lücken)
+        const data = deepFillMissing(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          { ...(initialData as any) },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          defaults as any
+        );
+
+        // 3) Element-Objekt bauen
+        const el: PageElement = {
+          _id: id ?? nanoid(),
+          element: elementKey,
+          name,
+          visible,
+          order: typeof order === 'number' ? order : pageElements.length + 1,
+          data,
+          pageId: '',
+          createdAt: new Date(),
+        };
+
+        // 4) einfügen
+        upsertPageElement(el); // bump() passiert innerhalb von upsert
+
+        return el;
+      },
+      [pageElements.length, upsertPageElement]
+    );
 
   const value = useMemo(
     () => ({
@@ -215,10 +317,12 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
       getPageElement,
       clear,
       reorderByIds,
-      editingElementId,
-      setEditingElementId,
+      editingPageElementId,
+      setEditingPageElementId,
       editingElement,
       updateEditingElementData,
+      createPageElement,
+      revision, // <- wichtig für Preview-Remounts
     }),
     [
       pageElements,
@@ -229,9 +333,11 @@ export const PageElementsProvider: FC<PageElementsProviderProps> = ({
       getPageElement,
       clear,
       reorderByIds,
-      editingElementId,
+      editingPageElementId,
       editingElement,
       updateEditingElementData,
+      createPageElement,
+      revision,
     ]
   );
 
@@ -250,4 +356,9 @@ export const usePageElements = (): PageElementsContextType => {
     );
   }
   return ctx;
+};
+
+/** Safe variant: returns null when used outside PageElementsProvider */
+export const useOptionalPageElements = (): PageElementsContextType | null => {
+  return useContext(PageElementsContext) ?? null;
 };

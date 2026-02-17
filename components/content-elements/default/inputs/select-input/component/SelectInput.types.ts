@@ -1,6 +1,9 @@
+import { ReactNode } from 'react';
+
 export type SelectInputOption = {
-  label: string;
+  label: ReactNode;
   value: string;
+  triggerLabel?: ReactNode;
 };
 
 export interface SelectInputProps {
@@ -15,4 +18,5 @@ export interface SelectInputProps {
   disabled?: boolean;
   autoFocus?: boolean;
   options: SelectInputOption[];
+  size?: 'small' | 'medium' | 'large';
 }

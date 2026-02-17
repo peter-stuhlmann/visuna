@@ -12,7 +12,7 @@ import AddFormElement from '@/components/create-form/AddFormElement';
 import DraggableTableRow from './TableRow';
 import { FormFieldManagementProps } from './FormFieldManagement.types';
 import { FormElement } from '@/components/templates/form/Form.types';
-import { StyledTable } from '../pages/pages-list/PagesList';
+import { StyledTable } from '../pages/pages-list/PagesList.styles';
 
 const FormFieldManagement: FC<FormFieldManagementProps> = ({ form }) => {
   const [formElements, setFormElements] = useState<FormElement[]>(
@@ -25,7 +25,7 @@ const FormFieldManagement: FC<FormFieldManagementProps> = ({ form }) => {
 
   const saveAllToApi = async (updatedElements: FormElement[]) => {
     try {
-      const response = await fetch('/api/update-form-elements', {
+      const response = await fetch('/api/form-elements/update-form-elements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -65,7 +65,7 @@ const FormFieldManagement: FC<FormFieldManagementProps> = ({ form }) => {
       .map((el, idx) => ({ ...el, order: idx + 1 }));
 
     try {
-      const response = await fetch('/api/update-form-elements', {
+      const response = await fetch('/api/form-elements/update-form-elements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

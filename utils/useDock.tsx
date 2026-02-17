@@ -8,13 +8,14 @@ import {
   FC,
   ReactNode,
 } from 'react';
+import { setClientCookie, getClientCookie } from '@/components/content-elements/default/utils/cookies';
 
 type DockContextType = {
   isFixed: boolean;
   setIsFixed: (isFixed: boolean) => void;
 };
 
-const LOCAL_STORAGE_KEY = 'dock-is-fixed';
+const COOKIE_KEY = 'dock-is-fixed';
 
 const DockContext = createContext<DockContextType | undefined>(undefined);
 
@@ -26,21 +27,31 @@ export const useDock = () => {
   return context;
 };
 
-export const DockProvider: FC<{ children?: ReactNode }> = ({ children }) => {
-  const [isFixed, setIsFixed] = useState<boolean>(true);
+type DockProviderProps = {
+  children?: ReactNode;
+  initialIsFixed?: boolean;
+};
 
-  // Lade initialen Zustand aus localStorage
+export const DockProvider: FC<DockProviderProps> = ({ 
+  children, 
+  initialIsFixed = true 
+}) => {
+  const [isFixed, setIsFixedState] = useState<boolean>(initialIsFixed);
+
+  // Fallback: Load from client-side cookie if not provided by server
   useEffect(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (saved !== null) {
-      setIsFixed(saved === 'true');
+    if (initialIsFixed === undefined) {
+      const saved = getClientCookie(COOKIE_KEY);
+      if (saved !== null) {
+        setIsFixedState(saved === 'true');
+      }
     }
-  }, []);
+  }, [initialIsFixed]);
 
-  // Speichere Änderungen in localStorage
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, isFixed.toString());
-  }, [isFixed]);
+  const setIsFixed = (value: boolean) => {
+    setIsFixedState(value);
+    setClientCookie(COOKIE_KEY, value.toString());
+  };
 
   const value: DockContextType = {
     isFixed,
